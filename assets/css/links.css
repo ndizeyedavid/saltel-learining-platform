@@ -1,0 +1,15 @@
+#active {
+  position: relative;
+  color: white;
+  background-color: #17a3d6;
+}
+#active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  width: 10px;
+  height: 100%;
+  border-radius: 0 40px 40px 0;
+  background-color: #17a3d6;
+}

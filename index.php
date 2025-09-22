@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Caritas Rwanda</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body class="bg-caritas-cream">
+    <!-- Main Welcome Container -->
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="w-full max-w-4xl">
+            <!-- Welcome Card -->
+            <div class="overflow-hidden bg-white shadow-2xl rounded-2xl">
+                <!-- Header Section with Logo -->
+                <div class="py-8 text-center text-white md:py-16 md:px-8 bg-gradient-to-r from-caritas to-secondary">
+                    <div class="mb-8">
+                        <img src="./assets/image/logo.gif" alt="Caritas Logo" class="w-auto h-16 mx-auto mb-6 rounded-md md:h-24">
+                    </div>
+                    <h1 class="mb-4 text-[20px] font-bold md:text-4xl">Welcome to Caritas Rwanda</h1>
+                </div>
+
+                <!-- Content Section -->
+                <div class="py-12 text-center md:px-8">
+                    <div class="max-w-2xl mx-auto">
+                        <h2 class="mb-6 text-[15px]  md:text-3xl font-semibold text-caritas-charcoal">
+                            Monitoring and Evaluation System
+                        </h2>
+
+                        <!-- Login Button -->
+                        <div class="space-y-4">
+                            <a href="login.php"
+                                class="inline-block px-8 py-4 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-caritas hover:bg-caritas-charcoal hover:scale-105 hover:shadow-xl">
+                                Access Your Account
+                            </a>
+                            <p class="text-xs text-gray-500">
+                                This system is reserved for authorized users only.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-8 text-center">
+                <p class="text-xs text-caritas-charcoal opacity-70">
+                    Caritas Rwanda Copyright ©
+                    <?php echo date("Y") ?> All Rights Reserved.
+
+                </p>
+            </div>
+        </div>
+    </div>
+</body>

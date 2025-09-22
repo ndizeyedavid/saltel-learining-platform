@@ -1,0 +1,19 @@
+{
+  "name": "caritas",
+  "version": "1.0.0",
+  "description": "Caritas project",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --watch",
+    "build": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --minify"
+  },
+  "keywords": [
+    "php",
+    "tailwindcss"
+  ],
+  "author": "Lerony",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

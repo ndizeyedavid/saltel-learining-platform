@@ -1,0 +1,116 @@
+
+Enum "users_gender_enum" {
+  "Male"
+  "Female"
+  "Other"
+}
+
+Enum "users_role_enum" {
+  "SuperAdmin"
+  "Teacher"
+  "Student"
+}
+
+Enum "course_content_content_type_enum" {
+  "PDF"
+  "Video"
+  "Text"
+}
+
+Enum "enrollments_payment_status_enum" {
+  "Pending"
+  "Paid"
+}
+
+Table "users" {
+  "user_id" INT [pk, increment]
+  "first_name" VARCHAR(100) [not null]
+  "middle_name" VARCHAR(100)
+  "last_name" VARCHAR(100) [not null]
+  "gender" users_gender_enum [not null]
+  "email" VARCHAR(150) [unique, not null]
+  "phone" VARCHAR(20) [unique, not null]
+  "role" users_role_enum [not null]
+  "password" VARCHAR(255) [not null]
+  "created_at" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "students" {
+  "student_id" INT [pk, increment]
+  "user_id" INT [not null]
+  "institution" VARCHAR(150)
+  "level_year" VARCHAR(50)
+  "program" VARCHAR(150)
+}
+
+Table "courses" {
+  "course_id" INT [pk, increment]
+  "teacher_id" INT [not null]
+  "category" VARCHAR(150) [not null]
+  "course_title" VARCHAR(200) [not null]
+  "description" TEXT
+  "price" DECIMAL(10,2) [not null]
+  "created_at" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "course_content" {
+  "content_id" INT [pk, increment]
+  "course_id" INT [not null]
+  "content_type" course_content_content_type_enum [not null]
+  "content_url" VARCHAR(255) [not null]
+  "uploaded_at" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "enrollments" {
+  "enrollment_id" INT [pk, increment]
+  "student_id" INT [not null]
+  "course_id" INT [not null]
+  "payment_status" enrollments_payment_status_enum [default: 'Pending']
+  "enrolled_at" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "assignments" {
+  "assignment_id" INT [pk, increment]
+  "course_id" INT [not null]
+  "title" VARCHAR(200) [not null]
+  "description" TEXT
+  "due_date" DATE
+}
+
+Table "submissions" {
+  "submission_id" INT [pk, increment]
+  "assignment_id" INT [not null]
+  "student_id" INT [not null]
+  "file_url" VARCHAR(255)
+  "submitted_at" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "grade" DECIMAL(5,2)
+  "feedback" TEXT
+}
+
+Table "certificates" {
+  "certificate_id" INT [pk, increment]
+  "student_id" INT [not null]
+  "course_id" INT [not null]
+  "issued_at" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "certificate_url" VARCHAR(255)
+}
+
+Ref:"users"."user_id" < "students"."user_id"
+
+Ref:"users"."user_id" < "courses"."teacher_id"
+
+Ref:"courses"."course_id" < "course_content"."course_id"
+
+Ref:"students"."student_id" < "enrollments"."student_id"
+
+Ref:"courses"."course_id" < "enrollments"."course_id"
+
+Ref:"courses"."course_id" < "assignments"."course_id"
+
+Ref:"assignments"."assignment_id" < "submissions"."assignment_id"
+
+Ref:"students"."student_id" < "submissions"."student_id"
+
+Ref:"students"."student_id" < "certificates"."student_id"
+
+Ref:"courses"."course_id" < "certificates"."course_id"
