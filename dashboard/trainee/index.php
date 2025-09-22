@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Trainee Dashboard</title>
     <?php include '../../include/imports.php'; ?>
+    <script src="../../assets/js/gamification.js" defer></script>
 </head>
 
 <body class="font-sans bg-gray-50">
@@ -23,6 +24,88 @@
                 <div class="mb-8">
                     <h1 class="mb-2 text-3xl font-bold text-gray-900">Hello Christopher👋</h1>
                     <p class="text-gray-600">Let's learn something new today!</p>
+                </div>
+
+                <!-- Gamification Stats -->
+                <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
+                    <!-- XP Points -->
+                    <div class="p-6 bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-sm rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-purple-100">Experience Points</p>
+                                <p class="text-2xl font-bold text-white">2,450 XP</p>
+                            </div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                                <i class="text-xl text-white fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-purple-100">Level 8</span>
+                                <span class="text-purple-100">550 XP to Level 9</span>
+                            </div>
+                            <div class="w-full bg-purple-400 bg-opacity-30 rounded-full h-2 mt-2">
+                                <div class="bg-yellow-400 h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges Earned -->
+                    <div class="p-6 bg-gradient-to-br from-yellow-500 to-orange-600 text-white shadow-sm rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-yellow-100">Badges Earned</p>
+                                <p class="text-2xl font-bold text-white">12</p>
+                            </div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                                <i class="text-xl text-white fas fa-medal"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm text-yellow-100">
+                                <i class="mr-1 fas fa-arrow-up"></i>
+                                <span>+2 this week</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Study Streak -->
+                    <div class="p-6 bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-sm rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-green-100">Study Streak</p>
+                                <p class="text-2xl font-bold text-white">15 Days</p>
+                            </div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                                <i class="text-xl text-white fas fa-fire"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm text-green-100">
+                                <i class="mr-1 fas fa-target"></i>
+                                <span>Goal: 30 days</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unlocked Content -->
+                    <div class="p-6 bg-gradient-to-br from-blue-500 to-cyan-600 text-white shadow-sm rounded-xl">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-blue-100">Unlocked Content</p>
+                                <p class="text-2xl font-bold text-white">8/12</p>
+                            </div>
+                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                                <i class="text-xl text-white fas fa-unlock"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm text-blue-100">
+                                <i class="mr-1 fas fa-lock"></i>
+                                <span>4 courses locked</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Top Row - Recent Course, Resources, Calendar -->
