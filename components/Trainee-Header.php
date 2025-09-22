@@ -26,7 +26,7 @@
                     <span class="text-sm font-medium text-white">MJ</span>
                 </div>
                 <div class="hidden md:block">
-                    <p class="text-sm font-medium text-gray-900">Mellow</p>
+                    <p class="text-sm font-medium text-gray-900">Christopher</p>
                     <p class="text-xs text-gray-500">Student</p>
                 </div>
                 <button class="text-gray-400 transition-colors hover:text-caritas">
