@@ -105,6 +105,26 @@
                                     </td>
                                 </tr>
                                 <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-6 py-4 font-medium text-gray-900">
+                                        <a href="assignment-take.php?id=1" class="text-blue-600 hover:text-blue-800 hover:underline">
+                                            Data Science Quiz - Module 6
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500">Machine Learning Basics</td>
+                                    <td class="px-6 py-4 text-gray-500">December 25, 2024</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            <span class="w-2 h-2 mr-1 bg-yellow-400 rounded-full"></span>
+                                            Available
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <a href="assignment-take.php?id=1" class="px-3 py-1 text-xs font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                                            Take Quiz
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-gray-50">
                                     <td class="px-6 py-4 font-medium text-gray-900">Usability Testing and Feedback</td>
                                     <td class="px-6 py-4 text-gray-500">Usability Testing and Iteration</td>
                                     <td class="px-6 py-4 text-gray-500">August 22, 2024</td>

@@ -88,9 +88,9 @@
                                     <span><i class="mr-1 far fa-clock"></i>12 weeks</span>
                                     <span><i class="mr-1 fas fa-book"></i>36 lessons</span>
                                 </div>
-                                <button class="px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">
+                                <a href="certificates.php?course=web-development" class="px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">
                                     View Certificate
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -129,9 +129,9 @@
                                     <span><i class="mr-1 far fa-clock"></i>10 weeks</span>
                                     <span><i class="mr-1 fas fa-book"></i>28 lessons</span>
                                 </div>
-                                <button class="px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">
+                                <a href="certificates.php?course=mobile-development" class="px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">
                                     View Certificate
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -170,9 +170,9 @@
                                     <span><i class="mr-1 far fa-clock"></i>8 weeks</span>
                                     <span><i class="mr-1 fas fa-book"></i>22 lessons</span>
                                 </div>
-                                <button class="px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">
+                                <a href="certificates.php?course=python-data-analytics" class="px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">
                                     View Certificate
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -266,8 +266,8 @@
                                     <span><i class="mr-1 fas fa-book"></i>42 lessons</span>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-lg font-bold text-gray-900">$199</div>
-                                    <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    <div class="text-lg font-bold text-gray-900">30,000 RWF</div>
+                                    <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700" onclick="openCheckoutModal('blockchain-development', 'Blockchain Development', 30000)">
                                         Enroll Now
                                     </button>
                                 </div>
@@ -313,9 +313,9 @@
                                     <span><i class="mr-1 far fa-clock"></i>16 weeks</span>
                                     <span><i class="mr-1 fas fa-book"></i>48 lessons</span>
                                 </div>
-                                <button class="px-4 py-2 text-sm font-medium text-blue-600 transition-colors rounded-lg bg-blue-50 hover:bg-blue-100">
+                                <a href="course-viewer.php?course=data-science" class="px-4 py-2 text-sm font-medium text-blue-600 transition-colors rounded-lg bg-blue-50 hover:bg-blue-100">
                                     Continue Learning
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -355,8 +355,8 @@
                                     <span><i class="mr-1 fas fa-book"></i>36 lessons</span>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-lg font-bold text-gray-900">$149</div>
-                                    <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    <div class="text-lg font-bold text-gray-900">40,000 RWF</div>
+                                    <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700" onclick="openCheckoutModal('cybersecurity-fundamentals', 'Cybersecurity Fundamentals', 40000)">
                                         Enroll Now
                                     </button>
                                 </div>
@@ -404,9 +404,9 @@
                                     <span><i class="mr-1 far fa-clock"></i>6 weeks</span>
                                     <span><i class="mr-1 fas fa-book"></i>18 lessons</span>
                                 </div>
-                                <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
+                                <a href="course-viewer.php?course=business-analytics" class="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
                                     Start Free
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -503,8 +503,8 @@
                                     <span><i class="mr-1 fas fa-book"></i>24 lessons</span>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-lg font-bold text-gray-900">$89</div>
-                                    <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    <div class="text-lg font-bold text-gray-900">40,000 RWF</div>
+                                    <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700" onclick="openCheckoutModal('digital-photography', 'Digital Photography Mastery', 40000)">
                                         Enroll Now
                                     </button>
                                 </div>
@@ -543,6 +543,127 @@
             </main>
         </div>
     </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 items-center justify-center hidden bg-black bg-opacity-50">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900">Course Enrollment</h3>
+                <button class="text-gray-400 transition-colors hover:text-gray-600" onclick="closeCheckoutModal()">
+                    <i class="text-xl fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="p-6">
+                <!-- Course Info -->
+                <div class="mb-6">
+                    <h4 class="mb-2 text-lg font-semibold text-gray-900" id="modalCourseTitle">Course Title</h4>
+                    <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50">
+                        <span class="text-gray-600">Course Price:</span>
+                        <span class="text-2xl font-bold text-blue-600" id="modalCoursePrice">0 RWF</span>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <form id="checkoutForm">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Email Address</label>
+                            <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your email" required>
+                        </div>
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Card Number</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="1234 5678 9012 3456" required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-2 text-sm font-medium text-gray-700">Expiry Date</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="MM/YY" required>
+                            </div>
+                            <div>
+                                <label class="block mb-2 text-sm font-medium text-gray-700">CVV</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="123" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mt-6 space-x-3">
+                        <button type="button" class="flex-1 px-4 py-2 text-gray-600 transition-colors border border-gray-300 rounded-lg hover:text-gray-700 hover:bg-gray-50" onclick="closeCheckoutModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 px-6 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                            <i class="mr-2 fas fa-credit-card"></i>
+                            Complete Purchase
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Security Notice -->
+                <div class="flex items-center p-3 mt-4 rounded-lg bg-green-50">
+                    <i class="mr-2 text-green-600 fas fa-shield-alt"></i>
+                    <span class="text-sm text-green-700">Your payment is secured with 256-bit SSL encryption</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentCourse = null;
+
+        function openCheckoutModal(courseId, courseTitle, coursePrice) {
+            currentCourse = courseId;
+            document.getElementById('modalCourseTitle').textContent = courseTitle;
+            document.getElementById('modalCoursePrice').textContent = Number(coursePrice).toLocaleString() + ' RWF';
+            document.getElementById('checkoutModal').classList.remove('hidden');
+            document.getElementById('checkoutModal').classList.add('flex');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+            document.getElementById('checkoutModal').classList.remove('flex');
+            currentCourse = null;
+        }
+
+        // Handle form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Simulate payment processing
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = '<i class="mr-2 fas fa-spinner fa-spin"></i>Processing...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                alert('Payment successful! You have been enrolled in the course.');
+                closeCheckoutModal();
+
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+
+                // Optionally redirect to course viewer
+                if (currentCourse) {
+                    window.location.href = `course-viewer.php?course=${currentCourse}`;
+                }
+            }, 2000);
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('checkoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCheckoutModal();
+            }
+        });
+    </script>
 </body>
 
 </html>
