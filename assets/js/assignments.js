@@ -75,16 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
           button.text(originalText).prop("disabled", false);
 
           // Show success notification
-          if (typeof toastr !== "undefined") {
-            toastr.success(
-              `File "${file.name}" uploaded successfully for "${assignmentTitle}"`,
-              "Upload Complete"
-            );
-          } else {
-            alert(
-              `File "${file.name}" uploaded successfully for "${assignmentTitle}"`
-            );
-          }
+          Swal.fire({
+            title: 'Upload Complete!',
+            text: `File "${file.name}" uploaded successfully for "${assignmentTitle}"`,
+            icon: 'success',
+            confirmButtonText: 'Great!',
+            confirmButtonColor: '#10B981'
+          });
         }, 2000);
       }
     });
@@ -105,15 +102,27 @@ document.addEventListener("DOMContentLoaded", function () {
     if (filter === "dates") {
       // Sort by due date
       table.order([2, "asc"]).draw();
-      if (typeof toastr !== "undefined") {
-        toastr.info("Assignments sorted by due date", "Filter Applied");
-      }
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'info',
+        title: 'Assignments sorted by due date',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+      });
     } else if (filter === "Status") {
       // Sort by status
       table.order([3, "asc"]).draw();
-      if (typeof toastr !== "undefined") {
-        toastr.info("Assignments sorted by status", "Filter Applied");
-      }
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'info',
+        title: 'Assignments sorted by status',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+      });
     }
   });
 

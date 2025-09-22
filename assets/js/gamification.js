@@ -26,18 +26,27 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showUnlockModal(requirement, xpReward, badgeReward) {
-    if (typeof toastr !== "undefined") {
-      toastr.info(
-        `🔒 ${requirement}<br>
-         <small>🏆 Rewards: +${xpReward} XP, ${badgeReward} Badge</small>`, 
-        "Course Locked", {
-          timeOut: 6000,
-          extendedTimeOut: 3000,
-          positionClass: "toast-top-center",
-          allowHtml: true
-        }
-      );
-    }
+    Swal.fire({
+      title: '🔒 Course Locked',
+      html: `
+        <div class="text-left">
+          <p class="mb-3 text-gray-700">${requirement}</p>
+          <div class="p-3 bg-blue-50 rounded-lg">
+            <p class="text-sm font-medium text-blue-800">🏆 Unlock Rewards:</p>
+            <ul class="mt-1 text-sm text-blue-700">
+              <li>• +${xpReward} XP Points</li>
+              <li>• ${badgeReward} Badge</li>
+            </ul>
+          </div>
+        </div>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Got it!',
+      confirmButtonColor: '#3b82f6',
+      customClass: {
+        popup: 'text-left'
+      }
+    });
   }
 
   function animateXPProgress() {
@@ -96,12 +105,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Unlock notification system
   function showUnlockNotification(courseName, xpReward) {
-    if (typeof toastr !== "undefined") {
-      toastr.success(`🎉 ${courseName} unlocked! +${xpReward} XP`, "New Content Available!", {
-        timeOut: 4000,
-        positionClass: "toast-top-right"
-      });
-    }
+    Swal.fire({
+      title: 'New Content Available!',
+      text: `🎉 ${courseName} unlocked! +${xpReward} XP`,
+      icon: 'success',
+      timer: 4000,
+      showConfirmButton: false,
+      toast: true,
+      position: 'top-end'
+    });
   }
 
   // Simulate unlocking content (for demo purposes)

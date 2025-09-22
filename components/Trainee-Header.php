@@ -1,5 +1,5 @@
 <!-- Gamified Header for Saltel Learning Platform -->
-<header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm" style="z-index: 10000; position: relative;">
+<header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm" style="z-index: 10; position: relative;">
     <div class="flex items-center justify-between">
         <!-- Gamified Progress & Quest Panel -->
         <div class="flex-1 max-w-2xl">

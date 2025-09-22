@@ -298,7 +298,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedAnswer = document.querySelector('input[name="quiz1"]:checked');
             
             if (!selectedAnswer) {
-                alert('Please select an answer before submitting.');
+                Swal.fire({
+                    title: 'Answer Required',
+                    text: 'Please select an answer before submitting.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#f59e0b'
+                });
                 return;
             }
 
@@ -398,7 +404,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (notes) {
                 // Save notes (in real app, this would save to database)
                 localStorage.setItem('lesson-notes', notes);
-                showNotification('Notes saved successfully!', 'success');
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Progress saved successfully!',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
                 closeNotesModal();
             }
         });
@@ -432,33 +446,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
-        
-        const colors = {
-            success: 'bg-green-500 text-white',
-            error: 'bg-red-500 text-white',
-            info: 'bg-blue-500 text-white',
-            warning: 'bg-yellow-500 text-black'
-        };
-        
-        notification.classList.add(...colors[type].split(' '));
-        notification.textContent = message;
-        
-        document.body.appendChild(notification);
-        
-        // Animate in
-        setTimeout(() => {
-            notification.classList.remove('translate-x-full');
-        }, 100);
-        
-        // Animate out and remove
-        setTimeout(() => {
-            notification.classList.add('translate-x-full');
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 3000);
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: type,
+            title: message,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
     }
 
     // Bookmark functionality

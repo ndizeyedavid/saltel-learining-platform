@@ -237,14 +237,13 @@ document.addEventListener("DOMContentLoaded", function () {
       button.disabled = false;
 
       // Show success notification
-      if (typeof toastr !== "undefined") {
-        toastr.success(
-          `Certificate for "${courseName}" downloaded successfully!`,
-          "Download Complete"
-        );
-      } else {
-        alert(`Certificate for "${courseName}" downloaded successfully!`);
-      }
+      Swal.fire({
+        title: 'Download Complete!',
+        text: `Certificate for "${courseName}" downloaded successfully!`,
+        icon: 'success',
+        confirmButtonText: 'Great!',
+        confirmButtonColor: '#10B981'
+      });
 
       // In a real application, you would trigger the actual download here
       // For demo purposes, we'll just show the notification
@@ -264,14 +263,13 @@ document.addEventListener("DOMContentLoaded", function () {
       button.disabled = false;
 
       // Show success notification
-      if (typeof toastr !== "undefined") {
-        toastr.success(
-          "All certificates downloaded as ZIP file!",
-          "Download Complete"
-        );
-      } else {
-        alert("All certificates downloaded as ZIP file!");
-      }
+      Swal.fire({
+        title: 'Download Complete!',
+        text: 'All certificates downloaded as ZIP file!',
+        icon: 'success',
+        confirmButtonText: 'Awesome!',
+        confirmButtonColor: '#10B981'
+      });
     }, 3000);
   }
 
@@ -333,12 +331,15 @@ document.addEventListener("DOMContentLoaded", function () {
       // Fallback for browsers that don't support Web Share API
       const shareUrl = `https://saltel.edu/verify/${certificateId}`;
       navigator.clipboard.writeText(shareUrl).then(() => {
-        if (typeof toastr !== "undefined") {
-          toastr.success(
-            "Certificate link copied to clipboard!",
-            "Share Ready"
-          );
-        }
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Certificate link copied to clipboard!',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true
+        });
       });
     }
   }
@@ -358,29 +359,25 @@ document.addEventListener("DOMContentLoaded", function () {
       button.innerHTML = originalText;
       button.disabled = false;
 
-      if (typeof toastr !== "undefined") {
-        toastr.success(
-          `Certificate ${certificateId} is authentic and verified!`,
-          "Verification Complete",
-          {
-            timeOut: 4000,
-          }
-        );
-      }
+      Swal.fire({
+        title: 'Verification Complete!',
+        text: `Certificate ${certificateId} is authentic and verified!`,
+        icon: 'success',
+        confirmButtonText: 'Excellent!',
+        confirmButtonColor: '#10B981'
+      });
     }, 2000);
   }
 
   // Add locked certificate modal function
   function showLockedCertificateModal(requirement) {
-    if (typeof toastr !== "undefined") {
-      toastr.info(`🔒 ${requirement}`, "Certificate Locked", {
-        timeOut: 5000,
-        extendedTimeOut: 2000,
-        positionClass: "toast-top-center",
-      });
-    } else {
-      alert(`Certificate Locked: ${requirement}`);
-    }
+    Swal.fire({
+      title: '🔒 Certificate Locked',
+      text: requirement,
+      icon: 'info',
+      confirmButtonText: 'Understood',
+      confirmButtonColor: '#3b82f6'
+    });
   }
 
   // Initialize with all certificates visible

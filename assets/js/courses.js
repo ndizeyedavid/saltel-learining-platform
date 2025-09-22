@@ -207,16 +207,13 @@ document.addEventListener("DOMContentLoaded", function () {
           this.classList.add("bg-green-600", "cursor-not-allowed");
 
           // Show success notification
-          if (typeof toastr !== "undefined") {
-            toastr.success(
-              `Successfully enrolled in "${courseTitle}" for ${coursePrice}!`,
-              "Enrollment Complete"
-            );
-          } else {
-            alert(
-              `Successfully enrolled in "${courseTitle}" for ${coursePrice}!`
-            );
-          }
+          Swal.fire({
+            title: 'Enrollment Complete!',
+            text: `Successfully enrolled in "${courseTitle}" for ${coursePrice}!`,
+            icon: 'success',
+            confirmButtonText: 'Start Learning',
+            confirmButtonColor: '#10B981'
+          });
         }, 1500);
       });
     });

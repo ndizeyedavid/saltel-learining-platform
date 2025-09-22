@@ -173,20 +173,40 @@ function initializeTodoList() {
   // Handle add task button
   if (addTaskBtn) {
     addTaskBtn.addEventListener("click", function () {
-      const taskName = prompt("Enter new task name:");
-      if (taskName && taskName.trim()) {
-        const todoList = document.getElementById("todoList");
-        const newTask = createSimpleTaskElement(taskName.trim());
-        todoList.insertBefore(newTask, todoList.firstChild);
+      Swal.fire({
+        title: 'Add New Task',
+        input: 'text',
+        inputLabel: 'Task Name',
+        inputPlaceholder: 'Enter new task name...',
+        showCancelButton: true,
+        confirmButtonText: 'Add Task',
+        confirmButtonColor: '#3b82f6',
+        cancelButtonColor: '#6b7280',
+        inputValidator: (value) => {
+          if (!value || !value.trim()) {
+            return 'Please enter a task name!';
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed && result.value) {
+          const todoList = document.getElementById("todoList");
+          const newTask = createSimpleTaskElement(result.value.trim());
+          todoList.insertBefore(newTask, todoList.firstChild);
 
-        // Re-initialize event listeners for the new task
-        initializeSimpleTaskListeners(newTask);
+          // Re-initialize event listeners for the new task
+          initializeSimpleTaskListeners(newTask);
 
-        toastr.success(
-          `"${taskName}" added to your todo list`,
-          "New Task Added"
-        );
-      }
+          Swal.fire({
+            title: 'Task Added!',
+            text: `"${result.value}" added to your todo list`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+          });
+        }
+      });
     });
   }
 }
@@ -227,7 +247,15 @@ function initializeResourceButtons() {
   // Join class button functionality
   document.querySelectorAll(".join-class-btn").forEach((button) => {
     button.addEventListener("click", function () {
-      toastr.success("Joining class...", "Success");
+      Swal.fire({
+        title: 'Joining Class',
+        text: 'Connecting to virtual classroom...',
+        icon: 'info',
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
     });
   });
 
@@ -247,10 +275,15 @@ function initializeResourceButtons() {
         this.textContent = "Enrolled ✓";
         this.classList.remove("bg-blue-600", "hover:bg-blue-700");
         this.classList.add("bg-gray-400", "cursor-not-allowed");
-        toastr.success(
-          `Successfully enrolled in "${lessonTitle}"!`,
-          "Enrollment Complete"
-        );
+        Swal.fire({
+          title: 'Enrollment Complete!',
+          text: `Successfully enrolled in "${lessonTitle}"!`,
+          icon: 'success',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
       }, 1500);
     });
   });
@@ -270,7 +303,15 @@ function initializeResourceButtons() {
       setTimeout(() => {
         this.textContent = originalText;
         this.disabled = false;
-        toastr.success(`Continuing "${courseTitle}"...`, "Course Loaded");
+        Swal.fire({
+          title: 'Course Loaded!',
+          text: `Continuing "${courseTitle}"...`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
       }, 1000);
     });
   });
@@ -302,10 +343,15 @@ function initializeResourceButtons() {
         progressText.textContent = "Progress: 10% complete";
         moduleText.textContent = "1/8 modules";
 
-        toastr.success(
-          `Started "${courseTitle}"! Welcome to your learning journey.`,
-          "Course Started"
-        );
+        Swal.fire({
+          title: 'Course Started!',
+          text: `Started "${courseTitle}"! Welcome to your learning journey.`,
+          icon: 'success',
+          timer: 3000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
       }, 1500);
     });
   });
@@ -318,15 +364,27 @@ function initializeResourceButtons() {
         this.closest(".resource-item").querySelector("p").textContent;
 
       // Show toast notification
-      if (typeof toastr !== "undefined") {
-        toastr.info(`Opening ${resourceName}...`);
-      }
+      Swal.fire({
+        title: 'Opening Resource',
+        text: `Opening ${resourceName}...`,
+        icon: 'info',
+        timer: 1000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
 
       // Simulate opening resource
       setTimeout(() => {
-        if (typeof toastr !== "undefined") {
-          toastr.success(`${resourceName} opened successfully!`);
-        }
+        Swal.fire({
+          title: 'Resource Opened!',
+          text: `${resourceName} opened successfully!`,
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end'
+        });
       }, 1000);
     });
   });
@@ -354,15 +412,27 @@ document.addEventListener("click", function (e) {
       .closest(".lesson-item")
       .querySelector("h4").textContent;
 
-    if (typeof toastr !== "undefined") {
-      toastr.success(`Joining ${className}...`);
-    }
+    Swal.fire({
+      title: 'Joining Class',
+      text: `Joining ${className}...`,
+      icon: 'info',
+      timer: 1500,
+      showConfirmButton: false,
+      toast: true,
+      position: 'top-end'
+    });
 
     // Simulate joining class
     setTimeout(() => {
-      if (typeof toastr !== "undefined") {
-        toastr.info("Redirecting to virtual classroom...");
-      }
+      Swal.fire({
+        title: 'Redirecting',
+        text: 'Redirecting to virtual classroom...',
+        icon: 'info',
+        timer: 2000,
+        showConfirmButton: false,
+        toast: true,
+        position: 'top-end'
+      });
     }, 1500);
   }
 });

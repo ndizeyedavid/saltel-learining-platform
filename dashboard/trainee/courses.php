@@ -643,7 +643,13 @@
             submitBtn.disabled = true;
 
             setTimeout(() => {
-                alert('Payment successful! You have been enrolled in the course.');
+                Swal.fire({
+                    title: 'Payment Successful!',
+                    text: 'You have been enrolled in the course.',
+                    icon: 'success',
+                    confirmButtonText: 'Continue',
+                    confirmButtonColor: '#10b981'
+                });
                 closeCheckoutModal();
 
                 // Reset button

@@ -181,11 +181,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const title = this.querySelector("h4").textContent;
       const description = this.querySelector("p").textContent;
       
-      if (typeof toastr !== "undefined") {
-        toastr.success(`${title}: ${description}`, "Achievement Details");
-      } else {
-        alert(`${title}: ${description}`);
-      }
+      Swal.fire({
+        title: 'Achievement Details',
+        html: `<strong>${title}</strong><br><br>${description}`,
+        icon: 'success',
+        confirmButtonText: 'Awesome!',
+        confirmButtonColor: '#10B981'
+      });
     });
   });
 
@@ -196,9 +198,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const period = this.value;
       
       // Update chart data based on selected period
-      if (typeof toastr !== "undefined") {
-        toastr.info(`Showing progress for: ${period}`, "Time Period Updated");
-      }
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'info',
+        title: `Showing progress for: ${period}`,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+      });
       
       // Here you would typically fetch new data and update the chart
       // For demo purposes, we'll just show a notification
