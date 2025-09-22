@@ -497,7 +497,10 @@ class AssignmentQuiz {
 
         // Show results page
         document.getElementById('quizInterface').classList.add('hidden');
-        document.getElementById('resultsPage').classList.remove('hidden');
+        const resultsPage = document.getElementById('resultsPage');
+        resultsPage.classList.remove('hidden');
+        resultsPage.classList.add('flex');
+        resultsPage.style.display = 'flex';
     }
 
     retakeQuiz() {
@@ -509,7 +512,10 @@ class AssignmentQuiz {
         this.quizStarted = false;
 
         // Reset UI
-        document.getElementById('resultsPage').classList.add('hidden');
+        const resultsPage = document.getElementById('resultsPage');
+        resultsPage.classList.add('hidden');
+        resultsPage.classList.remove('flex');
+        resultsPage.style.display = 'none';
         document.getElementById('landingPage').classList.remove('hidden');
 
         // Reset timer display
@@ -600,13 +606,19 @@ class AssignmentQuiz {
         reviewContainer.innerHTML = reviewHTML;
 
         // Replace results page with review
-        document.getElementById('resultsPage').classList.add('hidden');
+        const resultsPage = document.getElementById('resultsPage');
+        resultsPage.classList.add('hidden');
+        resultsPage.classList.remove('flex');
+        resultsPage.style.display = 'none';
         document.body.appendChild(reviewContainer);
 
         // Add back button functionality
         document.getElementById('backToResultsBtn').addEventListener('click', () => {
             document.body.removeChild(reviewContainer);
-            document.getElementById('resultsPage').classList.remove('hidden');
+            const resultsPage = document.getElementById('resultsPage');
+            resultsPage.classList.remove('hidden');
+            resultsPage.classList.add('flex');
+            resultsPage.style.display = 'flex';
         });
     }
 }
