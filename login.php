@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login • Caritas Rwanda</title>
+    <title>Login • saltel Rwanda</title>
     <link rel="stylesheet" href="./assets/css/main.css">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -22,7 +22,7 @@
             class="z-10 flex flex-col gap-5 p-8 py-10 w-[450px] bg-white rounded-lg">
             <!-- Top content -->
             <div class="space-y-2 text-center">
-                <img src="./assets/image/logo.gif" alt="Caritas Logo" class="w-auto h-24 mx-auto mb-6">
+                <img src="./assets/image/logo.gif" alt="saltel Logo" class="w-auto h-24 mx-auto mb-6">
                 <h3 class="text-2xl font-semibold">Login to Account</h3>
                 <h5 class="text-sm font-medium text-black/70">Please enter your email and password to continue</h5>
             </div>
@@ -31,7 +31,7 @@
             <div class="flex flex-col gap-2">
                 <label for="email" class="text-sm text-[#202224] font-medium">Email</label>
                 <input type="email" placeholder="someone@gmail.com" id="email" name="email" required
-                    class="w-full p-2 transition-colors border rounded-lg border-caritas-cream outline-secondary bg-black/5 focus:border-secondary focus:ring-1 focus:ring-secondary"
+                    class="w-full p-2 transition-colors border rounded-lg border-saltel-cream outline-secondary bg-black/5 focus:border-secondary focus:ring-1 focus:ring-secondary"
                     autocomplete="off">
                 <span class="hidden text-xs text-red-500" id="email-error">Please enter a valid email address</span>
             </div>
@@ -44,7 +44,7 @@
                         Password?</a>
                 </div>
                 <input type="password" placeholder="••••••••" id="password" name="password" required
-                    class="w-full p-2 transition-colors border rounded-lg border-caritas-cream outline-secondary bg-black/5 focus:border-secondary focus:ring-1 focus:ring-secondary"
+                    class="w-full p-2 transition-colors border rounded-lg border-saltel-cream outline-secondary bg-black/5 focus:border-secondary focus:ring-1 focus:ring-secondary"
                     autocomplete="off">
                 <span class="hidden text-xs text-red-500" id="password-error">Password is required</span>
             </div>

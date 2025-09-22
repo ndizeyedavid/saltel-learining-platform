@@ -15,21 +15,21 @@
         <!-- User Profile Section -->
         <div class="flex items-center space-x-4">
             <!-- Notifications -->
-            <button class="relative p-2 text-gray-400 transition-colors hover:text-caritas">
+            <button class="relative p-2 text-gray-400 transition-colors hover:text-saltel">
                 <i class="text-lg fas fa-bell"></i>
-                <span class="absolute flex items-center justify-center w-4 h-4 text-xs text-white rounded-full -top-1 -right-1 bg-caritas">3</span>
+                <span class="absolute flex items-center justify-center w-4 h-4 text-xs text-white rounded-full -top-1 -right-1 bg-saltel">3</span>
             </button>
 
             <!-- User Menu -->
             <div class="flex items-center space-x-3">
-                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-caritas to-secondary">
+                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-saltel to-secondary">
                     <span class="text-sm font-medium text-white">MJ</span>
                 </div>
                 <div class="hidden md:block">
                     <p class="text-sm font-medium text-gray-900">Christopher</p>
                     <p class="text-xs text-gray-500">Student</p>
                 </div>
-                <button class="text-gray-400 transition-colors hover:text-caritas">
+                <button class="text-gray-400 transition-colors hover:text-saltel">
                     <i class="text-sm fas fa-chevron-down"></i>
                 </button>
             </div>

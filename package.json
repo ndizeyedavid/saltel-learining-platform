@@ -1,7 +1,7 @@
 {
-  "name": "caritas",
+  "name": "saltel",
   "version": "1.0.0",
-  "description": "Caritas project",
+  "description": "saltel project",
   "main": "index.js",
   "scripts": {
     "build-css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/main.css --watch",

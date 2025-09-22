@@ -67,13 +67,13 @@ $(document).ready(function () {
 
   // Show field error
   function showFieldError(input, errorElement, message) {
-    input.removeClass("border-caritas-cream").addClass("border-red-500");
+    input.removeClass("border-saltel-cream").addClass("border-red-500");
     errorElement.text(message).removeClass("hidden");
   }
 
   // Hide field error
   function hideFieldError(input, errorElement) {
-    input.removeClass("border-red-500").addClass("border-caritas-cream");
+    input.removeClass("border-red-500").addClass("border-saltel-cream");
     errorElement.addClass("hidden");
   }
 
