@@ -1,6 +1,8 @@
 <!-- Link -->
 <link rel="stylesheet" href="./../../assets/css/main.css">
 <link rel="stylesheet" href="./../../assets/css/links.css">
+<link rel="stylesheet" href="./../../assets/css/dark-mode.css">
+<link rel="stylesheet" href="./../../assets/css/preloader.css">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Font Awesome CDN -->
@@ -20,7 +22,9 @@
 <!-- jQuery CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script src="../../assets/js/preloader.js"></script>
 <script src="../../assets/js/app.js"></script>
+<script src="../../assets/js/theme-switcher.js"></script>
 
 <!-- data table source CDN -->
 <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.tailwindcss.css">

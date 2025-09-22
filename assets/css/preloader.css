@@ -1,0 +1,403 @@
+/* Gamified Preloader Styles */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+  background: #667eea;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Dark mode preloader */
+.dark .preloader {
+  /* background: linear-gradient(135deg, #1e3a8a 0%, #581c87 100%); */
+  background: #1e3a8a;
+}
+
+.preloader-logo img {
+  height: 100px;
+  width: auto;
+}
+
+/* Main content container */
+.preloader-content {
+  text-align: center;
+  color: white;
+  max-width: 400px;
+  padding: 0 20px;
+}
+
+/* Title */
+.preloader-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+.preloader-subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  animation: subtitleFade 3s ease-in-out infinite;
+}
+
+/* Progress container */
+.progress-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* XP Bar */
+.xp-bar-container {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 4px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.xp-bar {
+  height: 12px;
+  background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7);
+  border-radius: 20px;
+  width: 0%;
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+/* Level indicator */
+.level-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.level-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+}
+
+.xp-text {
+  opacity: 0.9;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+
+.spinner-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: #10b981;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-ring:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  border-top-color: #3b82f6;
+  animation-duration: 1.5s;
+  animation-direction: reverse;
+}
+
+.spinner-ring:nth-child(3) {
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+  border-top-color: #f59e0b;
+  animation-duration: 2s;
+}
+
+/* Loading messages */
+.loading-messages {
+  height: 30px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.loading-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+/* Achievement notification */
+.achievement-popup {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(16, 185, 129, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  transform: translateX(100%);
+  animation: achievementSlide 3s ease-in-out;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.achievement-popup i {
+  margin-right: 8px;
+  color: #fbbf24;
+}
+
+/* Floating particles */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: particleFloat 6s infinite linear;
+}
+
+.particle:nth-child(odd) {
+  background: rgba(16, 185, 129, 0.6);
+  animation-duration: 8s;
+}
+
+.particle:nth-child(3n) {
+  background: rgba(59, 130, 246, 0.6);
+  animation-duration: 10s;
+}
+
+/* Animations */
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes titleGlow {
+  0% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+      0 0 40px rgba(16, 185, 129, 0.3);
+  }
+}
+
+@keyframes subtitleFade {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes messageSlide {
+  0%,
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  10%,
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes achievementSlide {
+  0%,
+  90%,
+  100% {
+    transform: translateX(100%);
+  }
+  10%,
+  80% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .preloader-title {
+    font-size: 1.5rem;
+  }
+
+  .preloader-logo img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .achievement-popup {
+    top: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Simple Loader Styles */
+.simple-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(102, 126, 234, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.dark .simple-loader {
+  background: rgba(30, 58, 138, 0.95);
+}
+
+.simple-loader-content {
+  text-align: center;
+  color: white;
+}
+
+.simple-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+
+.simple-spinner .spinner-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s linear infinite;
+}
+
+.simple-loader-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Smooth fade out */
+.preloader.fade-out,
+.simple-loader.fade-out {
+  animation: fadeOut 0.8s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}

@@ -1,0 +1,324 @@
+/* Dark Mode Styles for Saltel Learning Platform */
+
+/* Root variables for theme colors */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border-primary: #e5e7eb;
+  --border-secondary: #d1d5db;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.dark {
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --bg-tertiary: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --border-primary: #374151;
+  --border-secondary: #4b5563;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+}
+
+/* Base body styles */
+.dark body {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Background colors */
+.dark .bg-white {
+  background-color: var(--bg-primary) !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.dark .bg-gray-200 {
+  background-color: #4b5563 !important;
+}
+
+/* Text colors */
+.dark .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.dark .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+
+.dark .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-500 {
+  color: var(--text-tertiary) !important;
+}
+
+.dark .text-gray-400 {
+  color: var(--text-tertiary) !important;
+}
+
+/* Border colors */
+.dark .border-gray-200 {
+  border-color: var(--border-primary) !important;
+}
+
+.dark .border-gray-300 {
+  border-color: var(--border-secondary) !important;
+}
+
+/* Shadows */
+.dark .shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.dark .shadow-md {
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  background-color: var(--bg-tertiary) !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+/* Buttons */
+.dark .bg-blue-600:hover {
+  background-color: #2563eb !important;
+}
+
+.dark .bg-green-600:hover {
+  background-color: #16a34a !important;
+}
+
+/* Hover states */
+.dark .hover\:bg-gray-50:hover {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: #4b5563 !important;
+}
+
+.dark .hover\:bg-blue-50:hover {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.dark .hover\:bg-green-50:hover {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+.dark .hover\:bg-yellow-50:hover {
+  background-color: rgba(251, 191, 36, 0.1) !important;
+}
+
+.dark .hover\:bg-red-50:hover {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+.dark .hover\:bg-purple-50:hover {
+  background-color: rgba(168, 85, 247, 0.1) !important;
+}
+
+/* Specific component styles */
+.dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+.dark .bg-green-50 {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+.dark .bg-yellow-50 {
+  background-color: rgba(251, 191, 36, 0.1) !important;
+}
+
+.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+.dark .bg-purple-50 {
+  background-color: rgba(168, 85, 247, 0.1) !important;
+}
+
+/* Progress bars and charts */
+.dark .bg-blue-100 {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+.dark .bg-green-100 {
+  background-color: rgba(34, 197, 94, 0.2) !important;
+}
+
+/* Cards and containers */
+.dark .rounded-xl,
+.dark .rounded-lg {
+  background-color: var(--bg-primary);
+  border-color: var(--border-primary);
+}
+
+/* Navigation and sidebar */
+.dark .sidebar {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-primary) !important;
+}
+
+.dark .header {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-primary) !important;
+}
+
+/* Dropdown menus */
+.dark .dropdown-menu {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-primary) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+/* Tables */
+.dark table {
+  background-color: var(--bg-primary) !important;
+}
+
+.dark th {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark td {
+  border-color: var(--border-primary) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Modals */
+.dark .modal-content {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .modal-overlay {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Scrollbars */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Transitions for smooth theme switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Special cases for maintaining brand colors */
+.dark .text-blue-600,
+.dark .text-green-600,
+.dark .text-red-600,
+.dark .text-yellow-600,
+.dark .text-purple-600,
+.dark .text-orange-600 {
+  filter: brightness(1.1);
+}
+
+.dark .bg-blue-600,
+.dark .bg-green-600,
+.dark .bg-red-600,
+.dark .bg-yellow-600,
+.dark .bg-purple-600,
+.dark .bg-orange-600 {
+  filter: brightness(0.9);
+}
+
+/* Loading states */
+.dark .animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* Custom components */
+.dark .course-card,
+.dark .certificate-card,
+.dark .assignment-card {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-primary) !important;
+}
+
+.dark .stats-card {
+  background-color: var(--bg-primary) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* FAQ accordion */
+.dark .faq-item {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-primary) !important;
+}
+
+/* Profile page specific */
+.dark .profile-header {
+  background-color: var(--bg-primary) !important;
+}
+
+/* Settings page toggles */
+.dark .toggle-bg {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.dark .toggle-bg.checked {
+  background-color: #3b82f6 !important;
+}
