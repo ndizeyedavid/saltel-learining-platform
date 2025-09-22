@@ -168,17 +168,21 @@
 
                         <!-- Menu Items -->
                         <div class="py-2">
-                            <button class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-gray-50 hover:text-gray-600">
+                            <a href="profile.php" class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-gray-50 hover:text-gray-600">
                                 <i class="w-5 fas fa-user"></i>
                                 <span class="font-medium">Profile</span>
-                            </button>
-                            <button class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-gray-50 hover:text-gray-600">
+                            </a>
+                            <a href="settings.php" class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-gray-50 hover:text-gray-600">
                                 <i class="w-5 fas fa-cog"></i>
                                 <span class="font-medium">Settings</span>
-                            </button>
-                            <button class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-blue-50 hover:text-blue-600">
+                            </a>
+                            <a href="faq.php" class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-blue-50 hover:text-blue-600">
                                 <i class="w-5 fas fa-question-circle"></i>
                                 <span class="font-medium">FAQ</span>
+                            </a>
+                            <button id="themeToggle" class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-blue-50 hover:text-blue-600">
+                                <i class="w-5 fas fa-moon"></i>
+                                <span class="font-medium">Dark Mode</span>
                             </button>
                         </div>
 
@@ -289,6 +293,6 @@
                     xpBar.style.width = '78%';
                 }, 500);
             }
-        }, 1000);
+        }, 100);
     });
 </script>
