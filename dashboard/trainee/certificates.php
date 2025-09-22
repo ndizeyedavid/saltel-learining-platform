@@ -18,7 +18,7 @@
             <?php include '../../components/Trainee-Header.php'; ?>
 
             <!-- Main Content -->
-            <main class="flex-1 p-6 overflow-y-auto">
+            <main class="flex-1 p-6 overflow-y-auto ">
                 <!-- Page Header -->
                 <div class="mb-8">
                     <h1 class="mb-2 text-3xl font-bold text-gray-900">My Certificates</h1>

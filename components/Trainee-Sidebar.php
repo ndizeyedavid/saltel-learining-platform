@@ -7,7 +7,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <div class="p-[16.7px] border-b border-gray-200">
         <!-- <div class="border-b border-gray-200"> -->
         <div class="flex flex-col items-center justify-center">
-            <img src="../../assets/images/logo.png" alt="Logo" class="w-[120px]">
+            <img src="../../assets/images/logo.png" alt="Logo" class="w-[143px]">
             <!-- <h1 class="text-xl font-bold text-gray-900">E-Learning</h1> -->
         </div>
     </div>
