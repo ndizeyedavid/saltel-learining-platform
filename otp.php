@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify OTP • Caritas Rwanda</title>
+    <title>Verify OTP • saltel Rwanda</title>
     <link rel="stylesheet" href="./assets/css/main.css">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -22,13 +22,13 @@
             class="z-10 flex flex-col gap-5 p-8 py-10 w-[450px] bg-white rounded-lg">
             <!-- Top content -->
             <div class="space-y-3 text-center">
-                <img src="./assets/image/logo.gif" alt="Caritas Logo" class="w-auto h-20 mx-auto mb-4">
+                <img src="./assets/image/logo.gif" alt="saltel Logo" class="w-auto h-20 mx-auto mb-4">
                 <div class="hidden mb-4 md:block">
-                    <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-caritas-cream">
-                        <i class="text-2xl fas fa-shield-alt text-caritas"></i>
+                    <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-saltel-cream">
+                        <i class="text-2xl fas fa-shield-alt text-saltel"></i>
                     </div>
                 </div>
-                <h3 class="text-2xl font-semibold text-caritas-charcoal">Verify Your Identity</h3>
+                <h3 class="text-2xl font-semibold text-saltel-charcoal">Verify Your Identity</h3>
                 <p class="px-4 text-sm font-medium text-black/70">
                     We've sent a 6-digit verification code to your email address.
                     Please enter the code below to continue.
@@ -43,12 +43,12 @@
             <div class="flex flex-col gap-4">
                 <label class="text-sm text-[#202224] font-medium text-center">Enter Verification Code</label>
                 <div class="grid w-full grid-cols-6 gap-3" id="otp-container">
-                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-caritas-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="0">
-                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-caritas-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="1">
-                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-caritas-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="2">
-                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-caritas-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="3">
-                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-caritas-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="4">
-                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-caritas-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="5">
+                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-saltel-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="0">
+                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-saltel-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="1">
+                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-saltel-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="2">
+                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-saltel-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="3">
+                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-saltel-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="4">
+                    <input type="text" maxlength="1" class="p-2 text-xl font-bold text-center transition-all border-2 rounded-lg outline-none md:p-4 otp-input border-saltel-cream bg-black/5 focus:border-secondary focus:ring-2 focus:ring-secondary/20" data-index="5">
                 </div>
                 <input type="hidden" name="otp" id="otp-value">
                 <span class="hidden text-xs text-center text-red-500" id="otp-error">Please enter the complete verification code</span>

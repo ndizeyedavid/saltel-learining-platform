@@ -1,11 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./*.php", "./components/*.php", "./assets/js/*.js", "./dashboard/*.php"],
+  content: [
+    "./*.php",
+    "./components/*.php",
+    "./assets/js/*.js",
+    "./dashboard/*.php",
+  ],
   theme: {
     extend: {
       colors: {
         // Updated primary brand color - vibrant blue
-        caritas: {
+        saltel: {
           DEFAULT: "#17a3d6",
           50: "#f0f9ff",
           100: "#e0f2fe",
@@ -21,7 +26,7 @@ module.exports = {
           charcoal: "#2B2729",
           white: "#FFFFFF",
         },
-        // Primary color palette matching caritas
+        // Primary color palette matching saltel
         primary: {
           DEFAULT: "#17a3d6",
           50: "#f0f9ff",
@@ -103,46 +108,46 @@ module.exports = {
       },
       // Enhanced spacing scale
       spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
+        18: "4.5rem",
+        88: "22rem",
+        128: "32rem",
       },
       // Custom font sizes
       fontSize: {
-        '2xs': ['0.625rem', { lineHeight: '0.75rem' }],
-        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-        '5xl': ['3rem', { lineHeight: '1' }],
+        "2xs": ["0.625rem", { lineHeight: "0.75rem" }],
+        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
+        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
+        "5xl": ["3rem", { lineHeight: "1" }],
       },
       // Custom shadows
       boxShadow: {
-        'brand': '0 4px 14px 0 rgba(255, 75, 0, 0.15)',
-        'brand-lg': '0 10px 25px 0 rgba(255, 75, 0, 0.2)',
-        'inner-brand': 'inset 0 2px 4px 0 rgba(255, 75, 0, 0.1)',
+        brand: "0 4px 14px 0 rgba(255, 75, 0, 0.15)",
+        "brand-lg": "0 10px 25px 0 rgba(255, 75, 0, 0.2)",
+        "inner-brand": "inset 0 2px 4px 0 rgba(255, 75, 0, 0.1)",
       },
       // Custom border radius
       borderRadius: {
-        '4xl': '2rem',
-        '5xl': '2.5rem',
+        "4xl": "2rem",
+        "5xl": "2.5rem",
       },
       // Animation enhancements
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
-        'bounce-gentle': 'bounceGentle 2s infinite',
+        "fade-in": "fadeIn 0.5s ease-in-out",
+        "slide-up": "slideUp 0.3s ease-out",
+        "bounce-gentle": "bounceGentle 2s infinite",
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
         slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
+          "0%": { transform: "translateY(10px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
         },
         bounceGentle: {
-          '0%, 100%': { transform: 'translateY(-5%)' },
-          '50%': { transform: 'translateY(0)' },
+          "0%, 100%": { transform: "translateY(-5%)" },
+          "50%": { transform: "translateY(0)" },
         },
       },
     },

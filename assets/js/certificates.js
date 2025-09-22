@@ -1,20 +1,22 @@
 // Certificates Page Functionality
 document.addEventListener("DOMContentLoaded", function () {
+  // Global variables
+  let allCertificates = [];
+  let filteredCertificates = [];
+
   // Initialize all functionality
   initializeFilters();
   initializeCertificateActions();
   initializeModal();
 
-  // Global variables
-  let allCertificates = [];
-  let filteredCertificates = [];
-
   function initializeFilters() {
     const categoryFilter = document.getElementById("categoryFilter");
     const yearFilter = document.getElementById("yearFilter");
-    
+
     // Get all certificate cards
-    allCertificates = Array.from(document.querySelectorAll(".certificate-card"));
+    allCertificates = Array.from(
+      document.querySelectorAll(".certificate-card")
+    );
     filteredCertificates = [...allCertificates];
 
     // Category filter
@@ -37,7 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const year = certificate.dataset.year;
 
       // Category filter
-      const matchesCategory = selectedCategory === "" || category === selectedCategory;
+      const matchesCategory =
+        selectedCategory === "" || category === selectedCategory;
 
       // Year filter
       const matchesYear = selectedYear === "" || year === selectedYear;
@@ -62,12 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show message if no certificates found
     const grid = document.getElementById("certificatesGrid");
     const existingMessage = document.getElementById("noCertificatesMessage");
-    
+
     if (filteredCertificates.length === 0) {
       if (!existingMessage) {
         const message = document.createElement("div");
         message.id = "noCertificatesMessage";
-        message.className = "col-span-full text-center py-12";
+        message.className = "py-12 text-center col-span-full";
         message.innerHTML = `
           <div class="text-gray-400">
             <i class="text-4xl mb-4 fas fa-certificate"></i>
@@ -83,13 +86,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeCertificateActions() {
+    // Handle locked certificate clicks
+    document.addEventListener("click", function (e) {
+      if (e.target.closest(".locked-certificate")) {
+        const card = e.target.closest(".locked-certificate");
+        const requirement = card.dataset.unlockRequirement;
+
+        showLockedCertificateModal(requirement);
+        return;
+      }
+    });
+
     // View certificate buttons
     document.addEventListener("click", function (e) {
       if (e.target.closest(".view-btn")) {
         const card = e.target.closest(".certificate-card");
+
+        // Check if certificate is locked
+        if (card.classList.contains("locked-certificate")) {
+          return; // Prevent action on locked certificates
+        }
+
         const courseName = card.querySelector("h4").textContent;
-        const completionDate = card.querySelector("p").textContent.replace("Completed on ", "");
-        
+        const completionDate = card
+          .querySelector("p")
+          .textContent.replace("Completed on ", "");
+
         showCertificateModal(courseName, completionDate);
       }
     });
@@ -98,22 +120,32 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (e) {
       if (e.target.closest(".download-btn")) {
         const card = e.target.closest(".certificate-card");
+
+        // Check if certificate is locked
+        if (card.classList.contains("locked-certificate")) {
+          return; // Prevent action on locked certificates
+        }
+
         const courseName = card.querySelector("h4").textContent;
-        
+
         downloadCertificate(courseName);
       }
     });
 
     // Download all certificates button
-    document.getElementById("downloadAllBtn").addEventListener("click", function () {
-      downloadAllCertificates();
-    });
+    document
+      .getElementById("downloadAllBtn")
+      .addEventListener("click", function () {
+        downloadAllCertificates();
+      });
   }
 
   function initializeModal() {
     const modal = document.getElementById("certificateModal");
     const closeBtn = document.getElementById("closeModal");
     const downloadBtn = document.getElementById("downloadModalBtn");
+    const shareBtn = document.getElementById("shareModalBtn");
+    const verifyBtn = document.getElementById("verifyModalBtn");
 
     // Close modal
     closeBtn.addEventListener("click", function () {
@@ -131,7 +163,16 @@ document.addEventListener("DOMContentLoaded", function () {
     downloadBtn.addEventListener("click", function () {
       const courseName = document.getElementById("modalCourseName").textContent;
       downloadCertificate(courseName);
-      hideModal();
+    });
+
+    // Share certificate
+    shareBtn.addEventListener("click", function () {
+      shareCertificate();
+    });
+
+    // Verify certificate
+    verifyBtn.addEventListener("click", function () {
+      verifyCertificate();
     });
 
     // Close modal with Escape key
@@ -146,22 +187,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("certificateModal");
     const courseNameEl = document.getElementById("modalCourseName");
     const dateEl = document.getElementById("modalDate");
+    const certificateIdEl = document.getElementById("certificateId");
 
+    // Update certificate content
     courseNameEl.textContent = courseName;
     dateEl.textContent = completionDate;
 
+    // Generate unique certificate ID
+    const certificateId = generateCertificateId(courseName);
+    certificateIdEl.textContent = certificateId;
+
     modal.classList.remove("hidden");
     modal.classList.add("flex");
-    
+
     // Prevent body scroll
     document.body.style.overflow = "hidden";
+
+    // Add entrance animation
+    const certificateContent = modal.querySelector(".border-8");
+    certificateContent.style.transform = "scale(0.9)";
+    certificateContent.style.opacity = "0";
+
+    setTimeout(() => {
+      certificateContent.style.transition = "all 0.3s ease";
+      certificateContent.style.transform = "scale(1)";
+      certificateContent.style.opacity = "1";
+    }, 100);
   }
 
   function hideModal() {
     const modal = document.getElementById("certificateModal");
     modal.classList.add("hidden");
     modal.classList.remove("flex");
-    
+
     // Restore body scroll
     document.body.style.overflow = "";
   }
@@ -170,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Simulate certificate download
     const button = event.target.closest("button");
     const originalText = button.innerHTML;
-    
+
     button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
     button.disabled = true;
 
@@ -180,7 +238,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Show success notification
       if (typeof toastr !== "undefined") {
-        toastr.success(`Certificate for "${courseName}" downloaded successfully!`, "Download Complete");
+        toastr.success(
+          `Certificate for "${courseName}" downloaded successfully!`,
+          "Download Complete"
+        );
       } else {
         alert(`Certificate for "${courseName}" downloaded successfully!`);
       }
@@ -193,8 +254,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function downloadAllCertificates() {
     const button = document.getElementById("downloadAllBtn");
     const originalText = button.innerHTML;
-    
-    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Preparing...';
+
+    button.innerHTML =
+      '<i class="fas fa-spinner fa-spin mr-2"></i>Preparing...';
     button.disabled = true;
 
     setTimeout(() => {
@@ -203,7 +265,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Show success notification
       if (typeof toastr !== "undefined") {
-        toastr.success("All certificates downloaded as ZIP file!", "Download Complete");
+        toastr.success(
+          "All certificates downloaded as ZIP file!",
+          "Download Complete"
+        );
       } else {
         alert("All certificates downloaded as ZIP file!");
       }
@@ -229,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const finalValue = parseInt(stat.textContent);
     let currentValue = 0;
     const increment = finalValue / 30;
-    
+
     const timer = setInterval(() => {
       currentValue += increment;
       if (currentValue >= finalValue) {
@@ -239,6 +304,84 @@ document.addEventListener("DOMContentLoaded", function () {
       stat.textContent = Math.floor(currentValue);
     }, 50);
   });
+
+  // Generate unique certificate ID
+  function generateCertificateId(courseName) {
+    const courseCode =
+      courseName.replace(/[^A-Z]/g, "").substring(0, 3) || "GEN";
+    const year = new Date().getFullYear();
+    const randomNum = Math.floor(Math.random() * 999999)
+      .toString()
+      .padStart(6, "0");
+    return `SLT-${year}-${courseCode}${randomNum}`;
+  }
+
+  // Share certificate function
+  function shareCertificate() {
+    const courseName = document.getElementById("modalCourseName").textContent;
+    const certificateId = document.getElementById("certificateId").textContent;
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `Certificate of Achievement - ${courseName}`,
+          text: `I've completed ${courseName} and earned my certificate!`,
+          url: `https://saltel.edu/verify/${certificateId}`,
+        })
+        .catch(console.error);
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      const shareUrl = `https://saltel.edu/verify/${certificateId}`;
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        if (typeof toastr !== "undefined") {
+          toastr.success(
+            "Certificate link copied to clipboard!",
+            "Share Ready"
+          );
+        }
+      });
+    }
+  }
+
+  // Verify certificate function
+  function verifyCertificate() {
+    const certificateId = document.getElementById("certificateId").textContent;
+    const button = document.getElementById("verifyModalBtn");
+    const originalText = button.innerHTML;
+
+    button.innerHTML =
+      '<i class="fas fa-spinner fa-spin mr-2"></i>Verifying...';
+    button.disabled = true;
+
+    // Simulate verification process
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.disabled = false;
+
+      if (typeof toastr !== "undefined") {
+        toastr.success(
+          `Certificate ${certificateId} is authentic and verified!`,
+          "Verification Complete",
+          {
+            timeOut: 4000,
+          }
+        );
+      }
+    }, 2000);
+  }
+
+  // Add locked certificate modal function
+  function showLockedCertificateModal(requirement) {
+    if (typeof toastr !== "undefined") {
+      toastr.info(`🔒 ${requirement}`, "Certificate Locked", {
+        timeOut: 5000,
+        extendedTimeOut: 2000,
+        positionClass: "toast-top-center",
+      });
+    } else {
+      alert(`Certificate Locked: ${requirement}`);
+    }
+  }
 
   // Initialize with all certificates visible
   displayCertificates();

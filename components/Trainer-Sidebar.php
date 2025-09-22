@@ -70,13 +70,13 @@
 
             <!-- User Management (Role-based visibility) -->
             <li class="admin-only" style="display: none;">
-                <a href="../users/" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-caritas">
+                <a href="../users/" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-saltel">
                     <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-users"></i>
                     User Management
                 </a>
             </li>
             <li class="teacher-only" style="display: none;">
-                <a href="../students/" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-caritas">
+                <a href="../students/" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-saltel">
                     <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-user-graduate"></i>
                     My Students
                 </a>
@@ -84,7 +84,7 @@
 
             <!-- Reports & Analytics -->
             <li class="teacher-admin-only" style="display: none;">
-                <a href="../reports/" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-caritas">
+                <a href="../reports/" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-saltel">
                     <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-chart-bar"></i>
                     Reports
                 </a>
