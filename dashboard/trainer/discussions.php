@@ -1,141 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Discussions</title>
     <?php include '../../include/trainer-imports.php'; ?>
 </head>
+
 <body class="font-sans bg-gray-50">
-    <div class="flex overflow-hidden h-screen">
+    <div class="flex h-screen overflow-hidden">
         <?php include '../../components/Trainer-Sidebar.php'; ?>
-        
+
         <!-- Main Content Area -->
-        <div class="flex overflow-hidden flex-col flex-1">
+        <div class="flex flex-col flex-1 overflow-hidden">
             <?php include '../../components/Trainer-Header.php'; ?>
-            
+
             <!-- Main Content -->
-            <main class="overflow-y-auto flex-1 p-6">
-                <div class="mb-6">
-                    <h1 class="text-2xl font-bold text-gray-900">Discussions</h1>
-                    <p class="mt-1 text-sm text-gray-600">Manage course discussions and student interactions</p>
-                </div>
-
-                <!-- Discussion Management -->
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    <!-- Discussion Navigation -->
-                    <div class="lg:col-span-1">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                            <!-- Course Filter -->
-                            <div class="mb-4">
-                                <select class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm">
-                                    <option>All Courses</option>
-                                    <option>Web Development</option>
-                                    <option>Data Science</option>
-                                </select>
-                            </div>
-
-                            <!-- Discussion Categories -->
-                            <div class="space-y-2">
-                                <button class="w-full text-left px-3 py-2 rounded-lg bg-[#17a3d6] bg-opacity-10 text-[#17a3d6]">
-                                    <i class="fas fa-comments mr-2"></i>All Discussions
-                                </button>
-                                <button class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
-                                    <i class="fas fa-question-circle mr-2"></i>Questions
-                                </button>
-                                <button class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
-                                    <i class="fas fa-bullhorn mr-2"></i>Announcements
-                                </button>
-                                <button class="w-full text-left px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50">
-                                    <i class="fas fa-lightbulb mr-2"></i>General
-                                </button>
-                            </div>
-
-                            <!-- Create Discussion Button -->
-                            <div class="mt-4">
-                                <button class="w-full bg-[#17a3d6] text-white px-4 py-2 rounded-lg hover:bg-[#1792c0] transition-colors">
-                                    <i class="fas fa-plus mr-2"></i>New Discussion
-                                </button>
+            <main class="flex-1 overflow-y-auto">
+                <div class="flex h-full">
+                    <!-- Main Discussion Area -->
+                    <div class="flex flex-col flex-1">
+                        <!-- Discussion Header -->
+                        <div class="p-4 bg-white border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h1 class="text-2xl font-bold text-gray-900">Group Discussion</h1>
+                                    <p class="mt-1 text-gray-600">Chat with students and trainers</p>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm text-gray-500">12 online</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Discussion List -->
-                    <div class="lg:col-span-3">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                            <!-- Search and Filter -->
-                            <div class="flex flex-wrap gap-4 items-center mb-6">
+                        <!-- Messages Area -->
+                        <div class="flex-1 p-6 space-y-6 overflow-y-auto" id="messagesContainer">
+                            <!-- Trainer Message -->
+                            <div class="flex items-start space-x-3">
+                                <img class="w-10 h-10 rounded-full" src="../../assets/images/discussions/placeholder.png" alt="Trainer">
                                 <div class="flex-1">
-                                    <input type="text" placeholder="Search discussions..." class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm">
+                                    <div class="flex items-center mb-1 space-x-2">
+                                        <h3 class="font-semibold text-gray-900">Sarah</h3>
+                                        <span class="px-2 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">Trainer</span>
+                                        <span class="text-sm text-gray-500">2 hours ago</span>
+                                    </div>
+                                    <div class="p-4 border-l-4 border-blue-400 rounded-r-lg bg-blue-50">
+                                        <p class="text-gray-700">Welcome everyone to our discussion forum! This is a great place to ask questions, share insights, and collaborate with your fellow students. Don't hesitate to reach out if you need help with any assignments or concepts.</p>
+                                    </div>
+                                    <div class="flex items-center mt-2 space-x-4">
+                                        <button class="flex items-center space-x-1 text-sm text-gray-500 hover:text-blue-600">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <span>12</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <select class="border border-gray-300 rounded-lg px-4 py-2 text-sm">
-                                    <option>Most Recent</option>
-                                    <option>Most Active</option>
-                                    <option>Unanswered</option>
-                                </select>
                             </div>
 
-                            <!-- Discussion Threads -->
-                            <div class="space-y-4">
-                                <!-- Discussion Thread -->
-                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <div>
-                                            <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full mr-2">Question</span>
-                                            <span class="text-sm text-gray-500">Web Development Basics</span>
-                                        </div>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
+                            <!-- Student Message -->
+                            <div class="flex items-start space-x-3">
+                                <img class="w-10 h-10 rounded-full" src="../../assets/images/discussions/placeholder.png" alt="Student">
+                                <div class="flex-1">
+                                    <div class="flex items-center mb-1 space-x-2">
+                                        <h3 class="font-semibold text-gray-900">Emma Wilson</h3>
+                                        <span class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">Student</span>
+                                        <span class="text-sm text-gray-500">1 hour ago</span>
                                     </div>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-2">How to structure HTML for better accessibility?</h3>
-                                    <p class="text-sm text-gray-600 mb-4">I'm working on making my website more accessible. What are the best practices for structuring HTML elements?</p>
-                                    <div class="flex items-center justify-between text-sm text-gray-500">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-gray-200 mr-2"></div>
-                                            <span>John Doe</span>
-                                            <span class="mx-2">•</span>
-                                            <span>2 hours ago</span>
-                                        </div>
-                                        <div class="flex items-center gap-4">
-                                            <span><i class="fas fa-comment mr-1"></i>5 replies</span>
-                                            <span><i class="fas fa-eye mr-1"></i>24 views</span>
-                                        </div>
+                                    <div class="p-4 bg-white border border-gray-200 rounded-lg">
+                                        <p class="text-gray-700">Thank you John! I have a question about the machine learning assignment. I'm having trouble understanding the difference between supervised and unsupervised learning. Could someone explain this with practical examples?</p>
+                                    </div>
+                                    <div class="flex items-center mt-2 space-x-4">
+                                        <button class="flex items-center space-x-1 text-sm text-gray-500 hover:text-blue-600">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <span>5</span>
+                                        </button>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Announcement Thread -->
-                                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <div>
-                                            <span class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full mr-2">Announcement</span>
-                                            <span class="text-sm text-gray-500">All Courses</span>
-                                        </div>
-                                        <button class="text-gray-400 hover:text-gray-600">
-                                            <i class="fas fa-ellipsis-v"></i>
+                            <!-- Another Student Message -->
+                            <div class="flex items-start space-x-3">
+                                <img class="w-10 h-10 rounded-full" src="../../assets/images/discussions/placeholder.png" alt="Student">
+                                <div class="flex-1">
+                                    <div class="flex items-center mb-1 space-x-2">
+                                        <h3 class="font-semibold text-gray-900">Maria</h3>
+                                        <span class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">Student</span>
+                                        <span class="text-sm text-gray-500">30 minutes ago</span>
+                                    </div>
+                                    <div class="p-4 bg-white border border-gray-200 rounded-lg">
+                                        <p class="text-gray-700">Has anyone started working on the React project? I'd love to form a study group to work through it together. We could meet virtually this weekend.</p>
+                                    </div>
+                                    <div class="flex items-center mt-2 space-x-4">
+                                        <button class="flex items-center space-x-1 text-sm text-gray-500 hover:text-blue-600">
+                                            <i class="fas fa-thumbs-up"></i>
+                                            <span>3</span>
                                         </button>
                                     </div>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-2">New Course Materials Available</h3>
-                                    <p class="text-sm text-gray-600 mb-4">I've just uploaded new materials for Week 3. Please review them before the next session.</p>
-                                    <div class="flex items-center justify-between text-sm text-gray-500">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-gray-200 mr-2"></div>
-                                            <span>Instructor</span>
-                                            <span class="mx-2">•</span>
-                                            <span>1 day ago</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Message Input Area -->
+                        <div class="p-4 bg-white border-t border-gray-200">
+                            <div class="flex items-end space-x-3">
+                                <img class="w-10 h-10 rounded-full" src="../../assets/images/discussions/placeholder.png" alt="You">
+                                <div class="flex-1">
+                                    <div class="relative">
+                                        <textarea id="messageInput" rows="1" class="w-full px-4 py-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Type your message here..."></textarea>
+                                        <div class="absolute flex items-center space-x-2 bottom-3 right-3">
+                                            <button class="p-1 text-gray-400 rounded hover:text-gray-600">
+                                                <i class="fas fa-paperclip"></i>
+                                            </button>
+                                            <button class="p-1 text-gray-400 rounded hover:text-gray-600">
+                                                <i class="fas fa-smile"></i>
+                                            </button>
+                                            <button class="p-1 text-gray-400 rounded hover:text-gray-600">
+                                                <i class="fas fa-image"></i>
+                                            </button>
                                         </div>
-                                        <div class="flex items-center gap-4">
-                                            <span><i class="fas fa-comment mr-1"></i>12 replies</span>
-                                            <span><i class="fas fa-eye mr-1"></i>156 views</span>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                            <span>Shift + Enter for new line</span>
                                         </div>
+                                        <button id="sendMessageBtn" class="px-6 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                            <i class="mr-2 fas fa-paper-plane"></i>
+                                            Send
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </main>
         </div>
     </div>
 </body>
+
 </html>
