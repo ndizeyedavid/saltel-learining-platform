@@ -21,7 +21,7 @@
                 <!-- Header Section with Logo -->
                 <div class="py-8 text-center text-white md:py-16 md:px-8 bg-gradient-to-r from-saltel to-secondary">
                     <div class="mb-8">
-                        <img src="./assets/image/logo.gif" alt="saltel Logo" class="w-auto h-16 mx-auto mb-6 rounded-md md:h-24">
+                        <img src="./assets/images/logo.png" alt="saltel Logo" class="w-auto h-16 p-3 mx-auto mb-6 bg-white rounded-md md:h-24">
                     </div>
                     <h1 class="mb-4 text-[20px] font-bold md:text-4xl">Welcome to saltel Rwanda</h1>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="py-12 text-center md:px-8">
                     <div class="max-w-2xl mx-auto">
                         <h2 class="mb-6 text-[15px]  md:text-3xl font-semibold text-saltel-charcoal">
-                            Monitoring and Evaluation System
+                            E-Learning Platform
                         </h2>
 
                         <!-- Login Button -->
