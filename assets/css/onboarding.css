@@ -1,0 +1,218 @@
+/* Custom Onboarding Styles for Saltel Learning Platform */
+
+/* Custom tooltip styling */
+.saltel-tooltip {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
+  font-family: inherit !important;
+}
+
+.saltel-tooltip .introjs-tooltip-header {
+  background: transparent !important;
+  border: none !important;
+  padding: 20px 20px 10px !important;
+}
+
+.saltel-tooltip .introjs-tooltip-title {
+  color: white !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+
+.saltel-tooltip .introjs-tooltiptext {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  padding: 0 20px 20px !important;
+}
+
+.saltel-tooltip .introjs-bullets {
+  text-align: center !important;
+  padding: 10px 20px !important;
+}
+
+.saltel-tooltip .introjs-bullets ul {
+  margin: 0 !important;
+}
+
+.saltel-tooltip .introjs-bullets ul li a {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border: 2px solid transparent !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  margin: 0 4px !important;
+}
+
+.saltel-tooltip .introjs-bullets ul li a.active {
+  background: white !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Button styling */
+.saltel-tooltip .introjs-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.saltel-tooltip .introjs-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+.saltel-tooltip .introjs-nextbutton {
+  background: white !important;
+  color: #667eea !important;
+  border-color: white !important;
+}
+
+.saltel-tooltip .introjs-nextbutton:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #5a67d8 !important;
+}
+
+.saltel-tooltip .introjs-donebutton {
+  background: #10b981 !important;
+  color: white !important;
+  border-color: #10b981 !important;
+}
+
+.saltel-tooltip .introjs-donebutton:hover {
+  background: #059669 !important;
+  border-color: #059669 !important;
+}
+
+/* Progress bar */
+.saltel-tooltip .introjs-progress {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px !important;
+  height: 6px !important;
+  margin: 10px 20px 20px !important;
+  overflow: hidden !important;
+}
+
+.saltel-tooltip .introjs-progressbar {
+  background: white !important;
+  border-radius: 10px !important;
+  height: 100% !important;
+  transition: width 0.3s ease !important;
+}
+
+/* Highlight styling */
+.saltel-highlight {
+  border: 3px solid #667eea !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Overlay */
+.introjs-overlay {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+/* Dark mode adjustments */
+.dark .saltel-tooltip {
+  background: linear-gradient(135deg, #1e3a8a 0%, #581c87 100%) !important;
+}
+
+.dark .saltel-highlight {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .saltel-tooltip {
+    max-width: 90% !important;
+    margin: 10px !important;
+  }
+  
+  .saltel-tooltip .introjs-tooltip-title {
+    font-size: 1.1rem !important;
+  }
+  
+  .saltel-tooltip .introjs-tooltiptext {
+    font-size: 0.9rem !important;
+  }
+  
+  .saltel-tooltip .introjs-button {
+    padding: 6px 12px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Animation for tooltip appearance */
+.saltel-tooltip {
+  animation: tooltipFadeIn 0.3s ease-out !important;
+}
+
+@keyframes tooltipFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Custom arrow styling */
+.saltel-tooltip .introjs-arrow {
+  border: none !important;
+}
+
+.saltel-tooltip .introjs-arrow.top {
+  border-bottom-color: #667eea !important;
+}
+
+.saltel-tooltip .introjs-arrow.bottom {
+  border-top-color: #667eea !important;
+}
+
+.saltel-tooltip .introjs-arrow.left {
+  border-right-color: #667eea !important;
+}
+
+.saltel-tooltip .introjs-arrow.right {
+  border-left-color: #667eea !important;
+}
+
+.dark .saltel-tooltip .introjs-arrow.top {
+  border-bottom-color: #1e3a8a !important;
+}
+
+.dark .saltel-tooltip .introjs-arrow.bottom {
+  border-top-color: #1e3a8a !important;
+}
+
+.dark .saltel-tooltip .introjs-arrow.left {
+  border-right-color: #1e3a8a !important;
+}
+
+.dark .saltel-tooltip .introjs-arrow.right {
+  border-left-color: #1e3a8a !important;
+}
+
+/* Skip button styling */
+.saltel-tooltip .introjs-skipbutton {
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-decoration: none !important;
+  font-size: 0.9rem !important;
+}
+
+.saltel-tooltip .introjs-skipbutton:hover {
+  color: white !important;
+}
