@@ -91,13 +91,13 @@
                         <p class="text-sm text-gray-600">mellow@saltel.com</p>
                     </div>
                     <div class="py-2">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             <i class="w-5 fas fa-user-circle mr-2"></i>My Profile
                         </a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="settings.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             <i class="w-5 fas fa-cog mr-2"></i>Settings
                         </a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                        <a href="help.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             <i class="w-5 fas fa-question-circle mr-2"></i>Help Center
                         </a>
                     </div>
