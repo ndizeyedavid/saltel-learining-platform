@@ -1,8 +1,11 @@
+<!-- fav icon -->
+<link rel="icon" href="./../../assets/images/fav.png">
 <!-- Link -->
 <link rel="stylesheet" href="./../../assets/css/main.css">
 <link rel="stylesheet" href="./../../assets/css/links.css">
 <link rel="stylesheet" href="./../../assets/css/dark-mode.css">
 <link rel="stylesheet" href="./../../assets/css/preloader.css">
+<link rel="stylesheet" href="./../../assets/css/onboarding.css">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Font Awesome CDN -->
@@ -19,12 +22,17 @@
 <!-- SweetAlert2 CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<!-- Intro.js CDN for Onboarding -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/introjs.min.css">
+<script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/minified/intro.min.js"></script>
+
 <!-- jQuery CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script src="../../assets/js/preloader.js"></script>
 <script src="../../assets/js/app.js"></script>
 <script src="../../assets/js/theme-switcher.js"></script>
+<script src="../../assets/js/onboarding.js"></script>
 
 <!-- data table source CDN -->
 <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.tailwindcss.css">
