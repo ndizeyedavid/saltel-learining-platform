@@ -1,4 +1,4 @@
-<header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm">
+<header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm" style="z-index: 10; position: relative;">
     <div class="flex items-center justify-between">
         <!-- Search Bar -->
         <div class="flex-1 max-w-lg">
@@ -21,16 +21,16 @@
                     <span class="absolute flex items-center justify-center w-4 h-4 text-xs text-white rounded-full -top-1 -right-1 bg-saltel">3</span>
                 </button>
                 <!-- Notifications Dropdown -->
-                <div id="notificationDropdown" class="absolute right-0 hidden w-80 mt-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
+                <div id="notificationDropdown" class="absolute right-0 hidden mt-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg w-80">
                     <div class="p-4 border-b border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-900">Notifications</h3>
                     </div>
-                    <div class="max-h-96 overflow-y-auto">
+                    <div class="overflow-y-auto max-h-96">
                         <!-- Notification Items -->
-                        <a href="#" class="block p-4 hover:bg-gray-50 border-b border-gray-200">
+                        <a href="#" class="block p-4 border-b border-gray-200 hover:bg-gray-50">
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                    <i class="fas fa-user-graduate text-blue-600"></i>
+                                <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full">
+                                    <i class="text-blue-600 fas fa-user-graduate"></i>
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm font-medium text-gray-900">New course enrollment</p>
@@ -39,10 +39,10 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="#" class="block p-4 hover:bg-gray-50 border-b border-gray-200">
+                        <a href="#" class="block p-4 border-b border-gray-200 hover:bg-gray-50">
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                                    <i class="fas fa-check text-green-600"></i>
+                                <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-green-100 rounded-full">
+                                    <i class="text-green-600 fas fa-check"></i>
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm font-medium text-gray-900">Assignment Submitted</p>
@@ -53,8 +53,8 @@
                         </a>
                         <a href="#" class="block p-4 hover:bg-gray-50">
                             <div class="flex items-start">
-                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
-                                    <i class="fas fa-comment text-yellow-600"></i>
+                                <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 bg-yellow-100 rounded-full">
+                                    <i class="text-yellow-600 fas fa-comment"></i>
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm font-medium text-gray-900">New Discussion</p>
@@ -64,7 +64,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="p-4 bg-gray-50 border-t border-gray-200">
+                    <div class="p-4 border-t border-gray-200 bg-gray-50">
                         <a href="#" class="block text-sm text-center text-blue-600 hover:text-blue-700">View All Notifications</a>
                     </div>
                 </div>
@@ -92,18 +92,18 @@
                     </div>
                     <div class="py-2">
                         <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                            <i class="w-5 fas fa-user-circle mr-2"></i>My Profile
+                            <i class="w-5 mr-2 fas fa-user-circle"></i>My Profile
                         </a>
                         <a href="settings.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                            <i class="w-5 fas fa-cog mr-2"></i>Settings
+                            <i class="w-5 mr-2 fas fa-cog"></i>Settings
                         </a>
                         <a href="help.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                            <i class="w-5 fas fa-question-circle mr-2"></i>Help Center
+                            <i class="w-5 mr-2 fas fa-question-circle"></i>Help Center
                         </a>
                     </div>
                     <div class="py-2 border-t border-gray-200">
                         <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
-                            <i class="w-5 fas fa-sign-out-alt mr-2"></i>Sign Out
+                            <i class="w-5 mr-2 fas fa-sign-out-alt"></i>Sign Out
                         </a>
                     </div>
                 </div>

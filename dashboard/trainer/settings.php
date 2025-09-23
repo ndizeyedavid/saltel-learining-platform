@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Settings</title>
     <?php include '../../include/trainer-imports.php'; ?>
 </head>
+
 <body class="font-sans bg-gray-50">
     <div class="flex h-screen overflow-hidden">
         <?php include '../../components/Trainer-Sidebar.php'; ?>
@@ -14,7 +16,7 @@
             <?php include '../../components/Trainer-Header.php'; ?>
 
             <main class="flex-1 overflow-y-auto">
-                <div class="max-w-4xl px-6 py-8 mx-auto">
+                <div class="px-6 py-8 mx-auto">
                     <h1 class="mb-8 text-2xl font-bold text-gray-900">Settings</h1>
 
                     <div class="space-y-6">
@@ -82,32 +84,11 @@
                             </div>
                         </div>
 
-                        <!-- Theme Settings -->
-                        <div class="p-6 bg-white rounded-lg shadow-sm">
-                            <h2 class="mb-4 text-lg font-semibold text-gray-900">Theme Settings</h2>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-700">Theme Mode</label>
-                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                        <option>Light</option>
-                                        <option>Dark</option>
-                                        <option>System</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-gray-700">Accent Color</label>
-                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                                        <option>Blue (Default)</option>
-                                        <option>Green</option>
-                                        <option>Purple</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </main>
         </div>
     </div>
 </body>
+
 </html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Help Center</title>
     <?php include '../../include/trainer-imports.php'; ?>
 </head>
+
 <body class="font-sans bg-gray-50">
     <div class="flex h-screen overflow-hidden">
         <?php include '../../components/Trainer-Sidebar.php'; ?>
@@ -14,15 +16,15 @@
             <?php include '../../components/Trainer-Header.php'; ?>
 
             <main class="flex-1 overflow-y-auto">
-                <div class="max-w-4xl px-6 py-8 mx-auto">
+                <div class="px-6 py-8 mx-auto">
                     <h1 class="mb-8 text-2xl font-bold text-gray-900">Help Center</h1>
 
                     <!-- Search Bar -->
                     <div class="mb-8">
                         <div class="relative">
-                            <input type="text" 
-                                   class="w-full px-4 py-3 pl-12 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" 
-                                   placeholder="Search help articles...">
+                            <input type="text"
+                                class="w-full px-4 py-3 pl-12 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                placeholder="Search help articles...">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                                 <i class="text-gray-400 fas fa-search"></i>
                             </div>
@@ -33,7 +35,7 @@
                     <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
                         <a href="#" class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100">
+                                <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
                                     <i class="text-blue-600 fas fa-book"></i>
                                 </div>
                                 <h3 class="ml-3 text-lg font-medium text-gray-900">Getting Started</h3>
@@ -42,7 +44,7 @@
                         </a>
                         <a href="#" class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-green-100">
+                                <div class="flex items-center justify-center w-10 h-10 bg-green-100 rounded-full">
                                     <i class="text-green-600 fas fa-chalkboard-teacher"></i>
                                 </div>
                                 <h3 class="ml-3 text-lg font-medium text-gray-900">Teaching Tools</h3>
@@ -51,7 +53,7 @@
                         </a>
                         <a href="#" class="p-6 transition-shadow bg-white rounded-lg shadow-sm hover:shadow-md">
                             <div class="flex items-center mb-4">
-                                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-purple-100">
+                                <div class="flex items-center justify-center w-10 h-10 bg-purple-100 rounded-full">
                                     <i class="text-purple-600 fas fa-chart-line"></i>
                                 </div>
                                 <h3 class="ml-3 text-lg font-medium text-gray-900">Analytics Guide</h3>
@@ -103,9 +105,6 @@
                                 <a href="#" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                                     <i class="mr-2 fas fa-headset"></i>Contact Support
                                 </a>
-                                <a href="#" class="px-6 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50">
-                                    <i class="mr-2 fas fa-video"></i>Video Tutorials
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -126,4 +125,5 @@
         });
     </script>
 </body>
+
 </html>

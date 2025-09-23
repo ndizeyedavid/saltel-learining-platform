@@ -50,7 +50,7 @@
                                 <span><i class="mr-2 fas fa-clock"></i>8 Weeks</span>
                             </div>
                             <div class="flex items-center justify-between">
-                                <button class="text-[#17a3d6] hover:text-[#1792c0] font-medium">
+                                <button class="text-[#17a3d6] hover:text-[#1792c0] font-medium invisible">
                                     <i class="mr-1 fas fa-edit"></i>Edit
                                 </button>
                                 <a href="enrollments.php" class="text-gray-600 hover:text-gray-800">
