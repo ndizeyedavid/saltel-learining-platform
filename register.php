@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up • E-Learning Platform</title>
+    <link rel="icon" href="./assets/images/fav.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -58,6 +63,50 @@
 <body class="min-h-screen bg-[#667eea]">
     <div class="flex min-h-screen">
 
+        <!-- Error Banner -->
+        <div id="errorBanner" class="fixed top-0 left-0 right-0 z-50 <?php echo isset($_SESSION['error']) ? 'block' : 'hidden' ?>">
+            <div class="px-4 py-3 text-white bg-gradient-to-r from-red-600 to-red-800">
+                <div class="flex items-center justify-between mx-auto max-w-7xl">
+                    <div class="flex items-center">
+                        <i class="mr-2 fas fa-exclamation-circle"></i>
+                        <span id="errorMessage"><?php echo isset($_SESSION['error']) ? $_SESSION['error'] : ''; ?></span>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.style.display='none'" class="text-white hover:text-red-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OTP Error Banner -->
+        <div id="otpErrorBanner" class="fixed top-0 left-0 right-0 z-50 <?php echo isset($_SESSION['otp_error']) ? 'block' : 'hidden' ?>">
+            <div class="px-4 py-3 text-white bg-gradient-to-r from-red-600 to-red-800">
+                <div class="flex items-center justify-between mx-auto max-w-7xl">
+                    <div class="flex items-center">
+                        <i class="mr-2 fas fa-exclamation-circle"></i>
+                        <span id="otpErrorMessage"><?php echo isset($_SESSION['otp_error']) ? $_SESSION['otp_error'] : ''; ?></span>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.style.display='none'" class="text-white hover:text-red-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OTP Success Banner -->
+        <div id="otpSuccessBanner" class="fixed top-0 left-0 right-0 z-50 <?php echo isset($_SESSION['otp_success']) ? 'block' : 'hidden' ?>">
+            <div class="px-4 py-3 text-white bg-gradient-to-r from-green-600 to-green-800">
+                <div class="flex items-center justify-between mx-auto max-w-7xl">
+                    <div class="flex items-center">
+                        <i class="mr-2 fas fa-check-circle"></i>
+                        <span id="otpSuccessMessage"><?php echo isset($_SESSION['otp_success']) ? $_SESSION['otp_success'] : ''; ?></span>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.style.display='none'" class="text-white hover:text-green-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- Left side - Illustration -->
         <div class="relative hidden overflow-hidden bg-white lg:flex lg:w-1/2" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),  url('./assets/images/auth/signup.png'); background-size: cover; background-repeat: no-repeat">
@@ -95,7 +144,7 @@
                         </p>
                     </div>
 
-                    <form method="POST" action="php/register.php" class="space-y-6">
+                    <form method="POST" action="actions/register.php" class="space-y-6">
                         <div class="space-y-4">
                             <!-- Name Fields Row -->
                             <div class="grid grid-cols-2 gap-4">
@@ -201,7 +250,7 @@
                         </div>
 
                         <div>
-                            <button type="submit" id="register-btn"
+                            <button type="submit" name="register" id="register-btn"
                                 class="flex justify-center w-full px-4 py-3 text-sm font-medium text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-lg shadow-sm btn-hover hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 <span id="btn-text">Create Account</span>
                                 <span class="hidden ml-2" id="btn-spinner"><i class="fas fa-spinner fa-spin"></i></span>

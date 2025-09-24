@@ -1,0 +1,14 @@
+{
+    "name": "saltel/elearning-platform",
+    "description": "E-Learning Platform for Saltel Rwanda",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

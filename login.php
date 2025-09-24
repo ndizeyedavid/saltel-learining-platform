@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login • E-Learning Platform</title>
+    <link rel="icon" href="./assets/images/fav.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -29,9 +30,55 @@
 </head>
 
 <body class="min-h-screen bg-[#667eea]">
-    <div class="flex min-h-screen">
+    <?php session_start(); ?>
 
+    <!-- Session Messages Banner -->
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="fixed top-0 left-0 right-0 z-50 p-4 text-sm text-green-800 bg-green-100 border border-green-200" id="success-banner">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span><?php echo $_SESSION['success_message'];
+                            unset($_SESSION['success_message']); ?></span>
+                </div>
+                <button onclick="document.getElementById('success-banner').style.display='none'" class="text-green-600 hover:text-green-800">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    <?php endif; ?>
 
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="fixed top-0 left-0 right-0 z-50 p-4 text-sm text-red-800 bg-red-100 border border-red-200" id="error-banner">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span><?php echo $_SESSION['error'];
+                            unset($_SESSION['error']); ?></span>
+                </div>
+                <button onclick="document.getElementById('error-banner').style.display='none'" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['warning'])): ?>
+        <div class="fixed top-0 left-0 right-0 z-50 p-4 text-sm text-yellow-800 bg-yellow-100 border border-yellow-200" id="warning-banner">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <span><?php echo $_SESSION['warning'];
+                            unset($_SESSION['warning']); ?></span>
+                </div>
+                <button onclick="document.getElementById('warning-banner').style.display='none'" class="text-yellow-600 hover:text-yellow-800">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="flex min-h-screen" style="<?php echo (isset($_SESSION['success_message']) || isset($_SESSION['error']) || isset($_SESSION['warning'])) ? 'margin-top: 60px;' : ''; ?>">
         <!-- Left side - Illustration -->
         <div class="relative hidden overflow-hidden bg-white lg:flex lg:w-1/2" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),  url('./assets/images/auth/login.png'); background-size: cover; background-repeat: no-repeat">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10"></div>
@@ -68,7 +115,7 @@
                         </p>
                     </div>
 
-                    <form method="POST" action="php/login.php" class="space-y-6">
+                    <form method="POST" action="php/login.php" class="space-y-6" id="login-form">
                         <div class="space-y-4">
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email Address</label>
@@ -78,8 +125,10 @@
                                     </div>
                                     <input type="email" name="email" id="email" required
                                         class="block w-full py-3 pl-10 pr-3 transition-all duration-200 border border-gray-300 rounded-lg input-focus focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/50"
-                                        placeholder="Enter your email address">
+                                        placeholder="Enter your email address"
+                                        value="<?php echo isset($_SESSION['unverified_email']) ? $_SESSION['unverified_email'] : ''; ?>"><?php unset($_SESSION['unverified_email']); ?>
                                 </div>
+                                <span class="hidden text-xs text-red-500" id="email-error">Please enter a valid email address</span>
                             </div>
 
                             <div>
@@ -95,6 +144,7 @@
                                         <i class="fas fa-eye" id="eye-icon"></i>
                                     </button>
                                 </div>
+                                <span class="hidden text-xs text-red-500" id="password-error">Password is required</span>
                             </div>
                         </div>
 
@@ -152,13 +202,44 @@
             }
         });
 
-        // Form submission with loading state
-        document.getElementById('login-btn').addEventListener('click', function() {
+        // Form validation and submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
+            
+            let isValid = true;
+            
+            // Reset errors
+            emailError.classList.add('hidden');
+            passwordError.classList.add('hidden');
+            
+            // Validate email
+            if (!email || !email.includes('@')) {
+                emailError.classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password || password.length < 1) {
+                passwordError.classList.remove('hidden');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Show loading state
             const btnText = document.getElementById('btn-text');
             const btnSpinner = document.getElementById('btn-spinner');
-
+            const loginBtn = document.getElementById('login-btn');
+            
             btnText.textContent = 'Signing in...';
             btnSpinner.classList.remove('hidden');
+            loginBtn.disabled = true;
         });
     </script>
     <script src="./assets/js/validation/login.js"></script>
