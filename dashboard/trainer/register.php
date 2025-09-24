@@ -8,7 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up • E-Learning Platform</title>
-    <link rel="icon" href="./assets/images/fav.png">
+    <link rel="icon" href="../../assets/images/fav.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -108,35 +108,13 @@ session_start();
             </div>
         </div>
 
-        <!-- Left side - Illustration -->
-        <div class="relative hidden overflow-hidden bg-white lg:flex lg:w-1/2" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),  url('./assets/images/auth/signup.png'); background-size: cover; background-repeat: no-repeat">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-purple-600/10"></div>
-            <div class="relative z-10 flex flex-col items-center justify-center w-full p-12">
-                <div class="mb-8 text-center">
-                    <h1 class="mb-4 text-4xl font-bold leading-tight text-white">
-                        Enhanced interaction between <br /> <span class="text-blue-600">Trainers</span> and <span class="text-purple-600">Trainees</span> online!
-                    </h1>
-
-                </div>
-
-                <!-- Decorative elements -->
-                <div class="absolute w-32 h-32 bg-blue-200 rounded-full top-20 right-20 opacity-20 "></div>
-                <div class="absolute w-24 h-24 bg-purple-200 rounded-full bottom-20 left-20 opacity-20 " style="animation-delay: 1s;"></div>
-                <div class="absolute w-16 h-16 bg-indigo-200 rounded-full top-1/2 right-1/3 opacity-20 " style="animation-delay: 2s;"></div>
-
-                <!-- Learning illustration placeholder -->
-                <!-- <div class="flex items-center justify-center w-full h-[400px] bg-white/20 rounded-3xl backdrop-blur-sm">
-                    <img src="./assets/images/auth/login.png" alt="Preview" class="object-cover w-full h-full">
-                </div> -->
-            </div>
-        </div>
 
         <!-- Right side - Signup Form -->
         <div class="flex items-center justify-center flex-1 px-4 sm:px-6 lg:px-8">
             <div class="w-full max-w-lg">
                 <div class="p-8 bg-white shadow-xl rounded-2xl">
                     <div class="mb-8 text-center">
-                        <img src="./assets/images/logo.png" alt="Logo" class="w-auto h-[70px] mx-auto">
+                        <img src="../../assets/images/logo.png" alt="Logo" class="w-auto h-[70px] mx-auto">
                         <h2 class="mb-2 text-3xl font-bold text-gray-900">Create Account</h2>
                         <p class="text-gray-600">
                             Already have an account?
@@ -144,8 +122,8 @@ session_start();
                         </p>
                     </div>
 
-                    <form method="POST" action="actions/register.php" class="space-y-6">
-                        <input type="hidden" name="role" value="Student">
+                    <form method="POST" action="../../actions/register.php" class="space-y-6">
+                        <input type="hidden" name="role" value="Teacher">
                         <div class="space-y-4">
                             <!-- Name Fields Row -->
                             <div class="grid grid-cols-2 gap-4">
@@ -370,7 +348,7 @@ session_start();
             }
         });
     </script>
-    <script src="./assets/js/validation/register.js"></script>
+    <script src="../../assets/js/validation/register.js"></script>
 </body>
 
 </html>

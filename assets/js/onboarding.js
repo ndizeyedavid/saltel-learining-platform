@@ -149,7 +149,7 @@ class SaltelOnboarding {
     });
 
     tour.onexit(() => {
-      this.showSkipConfirmation();
+      this.completeOnboarding();
     });
 
     // Start the tour

@@ -6,11 +6,13 @@ include '../php/connect.php';
 require_once '../services/EmailService.php';
 
 // Function to generate 6-digit OTP
-function generateOTP() {
+function generateOTP()
+{
     return sprintf("%06d", mt_rand(100000, 999999));
 }
 
 if (isset($_POST['register'])) {
+    $role = mysqli_real_escape_string($conn, $_POST['role']);
     $fname = mysqli_real_escape_string($conn, $_POST['first_name']);
     $lname = mysqli_real_escape_string($conn, $_POST['last_name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -26,12 +28,12 @@ if (isset($_POST['register'])) {
     }
 
     $password = password_hash($password, PASSWORD_DEFAULT);
-    
+
     // Generate OTP and set expiration time (10 minutes from now)
     $otp = generateOTP();
     $otp_expires = date('Y-m-d H:i:s', strtotime('+10 minutes'));
 
-    $query = "INSERT INTO users (first_name, last_name, email, phone, password, gender, otp, otp_expires_at, is_verified) VALUES ('$fname', '$lname', '$email', '$phone', '$password', '$gender', '$otp', '$otp_expires', 0)";
+    $query = "INSERT INTO users (first_name, last_name, email, role, phone, password, gender, otp, otp_expires_at, is_verified) VALUES ('$fname', '$lname', '$email', '$role', '$phone', '$password', '$gender', '$otp', '$otp_expires', 0)";
 
     // Check if email or phone exists
     $check_query = $conn->prepare("SELECT * FROM users WHERE email = ? OR phone = ?");
@@ -51,7 +53,7 @@ if (isset($_POST['register'])) {
         try {
             $emailService = new EmailService();
             $fullName = $fname . ' ' . $lname;
-            
+
             if ($emailService->sendOTP($email, $fullName, $otp)) {
                 $_SESSION['success'] = $email;
                 $_SESSION['otp_sent'] = "OTP has been sent to your email address.";

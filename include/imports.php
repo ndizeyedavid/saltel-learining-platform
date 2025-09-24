@@ -29,7 +29,7 @@
 <!-- jQuery CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="../../assets/js/preloader.js"></script>
+<!-- <script src="../../assets/js/preloader.js"></script> -->
 <script src="../../assets/js/app.js"></script>
 <script src="../../assets/js/theme-switcher.js"></script>
 <script src="../../assets/js/onboarding.js"></script>

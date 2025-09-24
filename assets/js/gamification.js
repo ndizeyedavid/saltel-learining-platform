@@ -10,24 +10,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const requirement = card.dataset.unlockRequirement;
         const xpReward = card.dataset.xpReward || "100";
         const badgeReward = card.dataset.badgeReward || "Course Completion";
-        
+
         showUnlockModal(requirement, xpReward, badgeReward);
       }
     });
 
-    // XP animations
-    animateXPProgress();
-    
-    // Animate gamification stats on page load
-    animateStats();
-    
     // Add hover effects to gamification cards
     addGamificationHoverEffects();
   }
 
   function showUnlockModal(requirement, xpReward, badgeReward) {
     Swal.fire({
-      title: '🔒 Course Locked',
+      title: "🔒 Course Locked",
       html: `
         <div class="text-left">
           <p class="mb-3 text-gray-700">${requirement}</p>
@@ -40,39 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
       `,
-      icon: 'info',
-      confirmButtonText: 'Got it!',
-      confirmButtonColor: '#3b82f6',
+      icon: "info",
+      confirmButtonText: "Got it!",
+      confirmButtonColor: "#3b82f6",
       customClass: {
-        popup: 'text-left'
-      }
-    });
-  }
-
-  function animateXPProgress() {
-    const xpBar = document.querySelector(".bg-yellow-400");
-    if (xpBar) {
-      xpBar.style.width = "0%";
-      setTimeout(() => {
-        xpBar.style.transition = "width 2s ease-in-out";
-        xpBar.style.width = "78%";
-      }, 500);
-    }
-  }
-
-  function animateStats() {
-    // Animate XP counter
-    const xpElement = document.querySelector('.text-2xl.font-bold');
-    if (xpElement && xpElement.textContent.includes('XP')) {
-      animateCounter(xpElement, 2450, 'XP');
-    }
-    
-    // Animate badges counter
-    const badgeElements = document.querySelectorAll('.text-2xl.font-bold');
-    badgeElements.forEach(element => {
-      if (element.textContent === '12') {
-        animateCounter(element, 12, '');
-      }
+        popup: "text-left",
+      },
     });
   }
 
@@ -85,20 +52,21 @@ document.addEventListener("DOMContentLoaded", function () {
         currentValue = finalValue;
         clearInterval(timer);
       }
-      element.textContent = Math.floor(currentValue) + (suffix ? ' ' + suffix : '');
+      element.textContent =
+        Math.floor(currentValue) + (suffix ? " " + suffix : "");
     }, 40);
   }
 
   function addGamificationHoverEffects() {
-    const gamificationCards = document.querySelectorAll('.bg-gradient-to-br');
-    gamificationCards.forEach(card => {
-      card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-2px) scale(1.02)';
-        this.style.transition = 'all 0.3s ease';
+    const gamificationCards = document.querySelectorAll(".bg-gradient-to-br");
+    gamificationCards.forEach((card) => {
+      card.addEventListener("mouseenter", function () {
+        this.style.transform = "translateY(-2px) scale(1.02)";
+        this.style.transition = "all 0.3s ease";
       });
-      
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
+
+      card.addEventListener("mouseleave", function () {
+        this.style.transform = "translateY(0) scale(1)";
       });
     });
   }
@@ -106,32 +74,32 @@ document.addEventListener("DOMContentLoaded", function () {
   // Unlock notification system
   function showUnlockNotification(courseName, xpReward) {
     Swal.fire({
-      title: 'New Content Available!',
+      title: "New Content Available!",
       text: `🎉 ${courseName} unlocked! +${xpReward} XP`,
-      icon: 'success',
+      icon: "success",
       timer: 4000,
       showConfirmButton: false,
       toast: true,
-      position: 'top-end'
+      position: "top-end",
     });
   }
 
   // Simulate unlocking content (for demo purposes)
   function simulateUnlock(contentType, contentName, xpReward) {
     showUnlockNotification(contentName, xpReward);
-    
+
     // Update XP counter
-    const xpElement = document.querySelector('.text-2xl.font-bold');
-    if (xpElement && xpElement.textContent.includes('XP')) {
-      const currentXP = parseInt(xpElement.textContent.replace(/[^\d]/g, ''));
+    const xpElement = document.querySelector(".text-2xl.font-bold");
+    if (xpElement && xpElement.textContent.includes("XP")) {
+      const currentXP = parseInt(xpElement.textContent.replace(/[^\d]/g, ""));
       const newXP = currentXP + parseInt(xpReward);
-      animateCounter(xpElement, newXP, 'XP');
+      animateCounter(xpElement, newXP, "XP");
     }
   }
 
   // Make functions globally available for demo purposes
   window.gamification = {
     simulateUnlock: simulateUnlock,
-    showUnlockNotification: showUnlockNotification
+    showUnlockNotification: showUnlockNotification,
   };
 });
