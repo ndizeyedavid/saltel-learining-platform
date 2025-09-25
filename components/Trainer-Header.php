@@ -1,3 +1,15 @@
+<?php
+$profileImageUrl = null;
+if (isset($_SESSION['user_id'])) {
+    $stmt = $conn->prepare("SELECT profile_image_url FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($row = $res->fetch_assoc()) {
+        $profileImageUrl = $row['profile_image_url'] ?? null;
+    }
+}
+?>
 <header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm" style="z-index: 10; position: relative;">
     <div class="flex items-center justify-between">
         <!-- Search Bar -->
@@ -74,11 +86,17 @@
             <!-- User Menu -->
             <div class="relative">
                 <div class="flex items-center space-x-3">
-                    <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-saltel to-secondary">
-                        <span class="text-sm font-medium text-white">MJ</span>
-                    </div>
+                    <?php if ($profileImageUrl): ?>
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-saltel to-secondary">
+                            <img src="../../<?php echo htmlspecialchars($profileImageUrl); ?>" alt="Profile" class="object-cover w-8 h-8 rounded-full" />
+                        </div>
+                    <?php else: ?>
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-saltel to-secondary">
+                            <span class="text-sm font-medium text-white"><?php echo explode(" ", $_SESSION['user_name'])[0][0] . explode(" ", $_SESSION['user_name'])[1][0]; ?></span>
+                        </div>
+                    <?php endif; ?>
                     <div class="hidden md:block">
-                        <p class="text-sm font-medium text-gray-900">Mellow</p>
+                        <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($_SESSION['user_name']); ?></p>
                         <p class="text-xs text-gray-500">Trainer</p>
                     </div>
                     <button id="profileBtn" class="text-gray-400 transition-colors hover:text-saltel">
@@ -89,7 +107,7 @@
                 <div id="profileDropdown" class="absolute right-0 hidden w-56 mt-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                     <div class="p-4 border-b border-gray-200">
                         <p class="text-sm font-medium text-gray-900">Signed in as</p>
-                        <p class="text-sm text-gray-600">mellow@saltel.com</p>
+                        <p class="text-sm text-gray-600"><?php echo htmlspecialchars($_SESSION['user_email']); ?></p>
                     </div>
                     <div class="py-2">
                         <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">

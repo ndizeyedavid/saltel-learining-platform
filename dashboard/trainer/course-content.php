@@ -165,7 +165,7 @@ $course_title = $course_data['course_title'];
                         <!-- Action Buttons -->
                         <div class="flex justify-end mt-6 space-x-4">
                             <button id="previewBtn" class="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">
-                                Preview
+                                Preview Course
                             </button>
                             <button id="saveChangesBtn" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                                 Save Changes
@@ -331,8 +331,12 @@ $course_title = $course_data['course_title'];
                 alert('Please select a module first');
                 return;
             }
-
             await saveLessonContent();
+        });
+
+        // Preview button functionality
+        document.getElementById('previewBtn').addEventListener('click', () => {
+            window.open(`course-preview.php?course_id=${courseId}`, '_blank');
         });
 
         // File upload handlers

@@ -28,6 +28,11 @@ switch ($method) {
 function handleGetLessons() {
     global $conn;
     
+    // Check if requesting a specific lesson
+    if (isset($_GET['lesson_id'])) {
+        return handleGetSingleLesson();
+    }
+    
     $module_id = isset($_GET['module_id']) ? (int)$_GET['module_id'] : 0;
     if ($module_id <= 0) {
         http_response_code(400);
@@ -100,6 +105,82 @@ function handleGetLessons() {
     }
     
     echo json_encode(['lessons' => $lessons]);
+}
+
+function handleGetSingleLesson() {
+    global $conn;
+    
+    $lesson_id = isset($_GET['lesson_id']) ? (int)$_GET['lesson_id'] : 0;
+    if ($lesson_id <= 0) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid lesson ID']);
+        return;
+    }
+    
+    // Verify lesson ownership
+    $owner_check = $conn->prepare("
+        SELECT c.teacher_id 
+        FROM course_lessons l
+        JOIN course_modules m ON l.module_id = m.module_id
+        JOIN courses c ON m.course_id = c.course_id 
+        WHERE l.lesson_id = ?
+    ");
+    $owner_check->bind_param('i', $lesson_id);
+    $owner_check->execute();
+    $owner_result = $owner_check->get_result();
+    
+    if ($owner_result->num_rows === 0) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Lesson not found']);
+        return;
+    }
+    
+    $lesson_data = $owner_result->fetch_assoc();
+    if ($lesson_data['teacher_id'] != $_SESSION['user_id']) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Access denied']);
+        return;
+    }
+    
+    // Get lesson details
+    $stmt = $conn->prepare("
+        SELECT 
+            l.lesson_id,
+            l.title as lesson_title,
+            l.content as lesson_content,
+            l.sort_order as lesson_order,
+            l.lesson_type,
+            l.created_at,
+            m.title as module_title
+        FROM course_lessons l
+        JOIN course_modules m ON l.module_id = m.module_id
+        WHERE l.lesson_id = ?
+    ");
+    
+    $stmt->bind_param('i', $lesson_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 0) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Lesson not found']);
+        return;
+    }
+    
+    $lesson = $result->fetch_assoc();
+    
+    // Format the lesson data
+    $formatted_lesson = [
+        'lesson_id' => (int)$lesson['lesson_id'],
+        'lesson_title' => $lesson['lesson_title'],
+        'lesson_content' => $lesson['lesson_content'],
+        'lesson_order' => (int)$lesson['lesson_order'],
+        'lesson_type' => $lesson['lesson_type'],
+        'module_title' => $lesson['module_title'],
+        'created_at' => $lesson['created_at']
+    ];
+    
+    echo json_encode(['lesson' => $formatted_lesson]);
 }
 
 function handleCreateLesson() {

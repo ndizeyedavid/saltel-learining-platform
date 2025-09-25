@@ -13,6 +13,23 @@ $xp_system->updateStudyStreak($_SESSION['user_id']);
 
 // Refresh stats after daily bonus
 $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
+
+// Load profile image and compute initials
+$profileImageUrl = null;
+if (isset($_SESSION['user_id'])) {
+    $stmt = $conn->prepare("SELECT profile_image_url FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($row = $res->fetch_assoc()) {
+        $profileImageUrl = $row['profile_image_url'] ?? null;
+    }
+}
+$fullName = trim($_SESSION['user_name'] ?? '');
+$parts = preg_split('/\s+/', $fullName);
+$firstInitial = strtoupper(substr($parts[0] ?? 'U', 0, 1));
+$secondInitial = strtoupper(substr($parts[1] ?? '', 0, 1));
+$initials = $firstInitial . $secondInitial;
 ?>
 <!-- Gamified Header for Saltel Learning Platform -->
 <header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm" style="z-index: 10; position: relative;">
@@ -130,8 +147,12 @@ $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
                     <div class="relative">
                         <!-- Avatar with Level Ring -->
                         <div class="size-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-0.5">
-                            <div class="flex items-center justify-center w-full h-full bg-white rounded-full">
-                                <span class="text-lg font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"><?php echo explode(" ", $_SESSION['user_name'])[0][0] . explode(" ", $_SESSION['user_name'])[1][0]; ?></span>
+                            <div class="flex items-center justify-center w-full h-full bg-white rounded-full overflow-hidden">
+                                <?php if (!empty($profileImageUrl)) { ?>
+                                    <img src="<?php echo '../../' . htmlspecialchars($profileImageUrl); ?>" alt="Avatar" class="object-cover w-full h-full rounded-full" />
+                                <?php } else { ?>
+                                    <span class="text-lg font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"><?php echo htmlspecialchars($initials); ?></span>
+                                <?php } ?>
                             </div>
                         </div>
                         <!-- Level Badge -->
@@ -140,7 +161,7 @@ $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
                         </div>
                     </div>
                     <div class="hidden text-left md:block">
-                        <p class="text-sm font-bold text-gray-900"><?php echo explode(" ", $_SESSION['user_name'])[0][0] . ". " . explode(" ", $_SESSION['user_name'])[1]; ?></p>
+                        <p class="text-sm font-bold text-gray-900"><?php echo htmlspecialchars($parts[0][0] ?? 'U') . '. ' . htmlspecialchars($parts[1] ?? ($parts[0] ?? 'User')); ?></p>
                         <p class="text-xs text-gray-600">Level <?php echo $user_stats['current_level']; ?> • <?php echo number_format($user_stats['total_xp']); ?> XP</p>
                     </div>
                     <i class="text-gray-400 transition-transform duration-300 fas fa-chevron-down" id="userChevron"></i>
@@ -152,8 +173,12 @@ $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
                         <!-- User Info Header -->
                         <div class="flex items-center pb-4 space-x-3 border-b border-gray-200">
                             <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-0.5">
-                                <div class="flex items-center justify-center w-full h-full bg-white rounded-full">
-                                    <span class="text-xl font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"><?php echo explode(" ", $_SESSION['user_name'])[0][0] . explode(" ", $_SESSION['user_name'])[1][0]; ?></span>
+                                <div class="flex items-center justify-center w-full h-full bg-white rounded-full overflow-hidden">
+                                    <?php if (!empty($profileImageUrl)) { ?>
+                                        <img src="<?php echo '../../' . htmlspecialchars($profileImageUrl); ?>" alt="Avatar" class="object-cover w-full h-full rounded-full" />
+                                    <?php } else { ?>
+                                        <span class="text-xl font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"><?php echo htmlspecialchars($initials); ?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="flex-1">
