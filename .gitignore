@@ -3,4 +3,5 @@ vendor
 check-error-log.php
 SETUP_OTP.md
 test-brevo.php
+uploads
 # doc

@@ -76,11 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // Show success notification
           Swal.fire({
-            title: 'Upload Complete!',
+            title: "Upload Complete!",
             text: `File "${file.name}" uploaded successfully for "${assignmentTitle}"`,
-            icon: 'success',
-            confirmButtonText: 'Great!',
-            confirmButtonColor: '#10B981'
+            icon: "success",
+            confirmButtonText: "Great!",
+            confirmButtonColor: "#10B981",
           });
         }, 2000);
       }
@@ -104,24 +104,24 @@ document.addEventListener("DOMContentLoaded", function () {
       table.order([2, "asc"]).draw();
       Swal.fire({
         toast: true,
-        position: 'top-end',
-        icon: 'info',
-        title: 'Assignments sorted by due date',
+        position: "top-end",
+        icon: "info",
+        title: "Assignments sorted by due date",
         showConfirmButton: false,
         timer: 2000,
-        timerProgressBar: true
+        timerProgressBar: true,
       });
     } else if (filter === "Status") {
       // Sort by status
       table.order([3, "asc"]).draw();
       Swal.fire({
         toast: true,
-        position: 'top-end',
-        icon: 'info',
-        title: 'Assignments sorted by status',
+        position: "top-end",
+        icon: "info",
+        title: "Assignments sorted by status",
         showConfirmButton: false,
         timer: 2000,
-        timerProgressBar: true
+        timerProgressBar: true,
       });
     }
   });

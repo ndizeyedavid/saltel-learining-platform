@@ -162,12 +162,36 @@
                     labels: ['Video Views', 'Assignments', 'Discussions', 'Quizzes', 'Resources'],
                     data: [85, 75, 60, 80, 65]
                 },
-                topPerformers: [
-                    { name: 'Sarah Johnson', course: 'Web Development', score: '98%', progress: '100%' },
-                    { name: 'Michael Brown', course: 'Data Science', score: '96%', progress: '95%' },
-                    { name: 'Emily Davis', course: 'Mobile Development', score: '94%', progress: '90%' },
-                    { name: 'David Wilson', course: 'Web Development', score: '92%', progress: '88%' },
-                    { name: 'Jessica Lee', course: 'Data Science', score: '90%', progress: '85%' }
+                topPerformers: [{
+                        name: 'Sarah Johnson',
+                        course: 'Web Development',
+                        score: '98%',
+                        progress: '100%'
+                    },
+                    {
+                        name: 'Michael Brown',
+                        course: 'Data Science',
+                        score: '96%',
+                        progress: '95%'
+                    },
+                    {
+                        name: 'Emily Davis',
+                        course: 'Mobile Development',
+                        score: '94%',
+                        progress: '90%'
+                    },
+                    {
+                        name: 'David Wilson',
+                        course: 'Web Development',
+                        score: '92%',
+                        progress: '88%'
+                    },
+                    {
+                        name: 'Jessica Lee',
+                        course: 'Data Science',
+                        score: '90%',
+                        progress: '85%'
+                    }
                 ]
             };
         }
@@ -175,7 +199,7 @@
         // Initialize charts with mock data
         function initializeCharts() {
             const mockData = generateMockData();
-            
+
             // Course Progress Chart
             new Chart(document.getElementById('courseProgressChart'), {
                 type: 'line',
@@ -193,10 +217,15 @@
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: { position: 'top' }
+                        legend: {
+                            position: 'top'
+                        }
                     },
                     scales: {
-                        y: { beginAtZero: true, max: 100 }
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
                     }
                 }
             });
@@ -215,10 +244,14 @@
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: { position: 'top' }
+                        legend: {
+                            position: 'top'
+                        }
                     },
                     scales: {
-                        y: { beginAtZero: true }
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
             });
@@ -239,7 +272,10 @@
                 options: {
                     responsive: true,
                     scales: {
-                        r: { beginAtZero: true, max: 100 }
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
                     }
                 }
             });
@@ -266,4 +302,5 @@
         document.addEventListener('DOMContentLoaded', initializeCharts);
     </script>
 </body>
+
 </html>

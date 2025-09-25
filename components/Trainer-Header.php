@@ -7,6 +7,7 @@
                     <i class="text-[#17a3d6] fas fa-search"></i>
                 </div>
                 <input type="text"
+                    name="search"
                     class="block w-full py-2 pl-10 pr-3 text-sm outline-none border-2 rounded-lg border-[#17a3d6]"
                     placeholder="Search">
             </div>

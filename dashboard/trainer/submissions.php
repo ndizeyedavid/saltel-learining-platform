@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Submissions</title>
+    <?php include '../../include/trainer-guard.php'; ?>
     <?php include '../../include/trainer-imports.php'; ?>
 </head>
+
 <body class="font-sans bg-gray-50">
     <div class="flex overflow-hidden h-screen">
         <?php include '../../components/Trainer-Sidebar.php'; ?>
-        
+
         <!-- Main Content Area -->
         <div class="flex overflow-hidden flex-col flex-1">
             <?php include '../../components/Trainer-Header.php'; ?>
-            
+
             <!-- Main Content -->
             <main class="overflow-y-auto flex-1 p-6">
                 <div class="mb-6">
@@ -123,4 +126,5 @@
         </div>
     </div>
 </body>
+
 </html>

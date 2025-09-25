@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2025 at 06:42 PM
+-- Generation Time: Sep 25, 2025 at 12:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,6 +33,35 @@ CREATE TABLE `assignments` (
   `title` varchar(200) NOT NULL,
   `description` text DEFAULT NULL,
   `due_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignment_options`
+--
+
+CREATE TABLE `assignment_options` (
+  `option_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `option_text` varchar(500) NOT NULL,
+  `is_correct` tinyint(1) DEFAULT 0,
+  `sort_order` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignment_questions`
+--
+
+CREATE TABLE `assignment_questions` (
+  `question_id` int(11) NOT NULL,
+  `assignment_id` int(11) NOT NULL,
+  `question_text` text NOT NULL,
+  `points` int(11) DEFAULT 1,
+  `explanation` text DEFAULT NULL,
+  `sort_order` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -94,8 +123,22 @@ CREATE TABLE `courses` (
   `course_title` varchar(200) NOT NULL,
   `description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('Draft','Published','Archived') DEFAULT 'Draft',
+  `visibility` enum('Public','Private','Password Protected') DEFAULT 'Public',
+  `level` enum('Beginner','Intermediate','Advanced') DEFAULT 'Beginner',
+  `image_url` longtext NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `max_students` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `teacher_id`, `category`, `course_title`, `description`, `price`, `created_at`, `status`, `visibility`, `level`, `image_url`, `start_date`, `end_date`, `max_students`) VALUES
+(2, 18, 'Data Science', 'Non molestiae provident suscipit quis enim natus ut enim officia rerum qui sequi ex', 'Explicabo Quisquam ut laboris dolorum deserunt officia', 464.00, '2025-09-24 22:40:00', 'Published', 'Public', 'Intermediate', 'uploads/courses/course_1758753600_68d473409cf6a.jpg', '1994-02-11', '1997-01-03', 15);
 
 -- --------------------------------------------------------
 
@@ -114,6 +157,84 @@ CREATE TABLE `course_content` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `course_lessons`
+--
+
+CREATE TABLE `course_lessons` (
+  `lesson_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `title` varchar(200) NOT NULL,
+  `lesson_type` enum('video','text','quiz','document') NOT NULL DEFAULT 'text',
+  `content` longtext DEFAULT NULL,
+  `sort_order` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_modules`
+--
+
+CREATE TABLE `course_modules` (
+  `module_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `duration_minutes` int(11) DEFAULT NULL,
+  `points` int(11) DEFAULT 0,
+  `is_published` tinyint(1) DEFAULT 0,
+  `title` varchar(200) NOT NULL,
+  `description` text DEFAULT NULL,
+  `sort_order` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `course_modules`
+--
+
+INSERT INTO `course_modules` (`module_id`, `course_id`, `duration_minutes`, `points`, `is_published`, `title`, `description`, `sort_order`, `created_at`, `updated_at`) VALUES
+(1, 2, NULL, 0, 0, 'sad', 'asdasd', 1, '2025-09-24 22:56:01', '2025-09-24 22:56:01'),
+(2, 2, NULL, 0, 0, 'sdasd', 'sadasda', 2, '2025-09-24 22:56:07', '2025-09-24 22:56:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_prerequisites`
+--
+
+CREATE TABLE `course_prerequisites` (
+  `prerequisite_id` int(11) NOT NULL,
+  `lesson_id` int(11) NOT NULL,
+  `prerequisite_type` enum('module_completion','lesson_completion','quiz_score','assignment_submission') NOT NULL,
+  `prerequisite_value` varchar(255) DEFAULT NULL,
+  `required_score` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_resources`
+--
+
+CREATE TABLE `course_resources` (
+  `resource_id` int(11) NOT NULL,
+  `lesson_id` int(11) DEFAULT NULL,
+  `module_id` int(11) DEFAULT NULL,
+  `resource_type` enum('video','document','image','audio','link') NOT NULL,
+  `resource_name` varchar(255) NOT NULL,
+  `resource_url` varchar(500) NOT NULL,
+  `file_size` bigint(20) DEFAULT NULL,
+  `mime_type` varchar(100) DEFAULT NULL,
+  `is_downloadable` tinyint(1) DEFAULT 1,
+  `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `enrollments`
 --
 
@@ -123,6 +244,37 @@ CREATE TABLE `enrollments` (
   `course_id` int(11) NOT NULL,
   `payment_status` enum('Pending','Paid') DEFAULT 'Pending',
   `enrolled_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_answer_options`
+--
+
+CREATE TABLE `quiz_answer_options` (
+  `option_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `option_text` text NOT NULL,
+  `is_correct` tinyint(1) DEFAULT 0,
+  `option_order` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_questions`
+--
+
+CREATE TABLE `quiz_questions` (
+  `question_id` int(11) NOT NULL,
+  `lesson_id` int(11) NOT NULL,
+  `question_text` text NOT NULL,
+  `question_type` enum('multiple_choice','true_false','short_answer','essay') DEFAULT 'multiple_choice',
+  `points` int(11) DEFAULT 1,
+  `question_order` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -201,8 +353,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `middle_name`, `last_name`, `gender`, `email`, `phone`, `role`, `password`, `created_at`, `otp`, `otp_expires_at`, `is_verified`, `remember_token`, `remember_expires`, `last_login`) VALUES
-(16, 'Dylan', NULL, 'Nash', 'Female', 'esting228@gmail.com', '(147) 489-5700', 'Student', '$2y$10$1L5FdGGEABwYVsO7Fe9XCu9/iRK6ZUky/Q9gvAAiwyX7wQ4ifXrtS', '2025-09-24 13:02:17', NULL, NULL, 1, '5c75520102086899c2617a9eeade303fdbbc79125a2cdbd77205d512d6a26b40', '2025-10-24 14:29:07', '2025-09-24 15:36:32'),
-(18, 'Lael', NULL, 'Monroe', 'Male', 'davidndizeye101@gmail.com', '(151) 156-8553', 'Teacher', '$2y$10$1gFSukjoE/maHINREVWma.WBXD7hd6CnwqEvoB.d45FlVFNSxQgZ6', '2025-09-24 15:57:08', NULL, NULL, 1, NULL, NULL, '2025-09-24 16:42:03'),
+(16, 'Dylan', NULL, 'Nash', 'Female', 'esting228@gmail.com', '(147) 489-5700', 'Student', '$2y$10$1L5FdGGEABwYVsO7Fe9XCu9/iRK6ZUky/Q9gvAAiwyX7wQ4ifXrtS', '2025-09-24 13:02:17', NULL, NULL, 1, '5c75520102086899c2617a9eeade303fdbbc79125a2cdbd77205d512d6a26b40', '2025-10-24 14:29:07', '2025-09-24 17:21:08'),
+(18, 'Lael', NULL, 'Monroe', 'Male', 'davidndizeye101@gmail.com', '(151) 156-8553', 'Teacher', '$2y$10$1gFSukjoE/maHINREVWma.WBXD7hd6CnwqEvoB.d45FlVFNSxQgZ6', '2025-09-24 15:57:08', NULL, NULL, 1, '73481a4c7afe1f3f71041358402aaec1e5399788c459864b1371d66222cbff6b', '2025-10-24 17:42:46', '2025-09-24 17:42:47'),
 (19, 'Sample', NULL, 'User', 'Male', 'utesting228@gmail.com', '(079) 614-0857', 'Student', '$2y$10$u41zzx9hijODsGajATJI5.llCw05haj3uKk1zRPcoFfIwqBRow0s6', '2025-09-24 15:59:24', NULL, NULL, 1, '6e4dab91d9c73efc3b3c412fa57f1a544f0a4a09033a23a7788f787b9dd6381b', '2025-10-24 16:00:00', '2025-09-24 16:00:00');
 
 -- --------------------------------------------------------
@@ -310,6 +462,20 @@ ALTER TABLE `assignments`
   ADD KEY `course_id` (`course_id`);
 
 --
+-- Indexes for table `assignment_options`
+--
+ALTER TABLE `assignment_options`
+  ADD PRIMARY KEY (`option_id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
+-- Indexes for table `assignment_questions`
+--
+ALTER TABLE `assignment_questions`
+  ADD PRIMARY KEY (`question_id`),
+  ADD KEY `assignment_id` (`assignment_id`);
+
+--
 -- Indexes for table `badges`
 --
 ALTER TABLE `badges`
@@ -338,12 +504,58 @@ ALTER TABLE `course_content`
   ADD KEY `course_id` (`course_id`);
 
 --
+-- Indexes for table `course_lessons`
+--
+ALTER TABLE `course_lessons`
+  ADD PRIMARY KEY (`lesson_id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `module_id` (`module_id`);
+
+--
+-- Indexes for table `course_modules`
+--
+ALTER TABLE `course_modules`
+  ADD PRIMARY KEY (`module_id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `course_prerequisites`
+--
+ALTER TABLE `course_prerequisites`
+  ADD PRIMARY KEY (`prerequisite_id`),
+  ADD KEY `lesson_id` (`lesson_id`);
+
+--
+-- Indexes for table `course_resources`
+--
+ALTER TABLE `course_resources`
+  ADD PRIMARY KEY (`resource_id`),
+  ADD KEY `lesson_id` (`lesson_id`),
+  ADD KEY `module_id` (`module_id`);
+
+--
 -- Indexes for table `enrollments`
 --
 ALTER TABLE `enrollments`
   ADD PRIMARY KEY (`enrollment_id`),
   ADD KEY `student_id` (`student_id`),
   ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `quiz_answer_options`
+--
+ALTER TABLE `quiz_answer_options`
+  ADD PRIMARY KEY (`option_id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `option_order` (`option_order`);
+
+--
+-- Indexes for table `quiz_questions`
+--
+ALTER TABLE `quiz_questions`
+  ADD PRIMARY KEY (`question_id`),
+  ADD KEY `lesson_id` (`lesson_id`),
+  ADD KEY `question_order` (`question_order`);
 
 --
 -- Indexes for table `students`
@@ -421,6 +633,18 @@ ALTER TABLE `assignments`
   MODIFY `assignment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `assignment_options`
+--
+ALTER TABLE `assignment_options`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `assignment_questions`
+--
+ALTER TABLE `assignment_questions`
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `badges`
 --
 ALTER TABLE `badges`
@@ -436,7 +660,7 @@ ALTER TABLE `certificates`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `course_content`
@@ -445,10 +669,46 @@ ALTER TABLE `course_content`
   MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `course_lessons`
+--
+ALTER TABLE `course_lessons`
+  MODIFY `lesson_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `course_modules`
+--
+ALTER TABLE `course_modules`
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `course_prerequisites`
+--
+ALTER TABLE `course_prerequisites`
+  MODIFY `prerequisite_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `course_resources`
+--
+ALTER TABLE `course_resources`
+  MODIFY `resource_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
   MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `quiz_answer_options`
+--
+ALTER TABLE `quiz_answer_options`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `quiz_questions`
+--
+ALTER TABLE `quiz_questions`
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -484,7 +744,7 @@ ALTER TABLE `user_badges`
 -- AUTO_INCREMENT for table `user_xp`
 --
 ALTER TABLE `user_xp`
-  MODIFY `xp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+  MODIFY `xp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
 -- AUTO_INCREMENT for table `xp_activities`
@@ -528,11 +788,36 @@ ALTER TABLE `course_content`
   ADD CONSTRAINT `course_content_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`);
 
 --
+-- Constraints for table `course_prerequisites`
+--
+ALTER TABLE `course_prerequisites`
+  ADD CONSTRAINT `course_prerequisites_ibfk_1` FOREIGN KEY (`lesson_id`) REFERENCES `course_lessons` (`lesson_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `course_resources`
+--
+ALTER TABLE `course_resources`
+  ADD CONSTRAINT `course_resources_ibfk_1` FOREIGN KEY (`lesson_id`) REFERENCES `course_lessons` (`lesson_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `course_resources_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `course_modules` (`module_id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `enrollments`
 --
 ALTER TABLE `enrollments`
   ADD CONSTRAINT `enrollments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
   ADD CONSTRAINT `enrollments_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`);
+
+--
+-- Constraints for table `quiz_answer_options`
+--
+ALTER TABLE `quiz_answer_options`
+  ADD CONSTRAINT `quiz_answer_options_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `quiz_questions` (`question_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `quiz_questions`
+--
+ALTER TABLE `quiz_questions`
+  ADD CONSTRAINT `quiz_questions_ibfk_1` FOREIGN KEY (`lesson_id`) REFERENCES `course_lessons` (`lesson_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `students`

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Course Settings</title>
+    <?php include '../../include/trainer-guard.php'; ?>
     <?php include '../../include/trainer-imports.php'; ?>
     <script src="../../assets/js/course-state.js"></script>
 </head>
