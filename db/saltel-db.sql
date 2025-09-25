@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2025 at 12:57 AM
+-- Generation Time: Sep 25, 2025 at 01:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -82,20 +82,6 @@ CREATE TABLE `badges` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `badges`
---
-
-INSERT INTO `badges` (`badge_id`, `badge_name`, `badge_description`, `badge_icon`, `badge_color`, `unlock_condition`, `xp_requirement`, `is_active`, `created_at`) VALUES
-(1, 'Welcome Rookie', 'Complete your first lesson', 'fas fa-graduation-cap', 'green', 'complete_first_lesson', 25, 1, '2025-09-24 14:37:13'),
-(2, 'Study Warrior', 'Study for 5 hours total', 'fas fa-sword', 'blue', 'study_5_hours', 300, 1, '2025-09-24 14:37:13'),
-(3, 'Assignment Master', 'Complete 10 assignments', 'fas fa-trophy', 'gold', 'complete_10_assignments', 500, 1, '2025-09-24 14:37:13'),
-(4, 'Streak Champion', 'Maintain 7-day study streak', 'fas fa-fire', 'red', 'study_streak_7', 150, 1, '2025-09-24 14:37:13'),
-(5, 'Knowledge Seeker', 'Earn 1000 XP', 'fas fa-star', 'purple', 'earn_1000_xp', 1000, 1, '2025-09-24 14:37:13'),
-(6, 'Course Conqueror', 'Complete your first course', 'fas fa-crown', 'orange', 'complete_first_course', 200, 1, '2025-09-24 14:37:13'),
-(7, 'Perfect Student', 'Get 100% on 5 assignments', 'fas fa-medal', 'platinum', 'perfect_5_assignments', 375, 1, '2025-09-24 14:37:13'),
-(8, 'Learning Legend', 'Reach Level 10', 'fas fa-dragon', 'legendary', 'reach_level_10', 5000, 1, '2025-09-24 14:37:13');
-
 -- --------------------------------------------------------
 
 --
@@ -132,13 +118,6 @@ CREATE TABLE `courses` (
   `end_date` date DEFAULT NULL,
   `max_students` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `courses`
---
-
-INSERT INTO `courses` (`course_id`, `teacher_id`, `category`, `course_title`, `description`, `price`, `created_at`, `status`, `visibility`, `level`, `image_url`, `start_date`, `end_date`, `max_students`) VALUES
-(2, 18, 'Data Science', 'Non molestiae provident suscipit quis enim natus ut enim officia rerum qui sequi ex', 'Explicabo Quisquam ut laboris dolorum deserunt officia', 464.00, '2025-09-24 22:40:00', 'Published', 'Public', 'Intermediate', 'uploads/courses/course_1758753600_68d473409cf6a.jpg', '1994-02-11', '1997-01-03', 15);
 
 -- --------------------------------------------------------
 
@@ -189,14 +168,6 @@ CREATE TABLE `course_modules` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `course_modules`
---
-
-INSERT INTO `course_modules` (`module_id`, `course_id`, `duration_minutes`, `points`, `is_published`, `title`, `description`, `sort_order`, `created_at`, `updated_at`) VALUES
-(1, 2, NULL, 0, 0, 'sad', 'asdasd', 1, '2025-09-24 22:56:01', '2025-09-24 22:56:01'),
-(2, 2, NULL, 0, 0, 'sdasd', 'sadasda', 2, '2025-09-24 22:56:07', '2025-09-24 22:56:07');
 
 -- --------------------------------------------------------
 
@@ -326,6 +297,22 @@ CREATE TABLE `submissions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `teacher_profiles`
+--
+
+CREATE TABLE `teacher_profiles` (
+  `user_id` int(11) NOT NULL,
+  `expertise` varchar(255) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
+  `linkedin_url` varchar(255) DEFAULT NULL,
+  `website_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -345,17 +332,9 @@ CREATE TABLE `users` (
   `is_verified` tinyint(1) DEFAULT 0,
   `remember_token` varchar(64) DEFAULT NULL,
   `remember_expires` timestamp NULL DEFAULT NULL,
-  `last_login` timestamp NULL DEFAULT NULL
+  `last_login` timestamp NULL DEFAULT NULL,
+  `profile_image_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `first_name`, `middle_name`, `last_name`, `gender`, `email`, `phone`, `role`, `password`, `created_at`, `otp`, `otp_expires_at`, `is_verified`, `remember_token`, `remember_expires`, `last_login`) VALUES
-(16, 'Dylan', NULL, 'Nash', 'Female', 'esting228@gmail.com', '(147) 489-5700', 'Student', '$2y$10$1L5FdGGEABwYVsO7Fe9XCu9/iRK6ZUky/Q9gvAAiwyX7wQ4ifXrtS', '2025-09-24 13:02:17', NULL, NULL, 1, '5c75520102086899c2617a9eeade303fdbbc79125a2cdbd77205d512d6a26b40', '2025-10-24 14:29:07', '2025-09-24 17:21:08'),
-(18, 'Lael', NULL, 'Monroe', 'Male', 'davidndizeye101@gmail.com', '(151) 156-8553', 'Teacher', '$2y$10$1gFSukjoE/maHINREVWma.WBXD7hd6CnwqEvoB.d45FlVFNSxQgZ6', '2025-09-24 15:57:08', NULL, NULL, 1, '73481a4c7afe1f3f71041358402aaec1e5399788c459864b1371d66222cbff6b', '2025-10-24 17:42:46', '2025-09-24 17:42:47'),
-(19, 'Sample', NULL, 'User', 'Male', 'utesting228@gmail.com', '(079) 614-0857', 'Student', '$2y$10$u41zzx9hijODsGajATJI5.llCw05haj3uKk1zRPcoFfIwqBRow0s6', '2025-09-24 15:59:24', NULL, NULL, 1, '6e4dab91d9c73efc3b3c412fa57f1a544f0a4a09033a23a7788f787b9dd6381b', '2025-10-24 16:00:00', '2025-09-24 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -387,14 +366,6 @@ CREATE TABLE `user_xp` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user_xp`
---
-
-INSERT INTO `user_xp` (`xp_id`, `user_id`, `total_xp`, `current_level`, `xp_to_next_level`, `study_streak`, `last_activity_date`, `created_at`, `updated_at`) VALUES
-(1, 16, 10, 1, 40, 1, '2025-09-24', '2025-09-24 14:56:50', '2025-09-24 14:56:50'),
-(211, 19, 10, 1, 40, 1, '2025-09-24', '2025-09-24 16:00:00', '2025-09-24 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -441,14 +412,6 @@ CREATE TABLE `xp_transactions` (
   `description` varchar(255) DEFAULT NULL,
   `earned_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `xp_transactions`
---
-
-INSERT INTO `xp_transactions` (`transaction_id`, `user_id`, `activity_id`, `xp_earned`, `description`, `earned_at`) VALUES
-(1, 16, 1, 10, 'Daily login bonus', '2025-09-24 14:56:50'),
-(3, 19, 1, 10, 'Daily login bonus', '2025-09-24 16:00:00');
 
 --
 -- Indexes for dumped tables
@@ -581,6 +544,12 @@ ALTER TABLE `submissions`
   ADD KEY `student_id` (`student_id`);
 
 --
+-- Indexes for table `teacher_profiles`
+--
+ALTER TABLE `teacher_profiles`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -648,7 +617,7 @@ ALTER TABLE `assignment_questions`
 -- AUTO_INCREMENT for table `badges`
 --
 ALTER TABLE `badges`
-  MODIFY `badge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `badge_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `certificates`
@@ -660,7 +629,7 @@ ALTER TABLE `certificates`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `course_content`
@@ -678,7 +647,7 @@ ALTER TABLE `course_lessons`
 -- AUTO_INCREMENT for table `course_modules`
 --
 ALTER TABLE `course_modules`
-  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `course_prerequisites`
@@ -732,19 +701,19 @@ ALTER TABLE `submissions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_badges`
 --
 ALTER TABLE `user_badges`
-  MODIFY `user_badge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_badge_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_xp`
 --
 ALTER TABLE `user_xp`
-  MODIFY `xp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
+  MODIFY `xp_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `xp_activities`
@@ -756,7 +725,7 @@ ALTER TABLE `xp_activities`
 -- AUTO_INCREMENT for table `xp_transactions`
 --
 ALTER TABLE `xp_transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -838,6 +807,12 @@ ALTER TABLE `study_sessions`
 ALTER TABLE `submissions`
   ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`),
   ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`);
+
+--
+-- Constraints for table `teacher_profiles`
+--
+ALTER TABLE `teacher_profiles`
+  ADD CONSTRAINT `fk_teacher_profiles_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_badges`

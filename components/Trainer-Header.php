@@ -121,7 +121,7 @@ if (isset($_SESSION['user_id'])) {
                         </a>
                     </div>
                     <div class="py-2 border-t border-gray-200">
-                        <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
+                        <a href="logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-50">
                             <i class="w-5 mr-2 fas fa-sign-out-alt"></i>Sign Out
                         </a>
                     </div>
