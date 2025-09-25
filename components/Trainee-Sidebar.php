@@ -1,5 +1,10 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
+
+require_once '../../php/check_auth.php';
+requireAuth(); // For any logged-in user
+// requireRole('Trainee'); // For specific roles
+
 ?>
 <!-- Sidebar -->
 <div class="flex flex-col w-64 bg-white border-r border-gray-200 shadow-lg">

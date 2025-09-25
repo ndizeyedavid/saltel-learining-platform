@@ -324,7 +324,10 @@ function updateModuleOptions(courseId) {
   moduleSelect.innerHTML = '<option value="">Select module</option>';
 
   if (courseId) {
-    fetch(`../api/courses/${courseId}/modules`)
+    // Call trainer API to load modules for selected course
+    fetch(
+      `../api/courses/modules.php?course_id=${encodeURIComponent(courseId)}`
+    )
       .then((response) => response.json())
       .then((modules) => {
         modules.forEach((module) => {

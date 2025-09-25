@@ -5,7 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Trainee Dashboard</title>
-    <?php include '../../include/imports.php'; ?>
+    <?php
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: ../../");
+        exit();
+    }
+    include '../../include/imports.php';
+    require_once '../../php/xp_system.php';
+
+    // Initialize XP system and get user stats
+    $xp_system = new XPSystem($conn);
+    $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
+    $user_badges = $xp_system->getUserBadges($_SESSION['user_id']);
+    $recent_transactions = $xp_system->getRecentTransactions($_SESSION['user_id'], 5);
+
+    // Award daily login XP
+    $xp_system->awardXP($_SESSION['user_id'], 'login', null, 'Daily login bonus');
+    $xp_system->updateStudyStreak($_SESSION['user_id']);
+
+    // Refresh stats after daily bonus
+    $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
+    ?>
     <script src="../../assets/js/gamification.js" defer></script>
 </head>
 
@@ -22,42 +43,47 @@
             <main class="flex-1 p-6 overflow-y-auto">
                 <!-- Welcome Section -->
                 <div class="mb-8">
-                    <h1 class="mb-2 text-3xl font-bold text-gray-900">Hello Christopher👋</h1>
+                    <h1 class="mb-2 text-3xl font-bold text-gray-900">Hello, <?php echo explode(" ", $_SESSION['user_name'])[1]; ?>👋</h1>
                     <p class="text-gray-600">Let's learn something new today!</p>
                 </div>
 
                 <!-- Gamification Stats -->
                 <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
                     <!-- XP Points -->
-                    <div class="p-6 bg-gradient-to-br from-purple-500 to-indigo-600 text-white shadow-sm rounded-xl">
+                    <div class="p-6 text-white shadow-sm bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-purple-100">Experience Points</p>
-                                <p class="text-2xl font-bold text-white">2,450 XP</p>
+                                <p class="text-2xl font-bold text-white"><?php echo number_format($user_stats['total_xp']); ?> XP</p>
                             </div>
-                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                            <div class="flex items-center justify-center w-12 h-12 bg-white rounded-lg bg-opacity-20">
                                 <i class="text-xl text-white fas fa-star"></i>
                             </div>
                         </div>
                         <div class="mt-4">
                             <div class="flex items-center justify-between text-sm">
-                                <span class="text-purple-100">Level 8</span>
-                                <span class="text-purple-100">550 XP to Level 9</span>
+                                <span class="text-purple-100" id="current-level">Level <?php echo $user_stats['current_level']; ?></span>
+                                <span class="text-purple-100" id="xp-to-next"><?php echo $user_stats['xp_to_next_level']; ?> XP to Level <?php echo $user_stats['current_level'] + 1; ?></span>
                             </div>
-                            <div class="w-full bg-purple-400 bg-opacity-30 rounded-full h-2 mt-2">
-                                <div class="bg-yellow-400 h-2 rounded-full" style="width: 78%"></div>
+                            <div class="w-full h-2 mt-2 bg-purple-400 rounded-full bg-opacity-30">
+                                <?php
+                                $level_base_xp = pow($user_stats['current_level'] - 1, 2) * 50;
+                                $level_total_xp = pow($user_stats['current_level'], 2) * 50;
+                                $level_progress = (($user_stats['total_xp'] - $level_base_xp) / ($level_total_xp - $level_base_xp)) * 100;
+                                ?>
+                                <div class="h-2 transition-all duration-500 bg-yellow-400 rounded-full" style="width: <?php echo $user_stats['total_xp'] * 100 / ($user_stats['total_xp'] + $user_stats['xp_to_next_level']); ?>%" id="level-progress"></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Badges Earned -->
-                    <div class="p-6 bg-gradient-to-br from-yellow-500 to-orange-600 text-white shadow-sm rounded-xl">
+                    <div class="p-6 text-white shadow-sm bg-gradient-to-br from-yellow-500 to-orange-600 rounded-xl">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-yellow-100">Badges Earned</p>
-                                <p class="text-2xl font-bold text-white">12</p>
+                                <p class="text-2xl font-bold text-white" id="badges-count"><?php echo count($user_badges); ?></p>
                             </div>
-                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                            <div class="flex items-center justify-center w-12 h-12 bg-white rounded-lg bg-opacity-20">
                                 <i class="text-xl text-white fas fa-medal"></i>
                             </div>
                         </div>
@@ -70,32 +96,32 @@
                     </div>
 
                     <!-- Study Streak -->
-                    <div class="p-6 bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-sm rounded-xl">
+                    <div class="p-6 text-white shadow-sm bg-gradient-to-br from-green-500 to-teal-600 rounded-xl">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-green-100">Study Streak</p>
-                                <p class="text-2xl font-bold text-white">15 Days</p>
+                                <p class="text-2xl font-bold text-white" id="study-streak"><?php echo $user_stats['study_streak']; ?> days</p>
                             </div>
-                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                            <div class="flex items-center justify-center w-12 h-12 bg-white rounded-lg bg-opacity-20">
                                 <i class="text-xl text-white fas fa-fire"></i>
                             </div>
                         </div>
                         <div class="mt-4">
                             <div class="flex items-center text-sm text-green-100">
-                                <i class="mr-1 fas fa-target"></i>
-                                <span>Goal: 30 days</span>
+                                <i class="mr-1 fas fa-calendar-check"></i>
+                                <span><?php echo $user_stats['study_streak'] > 0 ? 'Keep it up!' : 'Start your streak today!'; ?></span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Unlocked Content -->
-                    <div class="p-6 bg-gradient-to-br from-blue-500 to-cyan-600 text-white shadow-sm rounded-xl">
+                    <div class="p-6 text-white shadow-sm bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm font-medium text-blue-100">Unlocked Content</p>
                                 <p class="text-2xl font-bold text-white">8/12</p>
                             </div>
-                            <div class="flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-lg">
+                            <div class="flex items-center justify-center w-12 h-12 bg-white rounded-lg bg-opacity-20">
                                 <i class="text-xl text-white fas fa-unlock"></i>
                             </div>
                         </div>
@@ -285,33 +311,25 @@
 
                         <!-- Achievement Badges -->
                         <div class="space-y-3">
-                            <div class="flex items-center p-2 space-x-3 transition-all duration-200 rounded-lg cursor-pointer achievement-badge">
-                                <div class="flex items-center justify-center w-8 h-8 bg-yellow-100 rounded-full">
-                                    <i class="text-sm text-yellow-600 fas fa-medal"></i>
+                            <?php if (!empty($user_badges)): ?>
+                                <?php foreach (array_slice($user_badges, 0, 3) as $badge): ?>
+                                    <div class="flex items-center p-2 space-x-3 transition-all duration-200 rounded-lg cursor-pointer achievement-badge">
+                                        <div class="flex items-center justify-center w-8 h-8 bg-yellow-100 rounded-full">
+                                            <i class="text-sm text-yellow-600 <?php echo $badge['icon']; ?>"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($badge['name']); ?></p>
+                                            <p class="text-xs text-gray-500"><?php echo htmlspecialchars($badge['description']); ?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="text-center text-gray-500">
+                                    <i class="mb-2 text-2xl fas fa-medal"></i>
+                                    <p class="text-sm">No badges earned yet</p>
+                                    <p class="text-xs">Complete activities to earn your first badge!</p>
                                 </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-900">Week Warrior</p>
-                                    <p class="text-xs text-gray-500">5 days this week</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center p-2 space-x-3 transition-all duration-200 rounded-lg cursor-pointer achievement-badge">
-                                <div class="flex items-center justify-center w-8 h-8 bg-purple-100 rounded-full">
-                                    <i class="text-sm text-purple-600 fas fa-trophy"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-900">Course Crusher</p>
-                                    <p class="text-xs text-gray-500">3 courses completed</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center p-2 space-x-3 transition-all duration-200 rounded-lg cursor-pointer achievement-badge">
-                                <div class="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
-                                    <i class="text-sm text-green-600 fas fa-clock"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-900">Time Master</p>
-                                    <p class="text-xs text-gray-500">50+ hours studied</p>
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -603,10 +621,49 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Recent XP Transactions -->
+                    <div class="mt-8">
+                        <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-gray-900">Recent XP Activity</h3>
+                                <span class="text-sm text-gray-500">Last 7 days</span>
+                            </div>
+
+                            <div class="space-y-4">
+                                <?php if (!empty($recent_transactions)): ?>
+                                    <?php foreach ($recent_transactions as $transaction): ?>
+                                        <div class="flex items-center justify-between p-3 transition-all duration-200 border border-gray-100 rounded-lg hover:bg-gray-50">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex items-center justify-center w-10 h-10 bg-green-100 rounded-full">
+                                                    <i class="text-green-600 fas fa-plus"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($transaction['activity_name']); ?></p>
+                                                    <p class="text-xs text-gray-500"><?php echo date('M j, Y g:i A', strtotime($transaction['created_at'])); ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <p class="text-sm font-semibold text-green-600">+<?php echo $transaction['xp_earned']; ?> XP</p>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="py-8 text-center text-gray-500">
+                                        <i class="mb-2 text-3xl fas fa-chart-line"></i>
+                                        <p class="text-sm">No recent XP activity</p>
+                                        <p class="text-xs">Start learning to earn your first XP!</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
             </main>
         </div>
     </div>
+
+    <!-- Include gamification JavaScript -->
+    <script src="../../assets/js/gamification.js"></script>
 </body>
 
 </html>

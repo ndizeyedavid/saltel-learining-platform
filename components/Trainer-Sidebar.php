@@ -38,6 +38,12 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     Assignments
                 </a>
             </li>
+            <li>
+                <a href="transactions.php" <?php echo ($current_page == 'transactions') ? 'id="active"' : ''; ?> class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-[#17a3d6]">
+                    <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-wallet"></i>
+                    Transactions
+                </a>
+            </li>
             <!-- <li>
                 <a href="submissions.php" <?php echo ($current_page == 'submissions') ? 'id="active"' : ''; ?> class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-[#17a3d6]">
                     <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-upload"></i>

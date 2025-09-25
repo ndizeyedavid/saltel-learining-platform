@@ -1,3 +1,36 @@
+<?php
+require_once '../../php/xp_system.php';
+
+// Initialize XP system and get user stats
+$xp_system = new XPSystem($conn);
+$user_stats = $xp_system->getUserStats($_SESSION['user_id']);
+$user_badges = $xp_system->getUserBadges($_SESSION['user_id']);
+$recent_transactions = $xp_system->getRecentTransactions($_SESSION['user_id'], 5);
+
+// Award daily login XP
+$xp_system->awardXP($_SESSION['user_id'], 'login', null, 'Daily login bonus');
+$xp_system->updateStudyStreak($_SESSION['user_id']);
+
+// Refresh stats after daily bonus
+$user_stats = $xp_system->getUserStats($_SESSION['user_id']);
+
+// Load profile image and compute initials
+$profileImageUrl = null;
+if (isset($_SESSION['user_id'])) {
+    $stmt = $conn->prepare("SELECT profile_image_url FROM users WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($row = $res->fetch_assoc()) {
+        $profileImageUrl = $row['profile_image_url'] ?? null;
+    }
+}
+$fullName = trim($_SESSION['user_name'] ?? '');
+$parts = preg_split('/\s+/', $fullName);
+$firstInitial = strtoupper(substr($parts[0] ?? 'U', 0, 1));
+$secondInitial = strtoupper(substr($parts[1] ?? '', 0, 1));
+$initials = $firstInitial . $secondInitial;
+?>
 <!-- Gamified Header for Saltel Learning Platform -->
 <header class="px-6 py-4 bg-white border-b border-gray-200 shadow-sm" style="z-index: 10; position: relative;">
     <div class="flex items-center justify-between">
@@ -9,14 +42,14 @@
                     <div class="flex items-center space-x-2">
                         <i class="text-yellow-400 fas fa-star"></i>
                         <div class="text-left">
-                            <p class="text-xs font-medium opacity-90">Level 8</p>
-                            <p class="text-sm font-bold">2,450 XP</p>
+                            <p class="text-xs font-medium opacity-90">Level <?php echo $user_stats['current_level']; ?></p>
+                            <p class="text-sm font-bold"><?php echo number_format($user_stats['total_xp']); ?> XP</p>
                         </div>
                     </div>
                     <div class="w-16 h-2 bg-white rounded-full bg-opacity-30">
-                        <div class="h-2 transition-all duration-500 bg-yellow-400 rounded-full" style="width: 78%"></div>
+                        <div class="h-2 transition-all duration-500 bg-yellow-400 rounded-full" style="width: <?php echo $user_stats['total_xp'] * 100 / ($user_stats['total_xp'] + $user_stats['xp_to_next_level']); ?>%"></div>
                     </div>
-                    <span class="text-xs opacity-90">550 to Level 9</span>
+                    <span class="text-xs opacity-90"><?php echo $user_stats['xp_to_next_level']; ?> to Level <?php echo $user_stats['current_level'] + 1; ?></span>
                 </div>
             </div>
         </div>
@@ -114,18 +147,22 @@
                     <div class="relative">
                         <!-- Avatar with Level Ring -->
                         <div class="size-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-0.5">
-                            <div class="flex items-center justify-center w-full h-full bg-white rounded-full">
-                                <span class="text-lg font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">CD</span>
+                            <div class="flex items-center justify-center w-full h-full bg-white rounded-full overflow-hidden">
+                                <?php if (!empty($profileImageUrl)) { ?>
+                                    <img src="<?php echo '../../' . htmlspecialchars($profileImageUrl); ?>" alt="Avatar" class="object-cover w-full h-full rounded-full" />
+                                <?php } else { ?>
+                                    <span class="text-lg font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"><?php echo htmlspecialchars($initials); ?></span>
+                                <?php } ?>
                             </div>
                         </div>
                         <!-- Level Badge -->
                         <div class="absolute flex items-center justify-center border-2 border-white rounded-full size-5 -bottom-1 -right-1 bg-gradient-to-r from-yellow-400 to-orange-500">
-                            <span class="text-[9px] font-bold text-white">8</span>
+                            <span class="text-[9px] font-bold text-white"><?php echo $user_stats['current_level']; ?></span>
                         </div>
                     </div>
                     <div class="hidden text-left md:block">
-                        <p class="text-sm font-bold text-gray-900">C. David</p>
-                        <p class="text-xs text-gray-600">Level 8 • 2,450 XP</p>
+                        <p class="text-sm font-bold text-gray-900"><?php echo htmlspecialchars($parts[0][0] ?? 'U') . '. ' . htmlspecialchars($parts[1] ?? ($parts[0] ?? 'User')); ?></p>
+                        <p class="text-xs text-gray-600">Level <?php echo $user_stats['current_level']; ?> • <?php echo number_format($user_stats['total_xp']); ?> XP</p>
                     </div>
                     <i class="text-gray-400 transition-transform duration-300 fas fa-chevron-down" id="userChevron"></i>
                 </button>
@@ -136,16 +173,20 @@
                         <!-- User Info Header -->
                         <div class="flex items-center pb-4 space-x-3 border-b border-gray-200">
                             <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-0.5">
-                                <div class="flex items-center justify-center w-full h-full bg-white rounded-full">
-                                    <span class="text-xl font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">CD</span>
+                                <div class="flex items-center justify-center w-full h-full bg-white rounded-full overflow-hidden">
+                                    <?php if (!empty($profileImageUrl)) { ?>
+                                        <img src="<?php echo '../../' . htmlspecialchars($profileImageUrl); ?>" alt="Avatar" class="object-cover w-full h-full rounded-full" />
+                                    <?php } else { ?>
+                                        <span class="text-xl font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"><?php echo htmlspecialchars($initials); ?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <h3 class="font-bold text-gray-900">Christopher David</h3>
-                                <p class="text-sm text-gray-600">Computer Science Student</p>
+                                <h3 class="font-bold text-gray-900"><?php echo $_SESSION['user_name']; ?></h3>
+                                <p class="text-sm text-gray-600"><?php echo $_SESSION['user_email'] ?> XP</p>
                                 <div class="flex items-center mt-1 space-x-2">
-                                    <span class="px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full">Level 8</span>
-                                    <span class="px-2 py-1 text-xs font-medium text-yellow-800 bg-yellow-100 rounded-full">2,450 XP</span>
+                                    <span class="px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full">Level <?php echo $user_stats['current_level']; ?></span>
+                                    <span class="px-2 py-1 text-xs font-medium text-yellow-800 bg-yellow-100 rounded-full"><?php echo number_format($user_stats['total_xp']); ?> XP</span>
                                 </div>
                             </div>
                         </div>
@@ -153,15 +194,15 @@
                         <!-- Quick Stats -->
                         <div class="grid grid-cols-3 gap-3 py-4 border-b border-gray-200">
                             <div class="text-center">
-                                <div class="text-lg font-bold text-blue-600">8</div>
+                                <div class="text-lg font-bold text-blue-600"><?php echo count($user_badges); ?></div>
                                 <div class="text-xs text-gray-500">Courses</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-lg font-bold text-green-600">5</div>
+                                <div class="text-lg font-bold text-green-600"><?php echo count($user_badges); ?></div>
                                 <div class="text-xs text-gray-500">Certificates</div>
                             </div>
                             <div class="text-center">
-                                <div class="text-lg font-bold text-purple-600">12</div>
+                                <div class="text-lg font-bold text-purple-600"><?php echo count($user_badges); ?></div>
                                 <div class="text-xs text-gray-500">Badges</div>
                             </div>
                         </div>
@@ -288,9 +329,9 @@
         setTimeout(() => {
             const xpBar = document.querySelector('.bg-yellow-400');
             if (xpBar) {
-                xpBar.style.width = '0%';
+                xpBar.style.width = '<?php echo $user_stats['total_xp'] * 100 / ($user_stats['total_xp'] + $user_stats['xp_to_next_level']); ?>%';
                 setTimeout(() => {
-                    xpBar.style.width = '78%';
+                    xpBar.style.width = '<?php echo $user_stats['total_xp'] * 100 / ($user_stats['total_xp'] + $user_stats['xp_to_next_level']); ?>%';
                 }, 500);
             }
         }, 100);

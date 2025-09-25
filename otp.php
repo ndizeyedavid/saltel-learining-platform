@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP • saltel Rwanda</title>
+    <link rel="icon" href="./assets/images/fav.png">
+
     <link rel="stylesheet" href="./assets/css/main.css">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -30,8 +35,29 @@
                 </p>
                 <p class="text-xs font-medium text-secondary" id="email-display">
                     <!-- Email will be displayed -->
-                    someone@gmail.com
+                    <?php echo isset($_SESSION['success']) ? $_SESSION['success'] : ''; ?>
                 </p>
+
+                <?php if (isset($_SESSION['otp_sent'])): ?>
+                    <div class="p-3 mb-4 text-sm text-green-800 bg-green-100 rounded-lg">
+                        <?php echo $_SESSION['otp_sent'];
+                        unset($_SESSION['otp_sent']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['warning'])): ?>
+                    <div class="p-3 mb-4 text-sm text-yellow-800 bg-yellow-100 rounded-lg">
+                        <?php echo $_SESSION['warning'];
+                        unset($_SESSION['warning']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="p-3 mb-4 text-sm text-red-800 bg-red-100 rounded-lg">
+                        <?php echo $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <!-- OTP Input fields -->

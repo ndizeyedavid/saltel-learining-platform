@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saltel • Settings</title>
     <?php include '../../include/trainer-imports.php'; ?>
+    <?php include '../../include/trainer-guard.php'; ?>
 </head>
 
 <body class="font-sans bg-gray-50">
@@ -26,24 +27,25 @@
                             <div class="space-y-4">
                                 <div>
                                     <label class="block mb-2 text-sm font-medium text-gray-700">Current Password</label>
-                                    <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <input id="currentPassword" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                                 </div>
                                 <div>
                                     <label class="block mb-2 text-sm font-medium text-gray-700">New Password</label>
-                                    <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <input id="newPassword" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                                 </div>
                                 <div>
                                     <label class="block mb-2 text-sm font-medium text-gray-700">Confirm New Password</label>
-                                    <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <input id="confirmPassword" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                                 </div>
-                                <button class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                <button id="updatePasswordBtn" class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                                     Update Password
                                 </button>
+                                <p id="passwordMessage" class="mt-2 text-sm"></p>
                             </div>
                         </div>
 
                         <!-- Notification Settings -->
-                        <div class="p-6 bg-white rounded-lg shadow-sm">
+                        <!-- <div class="p-6 bg-white rounded-lg shadow-sm">
                             <h2 class="mb-4 text-lg font-semibold text-gray-900">Notification Settings</h2>
                             <div class="space-y-4">
                                 <label class="flex items-center">
@@ -63,10 +65,10 @@
                                     <span class="ml-2 text-sm text-gray-700">Email notifications</span>
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Privacy Settings -->
-                        <div class="p-6 bg-white rounded-lg shadow-sm">
+                        <!-- <div class="p-6 bg-white rounded-lg shadow-sm">
                             <h2 class="mb-4 text-lg font-semibold text-gray-900">Privacy Settings</h2>
                             <div class="space-y-4">
                                 <label class="flex items-center">
@@ -82,13 +84,49 @@
                                     <span class="ml-2 text-sm text-gray-700">Allow direct messages</span>
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
             </main>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('updatePasswordBtn');
+            const msg = document.getElementById('passwordMessage');
+            btn.addEventListener('click', async () => {
+                msg.textContent = '';
+                msg.className = 'mt-2 text-sm';
+                const payload = {
+                    current_password: document.getElementById('currentPassword').value,
+                    new_password: document.getElementById('newPassword').value,
+                    confirm_password: document.getElementById('confirmPassword').value
+                };
+                try {
+                    const res = await fetch('../api/trainer/settings.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        throw new Error(data.error || 'Failed to update password');
+                    }
+                    msg.textContent = data.success.message || 'Password updated successfully';
+                    msg.classList.add('text-green-600');
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                } catch (e) {
+                    msg.textContent = e.message || 'An error occurred';
+                    msg.classList.add('text-red-600');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
