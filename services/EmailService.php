@@ -1,11 +1,26 @@
 <?php
+// Load environment variables from .env file
+if (file_exists(__DIR__ . '/../.env')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+    $dotenv->load();
+    $dotenv->required([
+        'SENDGRID_HOST',
+        'SENDGRID_USERNAME',
+        'SENDGRID_API_KEY',
+        'SENDGRID_EMAIL'
+    ])->notEmpty();
+} else {
+    die('.env file not found in ' . __DIR__ . '/..');
+}
+
 // Check if autoloader exists, if not use alternative path
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require_once __DIR__ . '/../vendor/autoload.php';
 } elseif (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
     require_once __DIR__ . '/../../vendor/autoload.php';
 } else {
-    // Fallback: include PHPMailer files directly if composer not available
+    // Fallback: include PHPMailer files directly if composer not available 
     require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/PHPMailer.php';
     require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/SMTP.php';
     require_once __DIR__ . '/../vendor/phpmailer/phpmailer/src/Exception.php';
@@ -30,15 +45,15 @@ class EmailService
         try {
             // SendGrid SMTP settings
             $this->mail->isSMTP();
-            $this->mail->Host       = 'smtp.sendgrid.net';
+            $this->mail->Host       = $_ENV['SENDGRID_HOST'];
             $this->mail->SMTPAuth   = true;
-            $this->mail->Username   = 'apikey'; // Always "apikey" for SendGrid
-            $this->mail->Password   = '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'; // Replace with your SendGrid API key
+            $this->mail->Username   = $_ENV['SENDGRID_USERNAME']; // Always "apikey" for SendGrid
+            $this->mail->Password   = $_ENV['SENDGRID_API_KEY']; // Replace with your SendGrid API key
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port       = 587;
 
             // Sender email - Use your verified email in SendGrid
-            $this->mail->setFrom('davidndizeye101@gmail.com');
+            $this->mail->setFrom($_ENV['SENDGRID_EMAIL']);
         } catch (Exception $e) {
             // error_log("Email setup failed: " . $e->getMessage());
             echo "Email setup failed: " . $e->getMessage();

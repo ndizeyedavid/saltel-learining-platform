@@ -4,4 +4,6 @@ check-error-log.php
 SETUP_OTP.md
 test-brevo.php
 uploads
+.env
+migrations
 # doc
