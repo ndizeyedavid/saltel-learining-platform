@@ -104,7 +104,7 @@
         FROM courses c
         LEFT JOIN enrollments r ON c.course_id = r.course_id
         LEFT JOIN enrollments e ON c.course_id = e.course_id
-        WHERE c.status = 'active'
+        WHERE c.status = 'Published'
         AND c.course_id NOT IN (
             SELECT course_id FROM enrollments WHERE student_id = ?
         )
@@ -145,7 +145,7 @@
     $weekly_stmt->bind_param("i", $student_id);
     $weekly_stmt->execute();
     $weekly_logins = $weekly_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    
+
     // If no logins found with 'login', try alternative activity names
     if (empty($weekly_logins)) {
         // Try with different possible activity names
@@ -161,29 +161,29 @@
         $alt_stmt->bind_param("i", $student_id);
         $alt_stmt->execute();
         $alt_results = $alt_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        
+
         // Use the alternative results if found
         if (!empty($alt_results)) {
             $weekly_logins = $alt_results;
         }
     }
-    
+
     // Create array of last 7 days with login status
     $week_days = [];
     $day_names = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    
+
     for ($i = 6; $i >= 0; $i--) {
         $date = date('Y-m-d', strtotime("-$i days"));
         $day_name = $day_names[date('w', strtotime($date))];
         $has_login = false;
-        
+
         foreach ($weekly_logins as $login) {
             if ($login['login_date'] === $date) {
                 $has_login = true;
                 break;
             }
         }
-        
+
         $week_days[] = [
             'date' => $date,
             'day_name' => $day_name,
@@ -191,7 +191,7 @@
             'is_today' => $date === date('Y-m-d')
         ];
     }
-    
+
     // Calculate this week's login count
     $this_week_logins = count($weekly_logins);
 
@@ -562,7 +562,7 @@
                     <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="text-lg font-semibold text-gray-900">Featured Lessons</h3>
-                            <button class="text-sm text-blue-600 hover:text-blue-700">View All</button>
+                            <a href="courses.php" class="text-sm text-blue-600 hover:text-blue-700">View All</a>
                         </div>
 
                         <div class="space-y-4">
@@ -570,10 +570,6 @@
                                 <?php foreach ($featured_courses as $course): ?>
                                     <?php
                                     $icon = getCategoryIcon($course['category']);
-                                    $rating = round($course['avg_rating'], 1);
-                                    $full_stars = floor($rating);
-                                    $has_half_star = ($rating - $full_stars) >= 0.5;
-                                    $empty_stars = 5 - $full_stars - ($has_half_star ? 1 : 0);
                                     ?>
                                     <div class="p-4 transition-all border border-blue-200 rounded-lg cursor-pointer bg-blue-50/30 bg-blue-50 featured-lesson hover:shadow-md" onclick="window.location.href='../../courses.php?course_id=<?php echo $course['course_id']; ?>'">
                                         <div class="flex items-start space-x-4">
@@ -582,19 +578,7 @@
                                             </div>
                                             <div class="flex-1">
                                                 <div class="flex items-center mb-2 space-x-2">
-                                                    <h4 class="font-semibold text-gray-900"><?php echo htmlspecialchars($course['title']); ?></h4>
-                                                    <div class="flex text-yellow-400">
-                                                        <?php for ($i = 0; $i < $full_stars; $i++): ?>
-                                                            <i class="fas fa-star"></i>
-                                                        <?php endfor; ?>
-                                                        <?php if ($has_half_star): ?>
-                                                            <i class="fas fa-star-half-alt"></i>
-                                                        <?php endif; ?>
-                                                        <?php for ($i = 0; $i < $empty_stars; $i++): ?>
-                                                            <i class="far fa-star"></i>
-                                                        <?php endfor; ?>
-                                                        <span class="ml-1 text-sm text-gray-600">(<?php echo $rating; ?>)</span>
-                                                    </div>
+                                                    <h4 class="font-semibold text-gray-900"><?php echo htmlspecialchars($course['course_title']); ?></h4>
                                                 </div>
                                                 <p class="mb-3 text-sm text-gray-600"><?php echo htmlspecialchars(substr($course['description'], 0, 100)) . '...'; ?></p>
                                                 <div class="flex items-center justify-between">
@@ -608,7 +592,7 @@
                                                         <?php else: ?>
                                                             <span class="text-lg font-bold text-green-600">Free</span>
                                                         <?php endif; ?>
-                                                        <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 enroll-btn" onclick="event.stopPropagation(); window.location.href='../../courses.php?course_id=<?php echo $course['course_id']; ?>'">
+                                                        <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 enroll-btn" onclick="event.stopPropagation(); window.location.href='course-viewer.php?course=3=<?php echo $course['course_id']; ?>'">
                                                             Enroll Now
                                                         </button>
                                                     </div>
