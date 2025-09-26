@@ -993,7 +993,7 @@
             if (course.course_status === 'completed') {
                 return `<button onclick="viewCertificate(${course.course_id})" class="w-full px-4 py-2 text-sm font-medium text-green-600 transition-colors rounded-lg bg-green-50 hover:bg-green-100">View Certificate</button>`;
             } else if (course.course_status === 'in_progress' || course.course_status === 'enrolled') {
-                return `<a href="course-viewer.php?course=${course.course_id}" class="block w-full px-4 py-2 text-sm font-medium text-center text-blue-600 transition-colors rounded-lg bg-blue-50 hover:bg-blue-100">Continue Learning</a>`;
+                return `<a href="course-viewer.php?course=${course.course_id}&lesson=2" class="block w-full px-4 py-2 text-sm font-medium text-center text-blue-600 transition-colors rounded-lg bg-blue-50 hover:bg-blue-100">Continue Learning</a>`;
             } else if (course.course_status === 'pending_payment') {
                 return `<button onclick="completePayment(${course.course_id}, '${course.course_title}', ${course.price})" class="w-full px-4 py-2 text-sm font-medium text-white transition-colors bg-yellow-600 rounded-lg hover:bg-yellow-700">Complete Payment</button>`;
             } else if (course.can_enroll) {

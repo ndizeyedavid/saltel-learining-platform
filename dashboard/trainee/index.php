@@ -592,7 +592,7 @@
                                                         <?php else: ?>
                                                             <span class="text-lg font-bold text-green-600">Free</span>
                                                         <?php endif; ?>
-                                                        <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 enroll-btn" onclick="event.stopPropagation(); window.location.href='course-viewer.php?course=3=<?php echo $course['course_id']; ?>'">
+                                                        <button class="px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 enroll-btn" onclick="event.stopPropagation(); window.location.href='course-viewer.php?course=<?php echo $course['course_id']; ?>&lesson=2'">
                                                             Enroll Now
                                                         </button>
                                                     </div>
