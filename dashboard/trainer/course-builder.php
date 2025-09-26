@@ -51,7 +51,13 @@
                             <?php echo $course_data ? 'Update your course details and settings.' : 'Fill in the details below to create your course.'; ?>
                         </p>
                     </div>
-                    <?php echo $_SESSION['error']; ?>
+                    <?php if (isset($_SESSION['error'])): ?>
+
+                        <div class="p-4 mb-5 text-sm text-white bg-red-600 rounded-lg">
+                            <?php echo $_SESSION['error']; ?>sadas
+                        </div>
+                    <?php endif; ?>
+
                     <!-- Course Form -->
                     <form id="courseForm" action="../../dashboard/api/courses/save.php" method="POST" enctype="multipart/form-data">
                         <?php if ($course_data): ?>
@@ -195,7 +201,7 @@
 
                                 <div class="flex flex-col w-full gap-3 sm:flex-row sm:w-auto">
                                     <button type="submit" name="action" value="draft"
-                                        class="w-full px-6 py-2 text-gray-700 transition-colors bg-gray-100 border border-gray-300 rounded-lg sm:w-auto hover:bg-gray-200">
+                                        class="hidden w-full px-6 py-2 text-gray-700 transition-colors bg-gray-100 border border-gray-300 rounded-lg sm:w-auto hover:bg-gray-200">
                                         <i class="mr-2 fas fa-save"></i>Save as Draft
                                     </button>
 

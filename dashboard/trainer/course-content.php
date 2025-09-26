@@ -10,6 +10,8 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <?php
@@ -328,7 +330,12 @@ $course_title = $course_data['course_title'];
         // Save Changes button functionality
         document.getElementById('saveChangesBtn').addEventListener('click', async () => {
             if (!currentModuleId) {
-                alert('Please select a module first');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'No Module Selected',
+                    text: 'Please select a module first',
+                    confirmButtonColor: '#3b82f6'
+                });
                 return;
             }
             await saveLessonContent();
@@ -346,7 +353,12 @@ $course_title = $course_data['course_title'];
         // Quiz functionality
         document.getElementById('addQuestionBtn').addEventListener('click', () => {
             if (!currentLessonId) {
-                alert('Please save the lesson first before adding questions');
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Save Lesson First',
+                    text: 'Please save the lesson first before adding questions',
+                    confirmButtonColor: '#3b82f6'
+                });
                 return;
             }
             openQuestionModal();
@@ -355,7 +367,12 @@ $course_title = $course_data['course_title'];
         // Prerequisites functionality
         document.getElementById('addPrerequisiteBtn').addEventListener('click', () => {
             if (!currentLessonId) {
-                alert('Please save the lesson first before adding prerequisites');
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Save Lesson First',
+                    text: 'Please save the lesson first before adding prerequisites',
+                    confirmButtonColor: '#3b82f6'
+                });
                 return;
             }
             openPrerequisiteModal();
@@ -398,7 +415,12 @@ $course_title = $course_data['course_title'];
             };
 
             if (!moduleData.module_title) {
-                alert('Module title is required');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Missing Title',
+                    text: 'Module title is required',
+                    confirmButtonColor: '#3b82f6'
+                });
                 return;
             }
 
@@ -418,13 +440,31 @@ $course_title = $course_data['course_title'];
                     descInput.value = '';
                     moduleModal.classList.add('hidden');
                     loadModules(); // Reload modules
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Module Created!',
+                        text: 'Your module has been created successfully',
+                        confirmButtonColor: '#3b82f6',
+                        timer: 2000,
+                        timerProgressBar: true
+                    });
                 } else {
                     console.log(result);
-                    // alert(result.error || 'Failed to create module');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Creation Failed',
+                        text: result.error || 'Failed to create module',
+                        confirmButtonColor: '#3b82f6'
+                    });
                 }
             } catch (error) {
                 console.error('Error creating module:', error);
-                alert('Failed to create module');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Failed to create module. Please check your connection.',
+                    confirmButtonColor: '#3b82f6'
+                });
             }
         });
 
@@ -550,7 +590,12 @@ $course_title = $course_data['course_title'];
             const points = document.getElementById('lessonPoints').value;
 
             if (!lessonTitle) {
-                alert('Please enter a lesson title');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Missing Title',
+                    text: 'Please enter a lesson title',
+                    confirmButtonColor: '#3b82f6'
+                });
                 return;
             }
 
@@ -606,11 +651,21 @@ $course_title = $course_data['course_title'];
                         saveBtn.classList.add('bg-blue-600');
                     }, 2000);
                 } else {
-                    alert(result.error || 'Failed to save lesson');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Save Failed',
+                        text: result.error || 'Failed to save lesson',
+                        confirmButtonColor: '#3b82f6'
+                    });
                 }
             } catch (error) {
                 console.error('Error saving lesson:', error);
-                alert('Failed to save lesson');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Failed to save lesson. Please check your connection.',
+                    confirmButtonColor: '#3b82f6'
+                });
             }
         }
 
@@ -626,7 +681,12 @@ $course_title = $course_data['course_title'];
             if (!files.length) return;
 
             if (!currentLessonId) {
-                alert('Please save the lesson first before uploading resources');
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Save Lesson First',
+                    text: 'Please save the lesson first before uploading resources',
+                    confirmButtonColor: '#3b82f6'
+                });
                 return;
             }
 
@@ -668,12 +728,30 @@ $course_title = $course_data['course_title'];
                 if (result.success) {
                     // Reload resources list
                     await loadResources();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Upload Successful!',
+                        text: 'Resource has been uploaded successfully',
+                        confirmButtonColor: '#3b82f6',
+                        timer: 2000,
+                        timerProgressBar: true
+                    });
                 } else {
-                    alert(result.error || 'Failed to upload resource');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Upload Failed',
+                        text: result.error || 'Failed to upload resource',
+                        confirmButtonColor: '#3b82f6'
+                    });
                 }
             } catch (error) {
                 console.error('Error uploading resource:', error);
-                alert('Failed to upload resource');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Failed to upload resource. Please check your connection.',
+                    confirmButtonColor: '#3b82f6'
+                });
             }
         }
 
@@ -1094,33 +1172,41 @@ $course_title = $course_data['course_title'];
 
         // Delete module function
         async function deleteModule(moduleId) {
-            if (!confirm('Are you sure you want to delete this module? This will also delete all lessons and resources within it.')) {
-                return;
-            }
+            Swal.fire({
+                title: 'Delete Module?',
+                text: 'Are you sure you want to delete this module? This will also delete all lessons and resources within it.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(`../api/courses/modules.php?module_id=${moduleId}`, {
+                            method: 'DELETE'
+                        });
 
-            try {
-                const response = await fetch(`../api/courses/modules.php?module_id=${moduleId}`, {
-                    method: 'DELETE'
-                });
+                        const result = await response.json();
 
-                const result = await response.json();
-
-                if (result.success) {
-                    loadModules(); // Reload modules
-                    if (currentModuleId === moduleId) {
-                        currentModuleId = null;
-                        currentLessonId = null;
-                        // Clear editor
-                        document.querySelector('#contentEditor input[type="text"]').value = '';
-                        quill.setContents([]);
+                        if (result.success) {
+                            loadModules(); // Reload modules
+                            if (currentModuleId === moduleId) {
+                                currentModuleId = null;
+                                currentLessonId = null;
+                                // Clear editor
+                                document.querySelector('#contentEditor input[type="text"]').value = '';
+                                quill.setContents([]);
+                            }
+                        } else {
+                            alert(result.error || 'Failed to delete module');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting module:', error);
+                        alert('Failed to delete module');
                     }
-                } else {
-                    alert(result.error || 'Failed to delete module');
                 }
-            } catch (error) {
-                console.error('Error deleting module:', error);
-                alert('Failed to delete module');
-            }
+            });
+
         }
 
         // Prerequisites functionality

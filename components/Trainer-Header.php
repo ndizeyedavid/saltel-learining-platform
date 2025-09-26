@@ -29,7 +29,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="flex items-center space-x-4">
             <!-- Notifications -->
             <div class="relative">
-                <button id="notificationBtn" class="relative p-2 text-gray-400 transition-colors hover:text-saltel">
+                <button id="notificationBtn" class="relative hidden p-2 text-gray-400 transition-colors hover:text-saltel">
                     <i class="text-lg fas fa-bell"></i>
                     <span class="absolute flex items-center justify-center w-4 h-4 text-xs text-white rounded-full -top-1 -right-1 bg-saltel">3</span>
                 </button>

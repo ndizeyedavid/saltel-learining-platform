@@ -51,11 +51,17 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                 </a>
             </li> -->
 
-            <!-- Communication & Collaboration -->
             <li>
-                <a href="discussions.php" <?php echo ($current_page == 'discussions') ? 'id="active"' : ''; ?> class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-[#17a3d6]">
-                    <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-comments"></i>
-                    Discussions
+                <a href="classroom.php" <?php echo ($current_page == 'classroom') ? 'id="active"' : ''; ?> class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-[#17a3d6]">
+                    <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-chalkboard-teacher"></i>
+                    Classroom
+                </a>
+            </li>
+
+            <li>
+                <a href="calendar.php" <?php echo ($current_page == 'calendar') ? 'id="active"' : ''; ?> class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 transition-colors rounded-lg hover:bg-gray-50 hover:text-[#17a3d6]">
+                    <i class="flex items-center justify-center w-5 h-5 mr-3 fas fa-calendar"></i>
+                    Calendar
                 </a>
             </li>
 

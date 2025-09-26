@@ -344,7 +344,7 @@
     <script src="../../assets/js/assignment-quiz.js"></script>
 
     <!-- Anti-cheat JavaScript -->
-    <!-- <script>
+    <script>
         class AntiCheatSystem {
             constructor() {
                 this.violations = 0;
@@ -534,7 +534,7 @@
                 });
             }
         });
-    </script> -->
+    </script>
 </body>
 
 </html>

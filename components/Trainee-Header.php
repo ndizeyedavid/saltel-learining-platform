@@ -106,7 +106,7 @@ $initials = $firstInitial . $secondInitial;
         <div class="flex items-center space-x-4">
             <!-- Enhanced Notifications -->
             <div class="relative">
-                <button id="notificationBtn" class="relative text-gray-600 transition-all duration-300 transform bg-white border-2 border-transparent rounded-full shadow-lg size-12 notification-btn hover:text-blue-600 hover:shadow-xl hover:border-blue-200">
+                <button id="notificationBtn" class="relative hidden text-gray-600 transition-all duration-300 transform bg-white border-2 border-transparent rounded-full shadow-lg size-12 notification-btn hover:text-blue-600 hover:shadow-xl hover:border-blue-200">
                     <i class="text-xl fas fa-bell"></i>
                     <span class="absolute flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full notification-badge -top-1 -right-1">4</span>
                 </button>
@@ -282,10 +282,10 @@ $initials = $firstInitial . $secondInitial;
 
                         <!-- Bottom Actions -->
                         <div class="pt-2 border-t border-gray-200">
-                            <button class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-red-50 hover:text-red-600">
+                            <a href="../../php/logout.php" class="flex items-center w-full px-3 py-2 space-x-3 transition-colors rounded-lg hover:bg-red-50 hover:text-red-600">
                                 <i class="w-5 fas fa-sign-out-alt"></i>
                                 <span class="font-medium">Sign Out</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
