@@ -236,7 +236,7 @@
     </div>
 
     <!-- Results Page -->
-    <div id="resultsPage" class="hidden items-center justify-center min-h-screen p-4">
+    <div id="resultsPage" class="items-center justify-center hidden min-h-screen p-4">
         <div class="w-full max-w-2xl overflow-hidden bg-white shadow-xl rounded-2xl">
             <!-- Results Header -->
             <div id="resultsHeader" class="p-8 text-center text-white">
@@ -275,7 +275,7 @@
                         <i class="mr-2 fas fa-eye"></i>
                         Review Answers
                     </button>
-                    <button id="retakeAssignmentBtn" class="flex-1 px-6 py-3 font-semibold text-white transition-colors bg-gray-600 rounded-lg hover:bg-gray-700">
+                    <button id="retakeAssignmentBtn" class="flex-1 hidden px-6 py-3 font-semibold text-white transition-colors bg-gray-600 rounded-lg hover:bg-gray-700">
                         <i class="mr-2 fas fa-redo"></i>
                         Retake Quiz
                     </button>
@@ -344,7 +344,7 @@
     <script src="../../assets/js/assignment-quiz.js"></script>
 
     <!-- Anti-cheat JavaScript -->
-    <script>
+    <!-- <script>
         class AntiCheatSystem {
             constructor() {
                 this.violations = 0;
@@ -534,7 +534,7 @@
                 });
             }
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

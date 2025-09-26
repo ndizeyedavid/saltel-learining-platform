@@ -79,7 +79,7 @@
                         </div>
 
                         <!-- Assignment Filters -->
-                        <div class="p-6 mb-6 bg-white shadow-sm rounded-xl">
+                        <!-- <div class="p-6 mb-6 bg-white shadow-sm rounded-xl">
                             <div class="flex flex-wrap items-center justify-between gap-4">
                                 <div class="flex items-center space-x-4">
                                     <h3 class="text-lg font-semibold text-gray-900">Filter Assignments</h3>
@@ -92,290 +92,26 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="p-2 bg-white shadow-sm rounded-xl">
-                            <table id="assignmentsTable" class="w-full text-sm text-left text-gray-500">
+                            <div id="loadingSpinner" class="flex items-center justify-center hidden py-12">
+                                <div class="w-8 h-8 border-b-2 border-blue-600 rounded-full animate-spin"></div>
+                                <span class="ml-3 text-gray-600">Loading assignments...</span>
+                            </div>
+
+                            <table id="assignmentsTable" class="hidden w-full text-sm text-left text-gray-500">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="px-6 py-4 font-semibold">Assignment Title</th>
-                                        <th scope="col" class="px-6 py-4 font-semibold">Course/lessons</th>
-                                        <th scope="col" class="px-6 py-4 font-semibold">Due Date</th>
-                                        <th scope="col" class="px-6 py-4 font-semibold">Status</th>
-                                        <th scope="col" class="px-6 py-4 font-semibold">Action</th>
+                                        <th scope="col" class="px-6 py-3">Assignment</th>
+                                        <th scope="col" class="px-6 py-3">Course</th>
+                                        <th scope="col" class="px-6 py-3">Due Date</th>
+                                        <th scope="col" class="px-6 py-3">Status</th>
+                                        <th scope="col" class="px-6 py-3">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <!-- Completed Assignment -->
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-                                                <div>
-                                                    <div class="font-medium text-gray-900">Conducting User Research</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-blue-800 bg-blue-100 rounded-full">Document</span>
-                                                        <span class="font-medium text-green-600">• Submitted on July 1, 2024</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">User Research and Personas</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">July 1, 2024</div>
-                                            <div class="text-xs font-medium text-green-600">Submitted early</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-green-800 bg-green-100 border border-green-200 rounded-full">
-                                                <i class="mr-1 fas fa-check-circle"></i>
-                                                Completed
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center space-x-2">
-                                                <span class="text-sm font-medium text-green-600">✓ Submitted</span>
-                                                <button class="text-xs text-blue-600 underline hover:text-blue-800">View Feedback</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Technical Assignment - In Progress -->
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <div class="font-medium text-gray-900">React Portfolio Website</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-purple-800 bg-purple-100 rounded-full">Technical</span>
-                                                        <span class="font-medium text-blue-600">• ZIP Upload Required</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">React Development Mastery</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">December 30, 2024</div>
-                                            <div class="text-xs font-medium text-blue-600">5 days remaining</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-800 bg-blue-100 border border-blue-200 rounded-full">
-                                                <i class="mr-1 fas fa-clock"></i>
-                                                In Progress
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button class="px-4 py-2 text-sm font-medium text-white transition-all bg-purple-600 rounded-lg hover:bg-purple-700 hover:shadow-lg upload-code-btn" data-assignment="react-portfolio">
-                                                <i class="mr-2 fas fa-upload"></i>
-                                                Upload Code
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Quiz Assignment - Available -->
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <a href="assignment-take.php?id=1" class="font-medium text-blue-600 hover:text-blue-800 hover:underline">
-                                                        Data Science Quiz - Module 6
-                                                    </a>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-green-800 bg-green-100 rounded-full">Quiz</span>
-                                                        <span class="text-gray-600">• 15 Questions</span>
-                                                        <span class="font-medium text-orange-600">• 30 min limit</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">Machine Learning Basics</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">December 25, 2024</div>
-                                            <div class="text-xs font-medium text-orange-600">Due today!</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-yellow-800 bg-yellow-100 border border-yellow-200 rounded-full">
-                                                <i class="mr-1 fas fa-hourglass-half"></i>
-                                                Available
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <a href="assignment-take.php?id=1" class="px-4 py-2 text-sm font-medium text-white transition-all bg-green-600 rounded-lg hover:bg-green-700 hover:shadow-lg">
-                                                <i class="mr-2 fas fa-play"></i>
-                                                Take Quiz
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Locked Assignment - Course Incomplete -->
-                                    <tr class="border-b opacity-75 bg-gray-50 hover:bg-gray-100">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <div class="font-medium text-gray-600">Advanced ML Algorithms Quiz</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-gray-700 bg-gray-200 rounded-full">Quiz</span>
-                                                        <span class="font-medium text-red-600">• Requires: Machine Learning Basics</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">Advanced Analytics</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">January 15, 2025</div>
-                                            <div class="text-xs text-gray-500">21 days remaining</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-full">
-                                                <i class="mr-1 fas fa-lock"></i>
-                                                Locked
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button class="px-4 py-2 text-sm font-medium text-gray-600 transition-colors bg-gray-200 rounded-lg cursor-not-allowed hover:bg-gray-300 locked-assignment-btn"
-                                                data-required-course="Machine Learning Basics"
-                                                data-course-link="course-viewer.php?course=machine-learning-basics">
-                                                <i class="mr-2 fas fa-lock"></i>
-                                                View Requirements
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Technical Assignment - Python -->
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <div class="font-medium text-gray-900">Data Analysis Project</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-purple-800 bg-purple-100 rounded-full">Technical</span>
-                                                        <span class="font-medium text-red-600">• Overdue by 2 days</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">Python Data Analytics</td>
-                                        <td class="px-6 py-4">
-                                            <div class="font-medium text-red-600">January 5, 2025</div>
-                                            <div class="text-xs font-bold text-red-600">OVERDUE</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-red-800 bg-red-100 border border-red-200 rounded-full">
-                                                <i class="mr-1 fas fa-exclamation-triangle"></i>
-                                                Overdue
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button class="px-4 py-2 text-sm font-medium text-white transition-all bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg upload-code-btn" data-assignment="python-data-analysis">
-                                                <i class="mr-2 fas fa-upload"></i>
-                                                Upload Now
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Document Assignment -->
-                                    <tr class="bg-white border-b hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <div class="font-medium text-gray-900">Usability Testing Report</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-blue-800 bg-blue-100 rounded-full">Document</span>
-                                                        <span class="font-medium text-orange-600">• PDF, DOC, PPT accepted</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">Usability Testing and Iteration</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">August 22, 2024</div>
-                                            <div class="text-xs font-medium text-orange-600">3 days remaining</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-orange-800 bg-orange-100 border border-orange-200 rounded-full">
-                                                <i class="mr-1 fas fa-clock"></i>
-                                                Pending
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button class="px-4 py-2 text-sm font-medium text-blue-600 transition-all rounded-lg bg-blue-50 hover:bg-blue-100 hover:shadow-lg upload-doc-btn" data-assignment="usability-report">
-                                                <i class="mr-2 fas fa-upload"></i>
-                                                Upload Document
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Locked Technical Assignment -->
-                                    <tr class="border-b opacity-75 bg-gray-50 hover:bg-gray-100">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <div class="font-medium text-gray-600">Full-Stack E-commerce App</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-gray-700 bg-gray-200 rounded-full">Technical</span>
-                                                        <span class="font-medium text-red-600">• Requires: React Development Mastery</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">Advanced Web Development</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">February 1, 2025</div>
-                                            <div class="text-xs text-gray-500">32 days remaining</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-gray-700 bg-gray-200 border border-gray-300 rounded-full">
-                                                <i class="mr-1 fas fa-lock"></i>
-                                                Locked
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button class="px-4 py-2 text-sm font-medium text-gray-600 transition-colors bg-gray-200 rounded-lg cursor-not-allowed hover:bg-gray-300 locked-assignment-btn"
-                                                data-required-course="React Development Mastery"
-                                                data-course-link="course-viewer.php?course=react-development">
-                                                <i class="mr-2 fas fa-lock"></i>
-                                                View Requirements
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Quiz Assignment - Blockchain -->
-                                    <tr class="bg-white hover:bg-gray-50">
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center">
-
-                                                <div>
-                                                    <div class="font-medium text-gray-900">Blockchain Fundamentals Quiz</div>
-                                                    <div class="flex items-center space-x-2 text-xs text-gray-500">
-                                                        <span class="px-2 py-1 font-medium text-green-800 bg-green-100 rounded-full">Quiz</span>
-                                                        <span class="text-gray-600">• 20 Questions</span>
-                                                        <span class="font-medium text-blue-600">• 45 min limit</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-500">Blockchain Development</td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-gray-500">January 20, 2025</div>
-                                            <div class="text-xs font-medium text-green-600">15 days remaining</div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-green-800 bg-green-100 border border-green-200 rounded-full">
-                                                <i class="mr-1 fas fa-play-circle"></i>
-                                                Ready
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <a href="assignment-take.php?id=2" class="px-4 py-2 text-sm font-medium text-white transition-all bg-green-600 rounded-lg hover:bg-green-700 hover:shadow-lg">
-                                                <i class="mr-2 fas fa-play"></i>
-                                                Take Quiz
-                                            </a>
-                                        </td>
-                                    </tr>
+                                <tbody id="assignmentsTableBody">
+                                    <!-- Assignments will be loaded here dynamically -->
                                 </tbody>
                             </table>
                         </div>
