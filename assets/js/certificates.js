@@ -8,16 +8,68 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeFilters();
   initializeCertificateActions();
   initializeModal();
+  loadCertificateData();
+
+  function loadCertificateData() {
+    // Get all certificate cards after page load
+    setTimeout(() => {
+      allCertificates = Array.from(
+        document.querySelectorAll(".certificate-card")
+      );
+      filteredCertificates = [...allCertificates];
+      
+      // Populate filter options
+      populateFilterOptions();
+      
+      // Initialize animations
+      initializeAnimations();
+    }, 100);
+  }
+
+  function populateFilterOptions() {
+    const categoryFilter = document.getElementById("categoryFilter");
+    const yearFilter = document.getElementById("yearFilter");
+    
+    if (!categoryFilter || !yearFilter) return;
+
+    // Get unique categories and years from certificates
+    const categories = new Set();
+    const years = new Set();
+
+    allCertificates.forEach(certificate => {
+      const category = certificate.dataset.category;
+      const year = certificate.dataset.year;
+      
+      if (category) categories.add(category);
+      if (year) years.add(year);
+    });
+
+    // Clear existing options (except "All")
+    categoryFilter.innerHTML = '<option value="">All Categories</option>';
+    yearFilter.innerHTML = '<option value="">All Years</option>';
+
+    // Add category options
+    [...categories].sort().forEach(category => {
+      const option = document.createElement('option');
+      option.value = category;
+      option.textContent = category;
+      categoryFilter.appendChild(option);
+    });
+
+    // Add year options (newest first)
+    [...years].sort((a, b) => b - a).forEach(year => {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      yearFilter.appendChild(option);
+    });
+  }
 
   function initializeFilters() {
     const categoryFilter = document.getElementById("categoryFilter");
     const yearFilter = document.getElementById("yearFilter");
 
-    // Get all certificate cards
-    allCertificates = Array.from(
-      document.querySelectorAll(".certificate-card")
-    );
-    filteredCertificates = [...allCertificates];
+    if (!categoryFilter || !yearFilter) return;
 
     // Category filter
     categoryFilter.addEventListener("change", function () {
@@ -86,66 +138,60 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initializeCertificateActions() {
-    // Handle locked certificate clicks
-    document.addEventListener("click", function (e) {
-      if (e.target.closest(".locked-certificate")) {
-        const card = e.target.closest(".locked-certificate");
-        const requirement = card.dataset.unlockRequirement;
-
-        showLockedCertificateModal(requirement);
-        return;
-      }
-    });
-
-    // View certificate buttons
+    // Handle certificate view buttons
     document.addEventListener("click", function (e) {
       if (e.target.closest(".view-btn")) {
-        const card = e.target.closest(".certificate-card");
-
-        // Check if certificate is locked
-        if (card.classList.contains("locked-certificate")) {
-          return; // Prevent action on locked certificates
+        const certificateCard = e.target.closest(".certificate-card");
+        if (certificateCard) {
+          viewCertificate(certificateCard);
         }
-
-        const courseName = card.querySelector("h4").textContent;
-        const completionDate = card
-          .querySelector("p")
-          .textContent.replace("Completed on ", "");
-
-        showCertificateModal(courseName, completionDate);
       }
-    });
 
-    // Download certificate buttons
-    document.addEventListener("click", function (e) {
+      // Handle certificate download buttons
       if (e.target.closest(".download-btn")) {
-        const card = e.target.closest(".certificate-card");
-
-        // Check if certificate is locked
-        if (card.classList.contains("locked-certificate")) {
-          return; // Prevent action on locked certificates
+        const certificateCard = e.target.closest(".certificate-card");
+        if (certificateCard) {
+          // Check if certificate is locked
+          if (certificateCard.classList.contains("locked-certificate")) {
+            return; // Prevent action on locked certificates
+          }
+          
+          const courseName = certificateCard.querySelector("h4").textContent;
+          const certificateId = certificateCard.dataset.certificateId;
+          downloadCertificate(courseName, certificateId);
         }
-
-        const courseName = card.querySelector("h4").textContent;
-
-        downloadCertificate(courseName);
       }
     });
 
     // Download all certificates button
-    document
-      .getElementById("downloadAllBtn")
-      .addEventListener("click", function () {
+    const downloadAllBtn = document.getElementById("downloadAllBtn");
+    if (downloadAllBtn) {
+      downloadAllBtn.addEventListener("click", function () {
         downloadAllCertificates();
       });
+    }
+  }
+
+  function viewCertificate(certificateCard) {
+    // Extract certificate data from the card
+    const courseName = certificateCard.querySelector("h4").textContent;
+    const completionDate = certificateCard.querySelector("p:nth-of-type(1)").textContent.replace("Completed on ", "");
+    const certificateId = certificateCard.dataset.certificateId;
+    const category = certificateCard.dataset.category;
+    const ratingStars = certificateCard.querySelector(".text-yellow-400").innerHTML;
+    const ratingText = certificateCard.querySelector(".text-gray-600").textContent;
+
+    showCertificateModal(courseName, completionDate, certificateId, category, ratingStars, ratingText);
   }
 
   function initializeModal() {
     const modal = document.getElementById("certificateModal");
-    const closeBtn = document.getElementById("closeModal");
-    const downloadBtn = document.getElementById("downloadModalBtn");
-    const shareBtn = document.getElementById("shareModalBtn");
-    const verifyBtn = document.getElementById("verifyModalBtn");
+    const closeBtn = document.getElementById("closeCertificateModal");
+    const downloadBtn = document.getElementById("downloadCertificateBtn");
+    const shareBtn = document.getElementById("shareCertificateBtn");
+    const verifyBtn = document.getElementById("verifyCertificateBtn");
+
+    if (!modal || !closeBtn) return;
 
     // Close modal
     closeBtn.addEventListener("click", function () {
@@ -160,20 +206,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Download from modal
-    downloadBtn.addEventListener("click", function () {
-      const courseName = document.getElementById("modalCourseName").textContent;
-      downloadCertificate(courseName);
-    });
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", function () {
+        const courseName = document.getElementById("modalCourseName").textContent;
+        const certificateId = document.getElementById("modalCertificateId").textContent;
+        downloadCertificate(courseName, certificateId);
+      });
+    }
 
     // Share certificate
-    shareBtn.addEventListener("click", function () {
-      shareCertificate();
-    });
+    if (shareBtn) {
+      shareBtn.addEventListener("click", function () {
+        shareCertificate();
+      });
+    }
 
     // Verify certificate
-    verifyBtn.addEventListener("click", function () {
-      verifyCertificate();
-    });
+    if (verifyBtn) {
+      verifyBtn.addEventListener("click", function () {
+        verifyCertificate();
+      });
+    }
 
     // Close modal with Escape key
     document.addEventListener("keydown", function (e) {
@@ -183,56 +236,171 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function showCertificateModal(courseName, completionDate) {
+  function showCertificateModal(courseName, completionDate, certificateId, category, ratingStars, ratingText) {
     const modal = document.getElementById("certificateModal");
     const courseNameEl = document.getElementById("modalCourseName");
     const dateEl = document.getElementById("modalDate");
-    const certificateIdEl = document.getElementById("certificateId");
+    const certificateIdEl = document.getElementById("modalCertificateId");
+    const studentNameEl = document.getElementById("modalStudentName");
+    const ratingEl = document.getElementById("modalRating");
 
-    // Update certificate content
+    if (!modal || !courseNameEl || !dateEl || !certificateIdEl) return;
+
+    // Update certificate content with dynamic data
     courseNameEl.textContent = courseName;
     dateEl.textContent = completionDate;
-
-    // Generate unique certificate ID
-    const certificateId = generateCertificateId(courseName);
     certificateIdEl.textContent = certificateId;
+    
+    // Get student name from global variable set by PHP
+    studentNameEl.textContent = window.studentName || "Student Name";
+    
+    // Update rating stars and text
+    if (ratingEl) {
+      ratingEl.innerHTML = `
+        <div class="flex text-yellow-400 text-2xl">
+          ${ratingStars}
+        </div>
+        <span class="ml-3 text-lg text-gray-600">${ratingText}</span>
+      `;
+    }
 
+    // Show modal with animation
     modal.classList.remove("hidden");
-    modal.classList.add("flex");
+    modal.style.display = "flex";
 
     // Prevent body scroll
     document.body.style.overflow = "hidden";
 
     // Add entrance animation
-    const certificateContent = modal.querySelector(".border-8");
-    certificateContent.style.transform = "scale(0.9)";
-    certificateContent.style.opacity = "0";
+    const certificateContent = modal.querySelector("#certificateContent");
+    if (certificateContent) {
+      certificateContent.style.transform = "scale(0.9)";
+      certificateContent.style.opacity = "0";
 
-    setTimeout(() => {
-      certificateContent.style.transition = "all 0.3s ease";
-      certificateContent.style.transform = "scale(1)";
-      certificateContent.style.opacity = "1";
-    }, 100);
+      setTimeout(() => {
+        certificateContent.style.transition = "all 0.3s ease";
+        certificateContent.style.transform = "scale(1)";
+        certificateContent.style.opacity = "1";
+      }, 100);
+    }
   }
 
   function hideModal() {
     const modal = document.getElementById("certificateModal");
     modal.classList.add("hidden");
-    modal.classList.remove("flex");
+    modal.style.display = "none";
 
     // Restore body scroll
     document.body.style.overflow = "";
   }
 
-  function downloadCertificate(courseName) {
-    // Simulate certificate download
+  function shareCertificate() {
+    const certificateId = document.getElementById("modalCertificateId").textContent;
+    const courseName = document.getElementById("modalCourseName").textContent;
+    
+    // Create sharing URL
+    const shareUrl = `${window.location.origin}/elearning/verify.php?id=${certificateId}`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      Swal.fire({
+        title: 'Link Copied!',
+        text: `Certificate verification link for "${courseName}" copied to clipboard!`,
+        icon: 'success',
+        confirmButtonText: 'Great!',
+        confirmButtonColor: '#10B981'
+      });
+    }).catch(() => {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = shareUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      Swal.fire({
+        title: 'Link Ready!',
+        text: `Share this link to verify your certificate: ${shareUrl}`,
+        icon: 'info',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#3b82f6'
+      });
+    });
+  }
+
+  function verifyCertificate() {
+    // Show verification modal
+    const verificationModal = document.getElementById("verificationModal");
+    if (verificationModal) {
+      verificationModal.classList.remove("hidden");
+      verificationModal.style.display = "flex";
+      
+      // Pre-fill with current certificate ID
+      const certificateId = document.getElementById("modalCertificateId").textContent;
+      const certificateIdInput = document.getElementById("certificateId");
+      if (certificateIdInput) {
+        certificateIdInput.value = certificateId;
+      }
+    }
+  }
+
+  function initializeAnimations() {
+    // Add hover animations to certificate cards
+    allCertificates.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-4px)';
+        this.style.transition = 'transform 0.2s ease';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+  }
+
+  function downloadCertificate(courseName, certificateId = null) {
     const button = event.target.closest("button");
     const originalText = button.innerHTML;
 
     button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
     button.disabled = true;
 
-    setTimeout(() => {
+    // Get certificate ID from card if not provided
+    if (!certificateId) {
+      const card = button.closest(".certificate-card");
+      certificateId = card ? card.dataset.certificateId : null;
+    }
+
+    // Create download request
+    fetch('/elearning/dashboard/api/certificates/download.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        certificate_id: certificateId,
+        course_name: courseName
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.blob();
+      }
+      throw new Error('Download failed');
+    })
+    .then(blob => {
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `${courseName.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
       button.innerHTML = originalText;
       button.disabled = false;
 
@@ -244,10 +412,21 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmButtonText: 'Great!',
         confirmButtonColor: '#10B981'
       });
+    })
+    .catch(error => {
+      console.error('Download error:', error);
+      button.innerHTML = originalText;
+      button.disabled = false;
 
-      // In a real application, you would trigger the actual download here
-      // For demo purposes, we'll just show the notification
-    }, 2000);
+      // Show error notification
+      Swal.fire({
+        title: 'Download Failed',
+        text: 'Unable to download certificate. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#EF4444'
+      });
+    });
   }
 
   function downloadAllCertificates() {
@@ -258,50 +437,121 @@ document.addEventListener("DOMContentLoaded", function () {
       '<i class="fas fa-spinner fa-spin mr-2"></i>Preparing...';
     button.disabled = true;
 
-    setTimeout(() => {
+    // Get all available certificate IDs
+    const certificateIds = Array.from(document.querySelectorAll('.certificate-card:not(.locked-certificate)'))
+      .map(card => card.dataset.certificateId)
+      .filter(id => id);
+
+    if (certificateIds.length === 0) {
+      button.innerHTML = originalText;
+      button.disabled = false;
+      
+      Swal.fire({
+        title: 'No Certificates Available',
+        text: 'You don\'t have any certificates to download yet.',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#3b82f6'
+      });
+      return;
+    }
+
+    // Request bulk download
+    fetch('/elearning/dashboard/api/certificates/download-all.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        certificate_ids: certificateIds
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.blob();
+      }
+      throw new Error('Bulk download failed');
+    })
+    .then(blob => {
+      // Create download link for ZIP file
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `My_Certificates_${new Date().toISOString().split('T')[0]}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
       button.innerHTML = originalText;
       button.disabled = false;
 
       // Show success notification
       Swal.fire({
         title: 'Download Complete!',
-        text: 'All certificates downloaded as ZIP file!',
+        text: `All ${certificateIds.length} certificates downloaded as ZIP file!`,
         icon: 'success',
         confirmButtonText: 'Awesome!',
         confirmButtonColor: '#10B981'
       });
-    }, 3000);
+    })
+    .catch(error => {
+      console.error('Bulk download error:', error);
+      button.innerHTML = originalText;
+      button.disabled = false;
+
+      // Show error notification
+      Swal.fire({
+        title: 'Download Failed',
+        text: 'Unable to download certificates. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#EF4444'
+      });
+    });
   }
 
-  // Add hover effects to certificate cards
-  const certificateCards = document.querySelectorAll(".certificate-card");
-  certificateCards.forEach((card) => {
-    card.addEventListener("mouseenter", function () {
-      this.style.transform = "translateY(-4px)";
-      this.style.transition = "all 0.3s ease";
+  function initializeAnimations() {
+    // Add hover effects to certificate cards
+    const certificateCards = document.querySelectorAll(".certificate-card");
+    certificateCards.forEach((card) => {
+      card.addEventListener("mouseenter", function () {
+        if (!this.classList.contains("locked-certificate")) {
+          this.style.transform = "translateY(-4px)";
+          this.style.transition = "all 0.3s ease";
+        }
+      });
+
+      card.addEventListener("mouseleave", function () {
+        this.style.transform = "translateY(0)";
+      });
     });
 
-    card.addEventListener("mouseleave", function () {
-      this.style.transform = "translateY(0)";
+    // Animate stats on page load
+    animateStats();
+  }
+
+  function animateStats() {
+    // Animate stats on page load
+    const statNumbers = document.querySelectorAll(".text-2xl.font-bold");
+    statNumbers.forEach((stat) => {
+      const finalValue = parseInt(stat.textContent);
+      if (isNaN(finalValue)) return;
+      
+      let currentValue = 0;
+      const increment = finalValue / 30;
+
+      const timer = setInterval(() => {
+        currentValue += increment;
+        if (currentValue >= finalValue) {
+          currentValue = finalValue;
+          clearInterval(timer);
+        }
+        stat.textContent = Math.floor(currentValue);
+      }, 50);
     });
-  });
-
-  // Animate stats on page load
-  const statNumbers = document.querySelectorAll(".text-2xl.font-bold");
-  statNumbers.forEach((stat) => {
-    const finalValue = parseInt(stat.textContent);
-    let currentValue = 0;
-    const increment = finalValue / 30;
-
-    const timer = setInterval(() => {
-      currentValue += increment;
-      if (currentValue >= finalValue) {
-        currentValue = finalValue;
-        clearInterval(timer);
-      }
-      stat.textContent = Math.floor(currentValue);
-    }, 50);
-  });
+  }
 
   // Generate unique certificate ID
   function generateCertificateId(courseName) {
@@ -318,18 +568,21 @@ document.addEventListener("DOMContentLoaded", function () {
   function shareCertificate() {
     const courseName = document.getElementById("modalCourseName").textContent;
     const certificateId = document.getElementById("certificateId").textContent;
+    
+    // Use the actual domain for sharing
+    const baseUrl = window.location.origin;
+    const shareUrl = `${baseUrl}/elearning/verify-certificate.php?id=${certificateId}`;
 
     if (navigator.share) {
       navigator
         .share({
           title: `Certificate of Achievement - ${courseName}`,
           text: `I've completed ${courseName} and earned my certificate!`,
-          url: `https://saltel.edu/verify/${certificateId}`,
+          url: shareUrl,
         })
         .catch(console.error);
     } else {
       // Fallback for browsers that don't support Web Share API
-      const shareUrl = `https://saltel.edu/verify/${certificateId}`;
       navigator.clipboard.writeText(shareUrl).then(() => {
         Swal.fire({
           toast: true,
@@ -339,6 +592,16 @@ document.addEventListener("DOMContentLoaded", function () {
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true
+        });
+      }).catch(() => {
+        // Fallback if clipboard API is not available
+        Swal.fire({
+          title: 'Share Certificate',
+          html: `<p>Copy this link to share your certificate:</p>
+                 <input type="text" value="${shareUrl}" class="w-full p-2 border rounded mt-2" readonly onclick="this.select()">`,
+          icon: 'info',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#3b82f6'
         });
       });
     }
@@ -354,19 +617,60 @@ document.addEventListener("DOMContentLoaded", function () {
       '<i class="fas fa-spinner fa-spin mr-2"></i>Verifying...';
     button.disabled = true;
 
-    // Simulate verification process
-    setTimeout(() => {
+    // Make API call to verify certificate
+    fetch('/elearning/dashboard/api/certificates/verify.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        certificate_id: certificateId
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      button.innerHTML = originalText;
+      button.disabled = false;
+
+      if (data.success) {
+        Swal.fire({
+          title: 'Verification Complete!',
+          html: `
+            <div class="text-left">
+              <p><strong>Certificate ID:</strong> ${certificateId}</p>
+              <p><strong>Course:</strong> ${data.course_name}</p>
+              <p><strong>Student:</strong> ${data.student_name}</p>
+              <p><strong>Completion Date:</strong> ${data.completion_date}</p>
+              <p><strong>Status:</strong> <span class="text-green-600">✓ Verified & Authentic</span></p>
+            </div>
+          `,
+          icon: 'success',
+          confirmButtonText: 'Excellent!',
+          confirmButtonColor: '#10B981'
+        });
+      } else {
+        Swal.fire({
+          title: 'Verification Failed',
+          text: data.message || 'Certificate could not be verified.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#EF4444'
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Verification error:', error);
       button.innerHTML = originalText;
       button.disabled = false;
 
       Swal.fire({
-        title: 'Verification Complete!',
-        text: `Certificate ${certificateId} is authentic and verified!`,
-        icon: 'success',
-        confirmButtonText: 'Excellent!',
-        confirmButtonColor: '#10B981'
+        title: 'Verification Error',
+        text: 'Unable to verify certificate. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#EF4444'
       });
-    }, 2000);
+    });
   }
 
   // Add locked certificate modal function
