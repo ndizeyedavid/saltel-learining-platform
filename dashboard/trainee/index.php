@@ -28,6 +28,8 @@
     $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
     ?>
     <script src="../../assets/js/gamification.js" defer></script>
+    <!-- FullCalendar CDN -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 </head>
 
 <body class="font-sans bg-gray-50">
@@ -179,72 +181,17 @@
                         </div>
                     </div>
 
-                    <!-- Your Resources -->
+
+                    <!-- Weekly Events Calendar -->
                     <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
-                        <h3 class="mb-4 text-lg font-semibold text-gray-900">Your Resources</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between resource-item">
-                                <div class="flex items-center space-x-3">
-                                    <div class="flex items-center justify-center w-8 h-8 bg-red-100 rounded-lg">
-                                        <i class="text-sm text-red-600 fas fa-file-pdf"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Auto layout.pdf</p>
-                                        <p class="text-xs text-gray-500">83 MB</p>
-                                    </div>
-                                </div>
-                                <button class="text-sm font-medium text-blue-600 resource-btn">Open</button>
-                            </div>
-                            <div class="flex items-center justify-between resource-item">
-                                <div class="flex items-center space-x-3">
-                                    <div class="flex items-center justify-center w-8 h-8 bg-green-100 rounded-lg">
-                                        <i class="text-sm text-green-600 fas fa-file-alt"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Design - Figma</p>
-                                        <p class="text-xs text-gray-500">829 KB</p>
-                                    </div>
-                                </div>
-                                <button class="text-sm font-medium text-blue-600 resource-btn">Continue</button>
-                            </div>
-                            <div class="flex items-center justify-between resource-item">
-                                <div class="flex items-center space-x-3">
-                                    <div class="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg">
-                                        <i class="text-sm text-blue-600 fas fa-video"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Basics of UI.mp4</p>
-                                        <p class="text-xs text-gray-500">32 MB</p>
-                                    </div>
-                                </div>
-                                <button class="text-sm font-medium text-blue-600 resource-btn">Continue</button>
-                            </div>
-                            <div class="flex items-center justify-between resource-item">
-                                <div class="flex items-center space-x-3">
-                                    <div class="flex items-center justify-center w-8 h-8 bg-red-100 rounded-lg">
-                                        <i class="text-sm text-red-600 fas fa-file-pdf"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Auto layout.pdf</p>
-                                        <p class="text-xs text-gray-500">83 MB</p>
-                                    </div>
-                                </div>
-                                <button class="text-sm font-medium text-blue-600 resource-btn">Open</button>
-                            </div>
-                            <div class="flex items-center justify-between resource-item">
-                                <div class="flex items-center space-x-3">
-                                    <div class="flex items-center justify-center w-8 h-8 bg-green-100 rounded-lg">
-                                        <i class="text-sm text-green-600 fas fa-file-alt"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Design - Figma</p>
-                                        <p class="text-xs text-gray-500">829 KB</p>
-                                    </div>
-                                </div>
-                                <button class="text-sm font-medium text-blue-600 resource-btn">Continue</button>
-                            </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">This Week's Events</h3>
+                            <button class="text-sm font-medium text-blue-600 hover:text-blue-700">View All</button>
                         </div>
-                        <button class="mt-4 text-sm font-medium text-blue-600">See more</button>
+
+                        <!-- Mini Calendar -->
+                        <div id="mini-calendar" class="mb-4 h-[550px]"></div>
+
                     </div>
 
                     <!-- Learning Streak -->
@@ -417,101 +364,40 @@
 
                 <!-- Bottom Row - Recent Classes and Upcoming Lessons -->
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    <!-- Recent Enrolled Classes -->
-                    <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-semibold text-gray-900">Recent Enrolled Classes</h3>
-                            <div class="flex items-center space-x-2">
-                                <button class="px-3 py-1 text-sm text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">All</button>
-                                <button class="p-2 transition-colors rounded-lg hover:bg-gray-100">
-                                    <i class="text-gray-600 fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
 
-                        <div class="space-y-4">
-                            <!-- Course 1 - In Progress -->
-                            <div class="p-4 transition-all duration-300 border border-blue-200 rounded-lg bg-blue-50/30 enrolled-course hover:shadow-md">
-                                <div class="flex items-start justify-between">
-                                    <div class="flex items-start w-full space-x-4">
-                                        <div class="flex items-center justify-center bg-blue-100/40 w-14 h-14 rounded-xl">
-                                            <i class="text-xl text-blue-600 fas fa-paint-brush"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 font-semibold text-gray-900">User Experience (UX) Design</h4>
-
-                                            <div class="flex items-center mb-3 space-x-4 text-sm text-gray-600">
-                                                <span><i class="mr-1 far fa-clock"></i>5:30hrs</span>
-                                                <span><i class="mr-1 fas fa-book"></i>05 Lessons</span>
-                                                <span><i class="mr-1 fas fa-users"></i>1.2k students</span>
-                                            </div>
-                                            <!-- Progress Bar -->
-                                            <div class="w-full h-2 mb-2 bg-gray-200 rounded-full">
-                                                <div class="h-2 bg-blue-600 rounded-full progress-bar" style="width: 75%"></div>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-600">Progress: 75% complete</span>
-                                                <span class="font-medium text-blue-600">3/4 modules</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <!-- Recent XP Transactions -->
+                    <div>
+                        <div class="h-full p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold text-gray-900">Recent XP Activity</h3>
+                                <span class="text-sm text-gray-500">Last 7 days</span>
                             </div>
 
-                            <!-- Course 2 - Recently Started -->
-                            <div class="p-4 transition-all duration-300 border border-blue-200 rounded-lg bg-blue-50/30 enrolled-course hover:shadow-md">
-                                <div class="flex items-start">
-                                    <div class="flex items-start w-full space-x-4">
-                                        <div class="flex items-center justify-center bg-blue-100/40 w-14 h-14 rounded-xl">
-                                            <i class="text-xl text-blue-600 fas fa-palette"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 font-semibold text-gray-900">Visual Design and Branding</h4>
-
-                                            <div class="flex items-center mb-3 space-x-4 text-sm text-gray-600">
-                                                <span><i class="mr-1 far fa-clock"></i>4:00hrs</span>
-                                                <span><i class="mr-1 fas fa-book"></i>06 Lessons</span>
-                                                <span><i class="mr-1 fas fa-users"></i>890 students</span>
+                            <div class="space-y-4">
+                                <?php if (!empty($recent_transactions)): ?>
+                                    <?php foreach ($recent_transactions as $transaction): ?>
+                                        <div class="flex items-center justify-between p-3 transition-all duration-200 border border-gray-100 rounded-lg hover:bg-gray-50">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex items-center justify-center w-10 h-10 bg-green-100 rounded-full">
+                                                    <i class="text-green-600 fas fa-plus"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($transaction['activity_name']); ?></p>
+                                                    <p class="text-xs text-gray-500"><?php echo date('M j, Y g:i A', strtotime($transaction['earned_at'])); ?></p>
+                                                </div>
                                             </div>
-                                            <!-- Progress Bar -->
-                                            <div class="w-full h-2 mb-2 bg-gray-200 rounded-full">
-                                                <div class="h-2 bg-blue-600 rounded-full progress-bar" style="width: 25%"></div>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-600">Progress: 25% complete</span>
-                                                <span class="font-medium text-blue-600">1/4 modules</span>
+                                            <div class="text-right">
+                                                <p class="text-sm font-semibold text-green-600">+<?php echo $transaction['xp_earned']; ?> XP</p>
                                             </div>
                                         </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="py-8 text-center text-gray-500">
+                                        <i class="mb-2 text-3xl fas fa-chart-line"></i>
+                                        <p class="text-sm">No recent XP activity</p>
+                                        <p class="text-xs">Start learning to earn your first XP!</p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- Course 3 - Just Enrolled -->
-                            <div class="p-4 transition-all duration-300 border border-blue-200 rounded-lg bg-blue-50/30 enrolled-course hover:shadow-md">
-                                <div class="flex items-start justify-between">
-                                    <div class="flex items-start w-full space-x-4">
-                                        <div class="flex items-center justify-center bg-blue-100/40 w-14 h-14 rounded-xl">
-                                            <i class="text-xl text-blue-600 fas fa-code"></i>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h4 class="mb-1 font-semibold text-gray-900">Frontend Web Development</h4>
-
-                                            <div class="flex items-center mb-3 space-x-4 text-sm text-gray-600">
-                                                <span><i class="mr-1 far fa-clock"></i>12:00hrs</span>
-                                                <span><i class="mr-1 fas fa-book"></i>15 Lessons</span>
-                                                <span><i class="mr-1 fas fa-users"></i>3.5k students</span>
-                                            </div>
-                                            <!-- Progress Bar -->
-                                            <div class="w-full h-2 mb-2 bg-gray-200 rounded-full">
-                                                <div class="h-2 bg-blue-600 rounded-full progress-bar" style="width: 5%"></div>
-                                            </div>
-                                            <div class="flex items-center justify-between text-sm">
-                                                <span class="text-gray-600">Just enrolled</span>
-                                                <span class="font-medium text-blue-600">0/8 modules</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -622,48 +508,124 @@
                         </div>
                     </div>
 
-                    <!-- Recent XP Transactions -->
-                    <div class="mt-8">
-                        <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-semibold text-gray-900">Recent XP Activity</h3>
-                                <span class="text-sm text-gray-500">Last 7 days</span>
-                            </div>
-
-                            <div class="space-y-4">
-                                <?php if (!empty($recent_transactions)): ?>
-                                    <?php foreach ($recent_transactions as $transaction): ?>
-                                        <div class="flex items-center justify-between p-3 transition-all duration-200 border border-gray-100 rounded-lg hover:bg-gray-50">
-                                            <div class="flex items-center space-x-3">
-                                                <div class="flex items-center justify-center w-10 h-10 bg-green-100 rounded-full">
-                                                    <i class="text-green-600 fas fa-plus"></i>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($transaction['activity_name']); ?></p>
-                                                    <p class="text-xs text-gray-500"><?php echo date('M j, Y g:i A', strtotime($transaction['created_at'])); ?></p>
-                                                </div>
-                                            </div>
-                                            <div class="text-right">
-                                                <p class="text-sm font-semibold text-green-600">+<?php echo $transaction['xp_earned']; ?> XP</p>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <div class="py-8 text-center text-gray-500">
-                                        <i class="mb-2 text-3xl fas fa-chart-line"></i>
-                                        <p class="text-sm">No recent XP activity</p>
-                                        <p class="text-xs">Start learning to earn your first XP!</p>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
             </main>
         </div>
     </div>
 
     <!-- Include gamification JavaScript -->
     <script src="../../assets/js/gamification.js"></script>
+
+    <!-- Mini Calendar JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mock event data for the week
+            const mockEvents = [{
+                    title: 'UX Design Workshop',
+                    start: new Date().toISOString().split('T')[0] + 'T14:00:00',
+                    end: new Date().toISOString().split('T')[0] + 'T16:00:00',
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#3b82f6',
+                    textColor: '#ffffff'
+                },
+                {
+                    title: 'Assignment Due',
+                    start: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T23:59:00',
+                    backgroundColor: '#10b981',
+                    borderColor: '#10b981',
+                    textColor: '#ffffff'
+                },
+                {
+                    title: 'Study Group',
+                    start: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T18:00:00',
+                    end: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T20:00:00',
+                    backgroundColor: '#8b5cf6',
+                    borderColor: '#8b5cf6',
+                    textColor: '#ffffff'
+                },
+                {
+                    title: 'Quiz: JavaScript Basics',
+                    start: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T10:00:00',
+                    end: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T11:00:00',
+                    backgroundColor: '#f59e0b',
+                    borderColor: '#f59e0b',
+                    textColor: '#ffffff'
+                },
+                {
+                    title: 'Final Presentation',
+                    start: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T15:00:00',
+                    end: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T17:00:00',
+                    backgroundColor: '#ef4444',
+                    borderColor: '#ef4444',
+                    textColor: '#ffffff'
+                }
+            ];
+
+            // Initialize mini calendar
+            const calendarEl = document.getElementById('mini-calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'listWeek',
+                height: 200,
+                headerToolbar: {
+                    left: '',
+                    center: 'title',
+                    right: 'prev,next'
+                },
+                events: mockEvents,
+                eventDisplay: 'block',
+                dayMaxEvents: 2,
+                eventTimeFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    meridiem: 'short'
+                },
+                eventDidMount: function(info) {
+                    // Custom styling for events
+                    info.el.style.fontSize = '12px';
+                    info.el.style.padding = '2px 6px';
+                    info.el.style.borderRadius = '4px';
+                    info.el.style.marginBottom = '2px';
+                },
+                eventClick: function(info) {
+                    // Handle event click
+                    alert('Event: ' + info.event.title);
+                }
+            });
+
+            calendar.render();
+
+            // Custom styling for the calendar
+            setTimeout(() => {
+                const calendarContainer = document.querySelector('#mini-calendar .fc');
+                if (calendarContainer) {
+                    calendarContainer.style.fontSize = '12px';
+                }
+
+                // Style the header
+                const header = document.querySelector('#mini-calendar .fc-header-toolbar');
+                if (header) {
+                    header.style.marginBottom = '10px';
+                }
+
+                // Style the title
+                const title = document.querySelector('#mini-calendar .fc-toolbar-title');
+                if (title) {
+                    title.style.fontSize = '14px';
+                    title.style.fontWeight = '600';
+                    title.style.color = '#374151';
+                }
+
+                // Style navigation buttons
+                const buttons = document.querySelectorAll('#mini-calendar .fc-button');
+                buttons.forEach(button => {
+                    button.style.backgroundColor = '#f3f4f6';
+                    button.style.borderColor = '#d1d5db';
+                    button.style.color = '#374151';
+                    button.style.fontSize = '12px';
+                    button.style.padding = '4px 8px';
+                });
+            }, 100);
+        });
+    </script>
 </body>
 
 </html>
