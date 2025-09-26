@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2025 at 04:49 AM
+-- Generation Time: Sep 26, 2025 at 09:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -154,6 +154,29 @@ CREATE TABLE `certificates` (
 INSERT INTO `certificates` (`certificate_id`, `student_id`, `course_id`, `issued_at`, `certificate_url`, `certificate_code`) VALUES
 (1, 1, 3, '2025-09-26 00:37:10', NULL, 'CERT-FFCC0922'),
 (2, 1, 2, '2025-09-26 01:27:04', NULL, 'CERT-7A30BF65');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `conference_rooms`
+--
+
+CREATE TABLE `conference_rooms` (
+  `room_id` varchar(50) NOT NULL,
+  `room_name` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `room_key` varchar(10) NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `conference_rooms`
+--
+
+INSERT INTO `conference_rooms` (`room_id`, `room_name`, `created_by`, `room_key`, `is_active`, `created_at`) VALUES
+('room_68d635c701677', 'mellow', 1, '116200', 1, '2025-09-26 06:42:15'),
+('room_68d635f47c729', 'mellow', 1, '8AFA8A', 1, '2025-09-26 06:43:00');
 
 -- --------------------------------------------------------
 
@@ -429,6 +452,28 @@ INSERT INTO `quiz_questions` (`question_id`, `lesson_id`, `question_text`, `ques
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rank_progressions`
+--
+
+CREATE TABLE `rank_progressions` (
+  `progression_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `old_rank_id` int(11) DEFAULT NULL,
+  `new_rank_id` int(11) NOT NULL,
+  `total_xp` int(11) NOT NULL,
+  `progression_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rank_progressions`
+--
+
+INSERT INTO `rank_progressions` (`progression_id`, `user_id`, `old_rank_id`, `new_rank_id`, `total_xp`, `progression_date`) VALUES
+(1, 16, 1, 5, 1330, '2025-09-26 07:50:03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `resource_progress`
 --
 
@@ -463,7 +508,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`student_id`, `user_id`, `institution`, `level_year`, `program`) VALUES
-(1, 16, 'ESSA Nyararugunga', 'L4', 'Software Development');
+(1, 16, 'ESSA Nyararugunga', 'L4', 'Software Development'),
+(2, 19, 'ETSK MUSHA', 'L5', 'Networking');
 
 -- --------------------------------------------------------
 
@@ -482,6 +528,13 @@ CREATE TABLE `student_todos` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_todos`
+--
+
+INSERT INTO `student_todos` (`todo_id`, `student_id`, `title`, `description`, `due_date`, `completed`, `priority`, `created_at`, `updated_at`) VALUES
+(1, 16, 'sadasd', NULL, '2025-09-27', 1, 'medium', '2025-09-26 04:37:31', '2025-09-26 04:38:09');
 
 -- --------------------------------------------------------
 
@@ -514,6 +567,13 @@ CREATE TABLE `submissions` (
   `grade` decimal(5,2) DEFAULT NULL,
   `feedback` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `submissions`
+--
+
+INSERT INTO `submissions` (`submission_id`, `assignment_id`, `student_id`, `file_url`, `submitted_at`, `grade`, `feedback`) VALUES
+(28, 2, 1, NULL, '2025-09-26 02:57:26', 50.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -569,9 +629,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `middle_name`, `last_name`, `gender`, `email`, `phone`, `role`, `password`, `created_at`, `otp`, `otp_expires_at`, `is_verified`, `remember_token`, `remember_expires`, `last_login`, `profile_image_url`) VALUES
-(16, 'Dylan', 'Cheryl Rice', 'Nash', 'Female', 'esting228@gmail.com', '(147) 489-5700', 'Student', '$2y$10$1L5FdGGEABwYVsO7Fe9XCu9/iRK6ZUky/Q9gvAAiwyX7wQ4ifXrtS', '2025-09-24 13:02:17', NULL, NULL, 1, 'a447c8bc4042956f3330e0ed9441acf1baecd5147b22ba445f1aa1223b131022', '2025-10-25 20:33:53', '2025-09-25 22:50:36', NULL),
+(16, 'Dylan', 'Cheryl Rice', 'Nash', 'Female', 'esting228@gmail.com', '(147) 489-5700', 'Student', '$2y$10$1L5FdGGEABwYVsO7Fe9XCu9/iRK6ZUky/Q9gvAAiwyX7wQ4ifXrtS', '2025-09-24 13:02:17', NULL, NULL, 1, 'b26e6c4a7a52dc035b3a72aaf316286d26a4fa494fc9707987aaa44ecada8daf', '2025-10-26 05:52:19', '2025-09-26 05:52:19', NULL),
 (18, 'Peter', 'Candace Pugh', 'DeVan', 'Female', 'davidndizeye101@gmail.com', '(151) 156-8553', 'Teacher', '$2y$10$ZvYQDYsidQjmRLLmKCcbquCzdHWiL2I19e8DBk.xdsdADzGAZi142', '2025-09-24 15:57:08', NULL, NULL, 1, NULL, NULL, '2025-09-26 02:12:04', 'uploads/profile/user_18_1758796871.jpg'),
-(19, 'Sample', NULL, 'User', 'Male', 'utesting228@gmail.com', '(079) 614-0857', 'Student', '$2y$10$u41zzx9hijODsGajATJI5.llCw05haj3uKk1zRPcoFfIwqBRow0s6', '2025-09-24 15:59:24', NULL, NULL, 1, '6e4dab91d9c73efc3b3c412fa57f1a544f0a4a09033a23a7788f787b9dd6381b', '2025-10-24 16:00:00', '2025-09-24 16:00:00', NULL),
+(19, 'Sample', '', 'User', 'Male', 'utesting228@gmail.com', '(079) 614-0857', 'Student', '$2y$10$u41zzx9hijODsGajATJI5.llCw05haj3uKk1zRPcoFfIwqBRow0s6', '2025-09-24 15:59:24', NULL, NULL, 1, '6e4dab91d9c73efc3b3c412fa57f1a544f0a4a09033a23a7788f787b9dd6381b', '2025-10-24 16:00:00', '2025-09-26 07:12:15', NULL),
 (20, 'Isabella', NULL, 'Foster', 'Male', 'koseje9211@auslank.com', '(190) 468-7256', 'Teacher', '$2y$10$tAnVe.MEhQgF8Q1LrrFXjOlHJV3xNoFYWQek105R/6nwDy6ULJh56', '2025-09-25 14:28:11', '305289', '2025-09-25 14:38:11', 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -617,8 +677,8 @@ CREATE TABLE `user_xp` (
 --
 
 INSERT INTO `user_xp` (`xp_id`, `user_id`, `total_xp`, `current_level`, `xp_to_next_level`, `study_streak`, `last_activity_date`, `created_at`, `updated_at`) VALUES
-(1, 16, 930, 1, 20, 3, '2025-09-26', '2025-09-24 14:56:50', '2025-09-26 01:29:20'),
-(211, 19, 10, 1, 40, 1, '2025-09-24', '2025-09-24 16:00:00', '2025-09-24 16:00:00');
+(1, 16, 1330, 5, 670, 3, '2025-09-26', '2025-09-24 14:56:50', '2025-09-26 07:55:52'),
+(211, 19, 20, 1, 30, 1, '2025-09-26', '2025-09-24 16:00:00', '2025-09-26 07:06:13');
 
 -- --------------------------------------------------------
 
@@ -650,6 +710,40 @@ INSERT INTO `xp_activities` (`activity_id`, `activity_name`, `activity_descripti
 (7, 'perfect_assignment', 'Get 100% on assignment', 75, NULL, 1, '2025-09-24 14:37:13'),
 (8, 'study_streak_7', '7-day study streak bonus', 150, NULL, 1, '2025-09-24 14:37:13'),
 (9, 'study_streak_30', '30-day study streak bonus', 500, NULL, 1, '2025-09-24 14:37:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `xp_ranks`
+--
+
+CREATE TABLE `xp_ranks` (
+  `rank_id` int(11) NOT NULL,
+  `rank_name` varchar(50) NOT NULL,
+  `rank_title` varchar(100) NOT NULL,
+  `min_xp` int(11) NOT NULL,
+  `max_xp` int(11) NOT NULL,
+  `rank_color` varchar(7) DEFAULT '#6B7280',
+  `rank_icon` varchar(50) DEFAULT 'fas fa-star',
+  `rank_order` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `xp_ranks`
+--
+
+INSERT INTO `xp_ranks` (`rank_id`, `rank_name`, `rank_title`, `min_xp`, `max_xp`, `rank_color`, `rank_icon`, `rank_order`, `created_at`) VALUES
+(1, 'novice', 'Novice Learner', 0, 99, '#9CA3AF', 'fas fa-seedling', 1, '2025-09-26 07:41:07'),
+(2, 'apprentice', 'Apprentice Scholar', 100, 249, '#10B981', 'fas fa-book-open', 2, '2025-09-26 07:41:07'),
+(3, 'student', 'Dedicated Student', 250, 499, '#3B82F6', 'fas fa-graduation-cap', 3, '2025-09-26 07:41:07'),
+(4, 'scholar', 'Advanced Scholar', 500, 999, '#8B5CF6', 'fas fa-user-graduate', 4, '2025-09-26 07:41:07'),
+(5, 'expert', 'Subject Expert', 1000, 1999, '#F59E0B', 'fas fa-medal', 5, '2025-09-26 07:41:07'),
+(6, 'master', 'Knowledge Master', 2000, 3999, '#EF4444', 'fas fa-crown', 6, '2025-09-26 07:41:07'),
+(7, 'grandmaster', 'Grand Master', 4000, 7999, '#DC2626', 'fas fa-trophy', 7, '2025-09-26 07:41:07'),
+(8, 'legend', 'Learning Legend', 8000, 15999, '#7C2D12', 'fas fa-fire', 8, '2025-09-26 07:41:07'),
+(9, 'mythic', 'Mythic Scholar', 16000, 31999, '#581C87', 'fas fa-gem', 9, '2025-09-26 07:41:07'),
+(10, 'immortal', 'Immortal Sage', 32000, 999999, '#1F2937', 'fas fa-infinity', 10, '2025-09-26 07:41:07');
 
 -- --------------------------------------------------------
 
@@ -711,7 +805,10 @@ INSERT INTO `xp_transactions` (`transaction_id`, `user_id`, `activity_id`, `xp_e
 (26, 16, 6, 200, 'Course completion', '2025-09-26 00:56:39'),
 (27, 16, 2, 25, 'Lesson completion', '2025-09-26 01:27:04'),
 (28, 16, 6, 200, 'Course completion', '2025-09-26 01:27:04'),
-(29, 16, 6, 200, 'Course completion', '2025-09-26 01:29:20');
+(29, 16, 6, 200, 'Course completion', '2025-09-26 01:29:20'),
+(30, 16, 6, 200, 'Course completion', '2025-09-26 04:03:02'),
+(31, 16, 6, 200, 'Course completion', '2025-09-26 04:26:49'),
+(32, 19, 1, 10, 'Daily login bonus', '2025-09-26 07:06:13');
 
 --
 -- Indexes for dumped tables
@@ -751,6 +848,14 @@ ALTER TABLE `certificates`
   ADD PRIMARY KEY (`certificate_id`),
   ADD KEY `student_id` (`student_id`),
   ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `conference_rooms`
+--
+ALTER TABLE `conference_rooms`
+  ADD PRIMARY KEY (`room_id`),
+  ADD UNIQUE KEY `room_key` (`room_key`),
+  ADD KEY `created_by` (`created_by`);
 
 --
 -- Indexes for table `courses`
@@ -848,6 +953,15 @@ ALTER TABLE `quiz_questions`
   ADD KEY `question_order` (`question_order`);
 
 --
+-- Indexes for table `rank_progressions`
+--
+ALTER TABLE `rank_progressions`
+  ADD PRIMARY KEY (`progression_id`),
+  ADD KEY `old_rank_id` (`old_rank_id`),
+  ADD KEY `new_rank_id` (`new_rank_id`),
+  ADD KEY `idx_user_progression` (`user_id`,`progression_date`);
+
+--
 -- Indexes for table `resource_progress`
 --
 ALTER TABLE `resource_progress`
@@ -925,6 +1039,15 @@ ALTER TABLE `user_xp`
 --
 ALTER TABLE `xp_activities`
   ADD PRIMARY KEY (`activity_id`);
+
+--
+-- Indexes for table `xp_ranks`
+--
+ALTER TABLE `xp_ranks`
+  ADD PRIMARY KEY (`rank_id`),
+  ADD UNIQUE KEY `rank_name` (`rank_name`),
+  ADD KEY `idx_xp_range` (`min_xp`,`max_xp`),
+  ADD KEY `idx_rank_order` (`rank_order`);
 
 --
 -- Indexes for table `xp_rules`
@@ -1048,6 +1171,12 @@ ALTER TABLE `quiz_questions`
   MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `rank_progressions`
+--
+ALTER TABLE `rank_progressions`
+  MODIFY `progression_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `resource_progress`
 --
 ALTER TABLE `resource_progress`
@@ -1057,13 +1186,13 @@ ALTER TABLE `resource_progress`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `student_todos`
 --
 ALTER TABLE `student_todos`
-  MODIFY `todo_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `todo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `study_sessions`
@@ -1075,7 +1204,7 @@ ALTER TABLE `study_sessions`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `submission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `submission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1093,13 +1222,19 @@ ALTER TABLE `user_badges`
 -- AUTO_INCREMENT for table `user_xp`
 --
 ALTER TABLE `user_xp`
-  MODIFY `xp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=585;
+  MODIFY `xp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1153;
 
 --
 -- AUTO_INCREMENT for table `xp_activities`
 --
 ALTER TABLE `xp_activities`
   MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `xp_ranks`
+--
+ALTER TABLE `xp_ranks`
+  MODIFY `rank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `xp_rules`
@@ -1111,7 +1246,7 @@ ALTER TABLE `xp_rules`
 -- AUTO_INCREMENT for table `xp_transactions`
 --
 ALTER TABLE `xp_transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
@@ -1129,6 +1264,12 @@ ALTER TABLE `assignments`
 ALTER TABLE `certificates`
   ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`),
   ADD CONSTRAINT `certificates_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`);
+
+--
+-- Constraints for table `conference_rooms`
+--
+ALTER TABLE `conference_rooms`
+  ADD CONSTRAINT `conference_rooms_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `students` (`student_id`);
 
 --
 -- Constraints for table `courses`
@@ -1194,6 +1335,14 @@ ALTER TABLE `quiz_answer_options`
 --
 ALTER TABLE `quiz_questions`
   ADD CONSTRAINT `quiz_questions_ibfk_1` FOREIGN KEY (`lesson_id`) REFERENCES `course_lessons` (`lesson_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rank_progressions`
+--
+ALTER TABLE `rank_progressions`
+  ADD CONSTRAINT `rank_progressions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rank_progressions_ibfk_2` FOREIGN KEY (`old_rank_id`) REFERENCES `xp_ranks` (`rank_id`),
+  ADD CONSTRAINT `rank_progressions_ibfk_3` FOREIGN KEY (`new_rank_id`) REFERENCES `xp_ranks` (`rank_id`);
 
 --
 -- Constraints for table `resource_progress`

@@ -1,8 +1,16 @@
 <?php
-require_once '../../php/xp_system.php';
 
-// Initialize XP system and get user stats
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once '../../php/connect.php';
+require_once '../../php/xp_system.php';
+require_once '../../services/RankSystem.php';
+
 $xp_system = new XPSystem($conn);
+$rank_system = new RankSystem($conn);
+
 $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
 $user_badges = $xp_system->getUserBadges($_SESSION['user_id']);
 $recent_transactions = $xp_system->getRecentTransactions($_SESSION['user_id'], 5);
@@ -13,6 +21,21 @@ $xp_system->updateStudyStreak($_SESSION['user_id']);
 
 // Refresh stats after daily bonus
 $user_stats = $xp_system->getUserStats($_SESSION['user_id']);
+
+// Check and update user rank based on current XP
+$rank_info = $rank_system->checkAndUpdateUserRank($_SESSION['user_id']);
+$current_rank = $rank_info['current_rank'] ?? null;
+$next_rank = $rank_info['next_rank'] ?? null;
+$xp_to_next = $rank_info['xp_to_next'] ?? 0;
+$rank_changed = $rank_info['rank_changed'] ?? false;
+
+// Store rank change notification for display
+if ($rank_changed && $current_rank) {
+    $_SESSION['rank_up_notification'] = [
+        'new_rank' => $current_rank,
+        'timestamp' => time()
+    ];
+}
 
 // Load profile image and compute initials
 $profileImageUrl = null;
@@ -37,19 +60,44 @@ $initials = $firstInitial . $secondInitial;
         <!-- Gamified Progress & Quest Panel -->
         <div class="flex-1 max-w-2xl">
             <div class="flex items-center">
-                <!-- XP & Level Display -->
-                <div class="flex items-center px-4 py-2 space-x-3 text-white transition-all duration-300 transform shadow-lg bg-saltel rounded-xl hover:shadow-xl">
-                    <div class="flex items-center space-x-2">
-                        <i class="text-yellow-400 fas fa-star"></i>
-                        <div class="text-left">
-                            <p class="text-xs font-medium opacity-90">Level <?php echo $user_stats['current_level']; ?></p>
-                            <p class="text-sm font-bold"><?php echo number_format($user_stats['total_xp']); ?> XP</p>
+                <!-- Rank & XP Display -->
+                <div class="flex items-center space-x-4">
+                    <!-- Current Rank Display -->
+                    <?php if ($current_rank): ?>
+                        <div class="flex items-center px-3 py-2 space-x-2 text-white transition-all duration-300 transform shadow-lg rounded-xl hover:shadow-xl" style="background-color: <?php echo $current_rank['rank_color']; ?>">
+                            <i class="<?php echo $current_rank['rank_icon']; ?>"></i>
+                            <div class="text-left">
+                                <p class="text-xs font-medium opacity-90"><?php echo htmlspecialchars($current_rank['rank_title']); ?></p>
+                                <p class="text-sm font-bold"><?php echo htmlspecialchars($current_rank['rank_name']); ?></p>
+                            </div>
                         </div>
+                    <?php endif; ?>
+
+                    <!-- XP & Level Display -->
+                    <div class="flex items-center px-4 py-2 space-x-3 text-white transition-all duration-300 transform shadow-lg bg-saltel rounded-xl hover:shadow-xl">
+                        <div class="flex items-center space-x-2">
+                            <i class="text-yellow-400 fas fa-star"></i>
+                            <div class="text-left">
+                                <p class="text-xs font-medium opacity-90">Level <?php echo $user_stats['current_level']; ?></p>
+                                <p class="text-sm font-bold"><?php echo number_format($user_stats['total_xp']); ?> XP</p>
+                            </div>
+                        </div>
+                        <div class="w-16 h-2 bg-white rounded-full bg-opacity-30">
+                            <div class="h-2 transition-all duration-500 bg-yellow-400 rounded-full" style="width: <?php echo $user_stats['total_xp'] * 100 / ($user_stats['total_xp'] + $user_stats['xp_to_next_level']); ?>%"></div>
+                        </div>
+                        <span class="text-xs opacity-90"><?php echo $user_stats['xp_to_next_level']; ?> to Level <?php echo $user_stats['current_level'] + 1; ?></span>
                     </div>
-                    <div class="w-16 h-2 bg-white rounded-full bg-opacity-30">
-                        <div class="h-2 transition-all duration-500 bg-yellow-400 rounded-full" style="width: <?php echo $user_stats['total_xp'] * 100 / ($user_stats['total_xp'] + $user_stats['xp_to_next_level']); ?>%"></div>
-                    </div>
-                    <span class="text-xs opacity-90"><?php echo $user_stats['xp_to_next_level']; ?> to Level <?php echo $user_stats['current_level'] + 1; ?></span>
+
+                    <!-- Next Rank Progress -->
+                    <?php if ($next_rank && $xp_to_next > 0): ?>
+                        <div class="flex items-center px-3 py-2 space-x-2 text-gray-700 transition-all duration-300 transform bg-white border-2 border-gray-200 shadow-lg rounded-xl hover:shadow-xl hover:border-gray-300">
+                            <i class="<?php echo $next_rank['rank_icon']; ?>" style="color: <?php echo $next_rank['rank_color']; ?>"></i>
+                            <div class="text-left">
+                                <p class="text-xs font-medium text-gray-600">Next: <?php echo htmlspecialchars($next_rank['rank_name']); ?></p>
+                                <p class="text-sm font-bold"><?php echo number_format($xp_to_next); ?> XP to go</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -147,7 +195,7 @@ $initials = $firstInitial . $secondInitial;
                     <div class="relative">
                         <!-- Avatar with Level Ring -->
                         <div class="size-10 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-0.5">
-                            <div class="flex items-center justify-center w-full h-full bg-white rounded-full overflow-hidden">
+                            <div class="flex items-center justify-center w-full h-full overflow-hidden bg-white rounded-full">
                                 <?php if (!empty($profileImageUrl)) { ?>
                                     <img src="<?php echo '../../' . htmlspecialchars($profileImageUrl); ?>" alt="Avatar" class="object-cover w-full h-full rounded-full" />
                                 <?php } else { ?>
@@ -173,7 +221,7 @@ $initials = $firstInitial . $secondInitial;
                         <!-- User Info Header -->
                         <div class="flex items-center pb-4 space-x-3 border-b border-gray-200">
                             <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-0.5">
-                                <div class="flex items-center justify-center w-full h-full bg-white rounded-full overflow-hidden">
+                                <div class="flex items-center justify-center w-full h-full overflow-hidden bg-white rounded-full">
                                     <?php if (!empty($profileImageUrl)) { ?>
                                         <img src="<?php echo '../../' . htmlspecialchars($profileImageUrl); ?>" alt="Avatar" class="object-cover w-full h-full rounded-full" />
                                     <?php } else { ?>
@@ -183,8 +231,13 @@ $initials = $firstInitial . $secondInitial;
                             </div>
                             <div class="flex-1">
                                 <h3 class="font-bold text-gray-900"><?php echo $_SESSION['user_name']; ?></h3>
-                                <p class="text-sm text-gray-600"><?php echo $_SESSION['user_email'] ?> XP</p>
+                                <p class="text-sm text-gray-600"><?php echo $_SESSION['user_email']; ?></p>
                                 <div class="flex items-center mt-1 space-x-2">
+                                    <?php if ($current_rank): ?>
+                                        <span class="px-2 py-1 text-xs font-medium rounded-full" style="background-color: <?php echo $current_rank['rank_color']; ?>20; color: <?php echo $current_rank['rank_color']; ?>">
+                                            <i class="<?php echo $current_rank['rank_icon']; ?> mr-1"></i><?php echo htmlspecialchars($current_rank['rank_name']); ?>
+                                        </span>
+                                    <?php endif; ?>
                                     <span class="px-2 py-1 text-xs font-medium text-purple-800 bg-purple-100 rounded-full">Level <?php echo $user_stats['current_level']; ?></span>
                                     <span class="px-2 py-1 text-xs font-medium text-yellow-800 bg-yellow-100 rounded-full"><?php echo number_format($user_stats['total_xp']); ?> XP</span>
                                 </div>
@@ -240,6 +293,53 @@ $initials = $firstInitial . $secondInitial;
         </div>
     </div>
 </header>
+
+<!-- Rank Up Notification Modal -->
+<?php if (isset($_SESSION['rank_up_notification']) && (time() - $_SESSION['rank_up_notification']['timestamp']) < 30): ?>
+    <div id="rankUpModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="relative max-w-md p-8 mx-4 text-center bg-white shadow-2xl rounded-2xl animate-bounce">
+            <div class="absolute transform -translate-x-1/2 -top-4 left-1/2">
+                <div class="flex items-center justify-center w-16 h-16 rounded-full shadow-lg" style="background-color: <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_color']; ?>">
+                    <i class="text-2xl text-white <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_icon']; ?>"></i>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h2 class="mb-2 text-2xl font-bold text-gray-900">🎉 Rank Up!</h2>
+                <p class="mb-4 text-gray-600">Congratulations! You've achieved a new rank:</p>
+
+                <div class="p-4 mb-6 rounded-lg" style="background-color: <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_color']; ?>20;">
+                    <h3 class="text-xl font-bold" style="color: <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_color']; ?>">
+                        <?php echo htmlspecialchars($_SESSION['rank_up_notification']['new_rank']['rank_title']); ?>
+                    </h3>
+                    <p class="text-sm text-gray-600"><?php echo htmlspecialchars($_SESSION['rank_up_notification']['new_rank']['rank_name']); ?></p>
+                </div>
+
+                <button onclick="closeRankUpModal()" class="px-6 py-2 text-white transition-colors rounded-lg hover:opacity-90" style="background-color: <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_color']; ?>">
+                    Continue Learning!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeRankUpModal() {
+            document.getElementById('rankUpModal').style.display = 'none';
+            // Clear the notification from session
+            fetch('clear-rank-notification.php', {
+                method: 'POST'
+            });
+        }
+
+        // Auto-close after 10 seconds
+        setTimeout(closeRankUpModal, 10000);
+    </script>
+
+    <?php
+    // Clear the notification after displaying
+    unset($_SESSION['rank_up_notification']);
+    ?>
+<?php endif; ?>
 
 <!-- JavaScript for Interactive Elements -->
 <script>

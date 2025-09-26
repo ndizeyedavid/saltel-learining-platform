@@ -365,7 +365,7 @@
                     <div class="p-6 bg-white border border-gray-200 shadow-sm rounded-xl">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-900">This Week's Events</h3>
-                            <button class="text-sm font-medium text-blue-600 hover:text-blue-700">View All</button>
+                            <a href="calendar.php" class="text-sm font-medium text-blue-600 hover:text-blue-700">View All</a>
                         </div>
 
                         <!-- Mini Calendar -->
