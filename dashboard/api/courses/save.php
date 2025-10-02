@@ -29,7 +29,11 @@ try {
     $description = trim($_POST['description']);
     $category = $_POST['category'];
     $level = $_POST['level'];
-    $price = (float)$_POST['price'];
+    // 😭😭😭😭😭😭😭😭
+    // $price = (float)$_POST['price'];
+    $default_price = 0;
+    $price = (float)$default_price;
+
     $max_students = !empty($_POST['max_students']) ? (int)$_POST['max_students'] : null;
     $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : null;
     $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : null;
