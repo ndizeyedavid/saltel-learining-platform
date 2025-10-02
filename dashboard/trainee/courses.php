@@ -139,7 +139,8 @@
                 $prereq_count = $result4->fetch_assoc()['prereq_count'];
 
                 if ($prereq_count > 0) {
-                    $has_prerequisites = true;
+                    // 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭
+                    // $has_prerequisites = true;
                     // For now, we'll assume prerequisites are not met if they exist
                     // In a real implementation, you'd check each prerequisite
                     $prerequisites_met = false;

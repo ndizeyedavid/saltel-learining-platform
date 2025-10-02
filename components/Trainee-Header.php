@@ -297,7 +297,7 @@ $initials = $firstInitial . $secondInitial;
 <!-- Rank Up Notification Modal -->
 <?php if (isset($_SESSION['rank_up_notification']) && (time() - $_SESSION['rank_up_notification']['timestamp']) < 30): ?>
     <div id="rankUpModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="relative max-w-md p-8 mx-4 text-center bg-white shadow-2xl rounded-2xl animate-bounce">
+        <div class="relative max-w-md p-8 mx-4 text-center bg-white shadow-2xl rounded-2xl">
             <div class="absolute transform -translate-x-1/2 -top-4 left-1/2">
                 <div class="flex items-center justify-center w-16 h-16 rounded-full shadow-lg" style="background-color: <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_color']; ?>">
                     <i class="text-2xl text-white <?php echo $_SESSION['rank_up_notification']['new_rank']['rank_icon']; ?>"></i>
