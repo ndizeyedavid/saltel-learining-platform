@@ -3,7 +3,7 @@ session_start();
 session_unset();
 
 include '../php/connect.php';
-require_once '../services/EmailService.php';
+// require_once '../services/EmailService.php';
 
 // Function to generate 6-digit OTP
 function generateOTP()
@@ -50,7 +50,7 @@ if (isset($_POST['register'])) {
     }
 
     if ($conn->query($query) === TRUE) {
-        $_SESSION['success'] = "Account created now login";
+        $_SESSION['success_message'] = "Account created now login";
         header("Location: ../login.php");
         exit();
 
