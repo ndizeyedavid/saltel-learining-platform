@@ -29,19 +29,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $result->fetch_assoc();
 
     // Verify password
-    if (!password_verify($password, $user['password'])) {
+
+    // SORRY YOUNG KING😉 I WILL RENABLE YOU ONCE THE PRESENTATION IS DONE🤗 
+    // if (!password_verify($password, $user['password'])) {
+
+    if ($password != $user['password']) {
         $_SESSION['error'] = "Invalid email or password.";
         header("Location: ../login.php");
         exit();
     }
 
     // Check if email is verified
-    if (!$user['is_verified']) {
-        $_SESSION['error'] = "Please verify your email address before logging in. Check your inbox for the verification code.";
-        $_SESSION['unverified_email'] = $email;
-        header("Location: ../login.php");
-        exit();
-    }
+
+    // SORRY YOUNG KING😉 I WILL RENABLE YOU ONCE THE PRESENTATION IS DONE🤗 
+
+    // if (!$user['is_verified']) {
+    //     $_SESSION['error'] = "Please verify your email address before logging in. Check your inbox for the verification code.";
+    //     $_SESSION['unverified_email'] = $email;
+    //     header("Location: ../login.php");
+    //     exit();
+    // }
 
     // Login successful - Set session variables
     $_SESSION['user_id'] = $user['user_id'];
@@ -54,12 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($remember_me) {
         $token = bin2hex(random_bytes(32));
         $expires = date('Y-m-d H:i:s', strtotime('+30 days'));
-        
+
         // Store remember token in database
         $remember_query = $conn->prepare("UPDATE users SET remember_token = ?, remember_expires = ? WHERE user_id = ?");
         $remember_query->bind_param("ssi", $token, $expires, $user['user_id']);
         $remember_query->execute();
-        
+
         // Set cookie
         setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/', '', false, true);
     }
@@ -85,10 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
     }
     exit();
-
 } else {
     // Direct access not allowed
     header("Location: ../login.php");
     exit();
 }
-?>

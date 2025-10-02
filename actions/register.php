@@ -27,7 +27,8 @@ if (isset($_POST['register'])) {
         exit();
     }
 
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    // SORRY YOUNG KING😉 I WILL RENABLE YOU ONCE THE PRESENTATION IS DONE🤗 
+    // $password = password_hash($password, PASSWORD_DEFAULT);
 
     // Generate OTP and set expiration time (10 minutes from now)
     $otp = generateOTP();
@@ -49,31 +50,36 @@ if (isset($_POST['register'])) {
     }
 
     if ($conn->query($query) === TRUE) {
-        // Send OTP email
-        try {
-            $emailService = new EmailService();
-            $fullName = $fname . ' ' . $lname;
+        $_SESSION['success'] = "Account created now login";
+        header("Location: ../login.php");
+        exit();
 
-            if ($emailService->sendOTP($email, $fullName, $otp)) {
-                $_SESSION['success'] = $email;
-                $_SESSION['otp_sent'] = "OTP has been sent to your email address.";
-                header("Location: ../otp.php");
-                exit();
-            } else {
-                // If email fails, still allow user to proceed but show warning
-                $_SESSION['success'] = $email;
-                $_SESSION['warning'] = "Registration successful, but email could not be sent. Please contact support.";
-                header("Location: ../otp.php");
-                exit();
-            }
-        } catch (Exception $e) {
-            // Log error and proceed
-            error_log("OTP Email sending failed: " . $e->getMessage());
-            $_SESSION['success'] = $email;
-            $_SESSION['warning'] = "Registration successful, but email could not be sent. Please contact support.";
-            header("Location: ../otp.php");
-            exit();
-        }
+        // Send OTP email
+        // SORRY YOUNG KING😉 I WILL RENABLE YOU ONCE THE PRESENTATION IS DONE🤗 
+        // try {
+        //     $emailService = new EmailService();
+        //     $fullName = $fname . ' ' . $lname;
+
+        //     if ($emailService->sendOTP($email, $fullName, $otp)) {
+        //         $_SESSION['success'] = $email;
+        //         $_SESSION['otp_sent'] = "OTP has been sent to your email address.";
+        //         header("Location: ../otp.php");
+        //         exit();
+        //     } else {
+        //         // If email fails, still allow user to proceed but show warning
+        //         $_SESSION['success'] = $email;
+        //         $_SESSION['warning'] = "Registration successful, but email could not be sent. Please contact support.";
+        //         header("Location: ../otp.php");
+        //         exit();
+        //     }
+        // } catch (Exception $e) {
+        //     // Log error and proceed
+        //     error_log($e);
+        //     $_SESSION['success'] = $email;
+        //     $_SESSION['warning'] = "Registration successful, but email could not be sent. Please contact support.";
+        //     header("Location: ../otp.php");
+        //     exit();
+        // }
     } else {
         $_SESSION['error'] = "Registration failed. Please try again";
         header("Location: ../register.php");
